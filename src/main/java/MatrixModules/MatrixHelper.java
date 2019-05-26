@@ -103,6 +103,8 @@ public class MatrixHelper {
                 }
 
                 C.setContent(c);
+                C.setColumns(matrixB.getColumns());
+                C.setRows(matrixB.getColumns());
 
             } else {
                 System.out.print("Размерность матриц не совпадает");
@@ -132,6 +134,8 @@ public class MatrixHelper {
                 }
 
                 C.setContent(c);
+                C.setColumns(matrixB.getColumns());
+                C.setRows(matrixB.getColumns());
 
             } else {
                 System.out.print("Размерность матриц не совпадает");
@@ -161,6 +165,8 @@ public class MatrixHelper {
                 }
 
                 C.setContent(c);
+                C.setColumns(matrixB.getColumns());
+                C.setRows(matrixB.getColumns());
 
             } else {
                 System.out.print("Размерность матриц не совпадает");
