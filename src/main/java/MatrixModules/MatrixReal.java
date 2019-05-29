@@ -106,7 +106,8 @@ public class MatrixReal {
 
         return B;
     }
-    public void mult(Matrix A,MatrixReal B,MatrixReal C){
+    public MatrixReal mult(Matrix A,MatrixReal B){
+        MatrixReal C = new MatrixReal();
         if (A.getColumns() != 0 && B.getColumns() != 0) {
 
             if ((B.getColumns() == B.getRows() &&
@@ -158,6 +159,7 @@ public class MatrixReal {
         } else {
             System.out.print("Одна из матриц не введена");
         }
+        return C;
 
     }
 

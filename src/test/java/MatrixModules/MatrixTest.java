@@ -95,8 +95,7 @@ class MatrixTest {
         B.print("B");
         E.print("E");
 
-        MatrixReal C = new MatrixReal();
-        C.mult(A, B, C);
+        MatrixReal C =B.mult(A, B);
 
         C.print("C");
         Assert.assertTrue(B.equals(E));
@@ -116,8 +115,7 @@ class MatrixTest {
         A.setColumns(3);
         A.setRows(3);
 
-        Matrix B = new Matrix();
-        A.transposition(B);
+        Matrix B =    A.transposition();
 
         int[][] expected = {
                 {2, 4, 1},

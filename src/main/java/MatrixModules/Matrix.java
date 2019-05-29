@@ -100,7 +100,8 @@ public class Matrix {
     }
 
 
-    public void transposition(Matrix B) {
+    public Matrix transposition() {
+        Matrix B = new Matrix();
         if (columns != 0) {
             if (columns == rows) {
                 int[][] b = new int[columns][rows];
@@ -119,7 +120,7 @@ public class Matrix {
             System.out.print("Матрица не введена");
         }
 
-
+        return B;
     }
 
     public MatrixReal reverse() {
@@ -142,7 +143,7 @@ public class Matrix {
             C.setColumns(columns);
             C.setRows(rows);
 
-           C= C.transposition();
+            C = C.transposition();
 
         } else {
             System.out.print("Матрица не введена");
