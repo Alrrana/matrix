@@ -28,7 +28,7 @@ class MatrixTest {
     }
 
     @Test
-    void reverse() { // ToDo Matrix x MatrixReal
+    void reverse() { //
         int[][] first = {
                 {2, 2},
                 {4, 2}

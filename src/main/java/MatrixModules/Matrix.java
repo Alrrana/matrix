@@ -1,11 +1,11 @@
 package MatrixModules;
 
 
-public class Matrix {
+public class Matrix<ElType> {
     private int columns = 0;
     private int rows = 0;
-    private int[][] content;
-    private long determinant;
+    private ElType[][] content;
+    private ElType determinant;
 
     @Override
     public boolean equals(Object obj) {
@@ -18,9 +18,10 @@ public class Matrix {
             int[][] b = B.getContent();
             for (int i = 0; i < columns; i++) {
                 for (int j = 0; j < rows; j++) {
-                    if (content[i][j] != b[i][j]) {
-                        return false;
-                    }
+                    if (ElType instanceof Integer)
+                        if (content[i][j] != b[i][j]) {
+                            return false;
+                        }
                 }
             }
         } else {
@@ -32,19 +33,19 @@ public class Matrix {
     }
 
 
-    public void setDeterminant(long determinant) {
+    public void setDeterminant(ElType determinant) {
         this.determinant = determinant;
     }
 
-    public double getDeterminant() {
+    public ElType getDeterminant() {
         return determinant;
     }
 
-    public void setContent(int[][] content) {
+    public void setContent(ElType[][] content) {
         this.content = content;
     }
 
-    public int[][] getContent() {
+    public ElType[][] getContent() {
         return content;
     }
 
@@ -68,7 +69,7 @@ public class Matrix {
         determinant = determinant(content, rows);
     }
 
-    private long determinant(int[][] a, int n) {
+    private long determinant(ElType[][] a, int n) {
 
         long tempD = 0;
         if (n == 1) tempD = a[0][0];
@@ -85,8 +86,8 @@ public class Matrix {
     }
 
 
-    private int[][] deteminantMinor(int[][] A, int n, int j1) {
-        int[][] t = new int[n - 1][n - 1];
+    private ElType[][] deteminantMinor(ElType[][] A, int n, int j1) {
+        ElType[][] t = new ElType[n - 1][n - 1];
         for (int i = 1; i < n; i++) {
             int j2 = 0;
             for (int j = 0; j < n; j++) {
@@ -142,7 +143,7 @@ public class Matrix {
             C.setColumns(columns);
             C.setRows(rows);
 
-           C= C.transposition();
+            C = C.transposition();
 
         } else {
             System.out.print("Матрица не введена");
