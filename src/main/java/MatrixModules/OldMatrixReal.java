@@ -1,6 +1,6 @@
 package MatrixModules;
 
-public class MatrixReal {
+public class OldMatrixReal {
     private int columns = 0;
     private int rows = 0;
     private double[][] content;
@@ -8,10 +8,10 @@ public class MatrixReal {
 
     @Override
     public boolean equals(Object obj) {
-        return equals((MatrixReal) obj);
+        return equals((OldMatrixReal) obj);
     }
 
-    public boolean equals(MatrixReal B) {
+    public boolean equals(OldMatrixReal B) {
         boolean eq = true;
         if (rows == B.getRows() && columns == B.getColumns()) {
             double[][] b = B.getContent();
@@ -84,8 +84,8 @@ public class MatrixReal {
         }
     }
 
-    public MatrixReal transposition() {
-        MatrixReal B = new MatrixReal();
+    public OldMatrixReal transposition() {
+        OldMatrixReal B = new OldMatrixReal();
         if (columns != 0) {
             if (columns == rows) {
                 double[][] b = new double[columns][rows];
@@ -106,7 +106,7 @@ public class MatrixReal {
 
         return B;
     }
-    public void mult(Matrix A,MatrixReal B,MatrixReal C){
+    public void mult(Matrix A, OldMatrixReal B, OldMatrixReal C){
         if (A.getColumns() != 0 && B.getColumns() != 0) {
 
             if ((B.getColumns() == B.getRows() &&

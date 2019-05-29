@@ -26,7 +26,7 @@ public class Check {
         A.print();
         A.transposition(C);
         C.print();
-        MatrixReal R = new MatrixReal();
+        OldMatrixReal R = new OldMatrixReal();
         A.reverse(R);
         R.print();
 

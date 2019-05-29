@@ -1,11 +1,14 @@
 package MatrixModules;
 
 
+import java.util.TreeSet;
+
 public class Matrix<ElType> {
     private int columns = 0;
     private int rows = 0;
     private ElType[][] content;
     private ElType determinant;
+
 
     @Override
     public boolean equals(Object obj) {
@@ -17,8 +20,8 @@ public class Matrix<ElType> {
         if (rows == B.getRows() && columns == B.getColumns()) {
             int[][] b = B.getContent();
             for (int i = 0; i < columns; i++) {
-                for (int j = 0; j < rows; j++) {
-                    if (ElType instanceof Integer)
+                for (int j = 0; j < rows; j++) {4
+                    if (obj.getClass()==Integer.class)
                         if (content[i][j] != b[i][j]) {
                             return false;
                         }
@@ -29,7 +32,7 @@ public class Matrix<ElType> {
         }
 
         return true;
-
+         new TreeSet<String>();
     }
 
 
@@ -123,8 +126,8 @@ public class Matrix<ElType> {
 
     }
 
-    public MatrixReal reverse() {
-        MatrixReal C = new MatrixReal();
+    public OldMatrixReal reverse() {
+        OldMatrixReal C = new OldMatrixReal();
         if (columns != 0) {
             if (determinant == 0) {
                 determinant();
