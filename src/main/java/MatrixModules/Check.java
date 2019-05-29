@@ -38,8 +38,8 @@ public class Check {
             System.out.print("IllegalAccessError ex ");
         } catch (RuntimeException e) {
             System.out.print("RuntimeException e ");
-        } catch (ArithmeticException e) {
-            System.out.print("IllegalAccessError ex1 ");
+//        } catch (ArithmeticException e) {
+//            System.out.print("IllegalAccessError ex1 ");
         } finally {
             System.out.print("Finally block ");
         }

@@ -105,4 +105,59 @@ public class MatrixReal {
 
 
     }
+    public void mult(Matrix A,MatrixReal B,MatrixReal C){
+        if (A.getColumns() != 0 && B.getColumns() != 0) {
+
+            if ((B.getColumns() == B.getRows() &&
+                    B.getColumns() == 1)
+                    ||
+                    (A.getColumns() == A.getRows() &&
+                            A.getColumns() == 1)) {
+                if (B.getRows() == 1) {
+                    double[][] c = new double[A.getColumns()][A.getRows()];
+                    int[][] a = A.getContent();
+                    for (int i = 0; i < A.getColumns(); ++i)
+                        for (int j = 0; j < A.getRows(); ++j){
+                            c[i][j]=(double)a[i][j];
+                        }
+                    C.setContent(c);
+                    C.setColumns(A.getColumns());
+                    C.setRows(A.getRows());
+                } else {
+                    C.setContent(B.getContent());
+                    C.setColumns(B.getColumns());
+                    C.setRows(B.getRows());
+                }
+            } else {
+
+                if (A.getColumns() == B.getRows() ||
+                        A.getRows() == B.getColumns()) {
+
+                    int[][] a = A.getContent();
+                    double[][] b = B.getContent();
+                    double[][] c = new double[B.getColumns()][B.getRows()];
+
+                    for (int i = 0; i < A.getColumns(); ++i)
+                        for (int j = 0; j < B.getRows(); ++j)
+                            for (int k = 0; k < B.getColumns(); ++k)
+                                c[i][j] +=(double) a[i][k] * b[k][j];
+
+                    C.setContent(c);
+                    C.setColumns(A.getColumns());
+                    C.setRows(B.getRows());
+
+                } else {
+                    System.out.print("Размерность матриц не совпадает");
+                    throw new IllegalMatrixDimensionException("Нельзя перемножать матрицы разного размера");
+//                    throw new IllegalArgumentException();
+                }
+            }
+
+
+        } else {
+            System.out.print("Одна из матриц не введена");
+        }
+
+    }
+
    }

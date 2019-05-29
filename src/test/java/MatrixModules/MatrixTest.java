@@ -76,7 +76,7 @@ class MatrixTest {
 
         double[][] expected = {
                 {-0.5, 0.5,0},
-                {1, -0.5,1},
+                {0, -0.5,1},
                 {0.5,0,-0.5}
         };
         MatrixReal E = new MatrixReal();
@@ -87,6 +87,10 @@ class MatrixTest {
         B.print("B");
         E.print("E");
 
+        MatrixReal C = new MatrixReal();
+        C.mult(A,B,C);
+
+        C.print("C");
         Assert.assertTrue(B.equals(E));
 
     }

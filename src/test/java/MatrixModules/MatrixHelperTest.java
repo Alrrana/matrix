@@ -349,15 +349,25 @@ class MatrixHelperTest {
 
         //set expect
 
+        boolean flag = false;
 
         Matrix C = new Matrix();
-        matrixHelper.mult(C);
+        try {
+            matrixHelper.mult(C);
+        }catch(IllegalMatrixDimensionException ex){
+            ex.Message();
+            flag=true;
+        }
 
+        Assert.assertTrue(flag);
 //        C.print("C");
 //        E.print("E");
 //
 //        Assert.assertFalse(C.equals(E));
 
     }
+
+
+
 
 }

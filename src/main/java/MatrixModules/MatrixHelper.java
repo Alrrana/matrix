@@ -188,7 +188,7 @@ public class MatrixHelper {
 
                 } else {
                     System.out.print("Размерность матриц не совпадает");
-                    throw new IllegalArgumentException("Нельзя перемножать матрицы разного размера");
+                    throw new IllegalMatrixDimensionException("Нельзя перемножать матрицы разного размера");
 //                    throw new IllegalArgumentException();
                 }
             }
