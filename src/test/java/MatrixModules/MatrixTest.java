@@ -38,8 +38,7 @@ class MatrixTest {
         A.setColumns(2);
         A.setRows(2);
 
-        MatrixReal B = new MatrixReal();
-        A.reverse(B);
+        MatrixReal B = A.reverse();
 
         double[][] expected = {
                 {-0.5, 0.5},
@@ -49,7 +48,6 @@ class MatrixTest {
         E.setContent(expected);
         E.setColumns(2);
         E.setRows(2);
-
 
 
         B.print("B");
@@ -71,28 +69,38 @@ class MatrixTest {
         A.setColumns(3);
         A.setRows(3);
 
-        MatrixReal B = new MatrixReal();
-        A.reverse(B);
+        MatrixReal B = A.reverse();
 
         double[][] expected = {
-                {-0.5, 0.5,0},
-                {0, -0.5,1},
-                {0.5,0,-0.5}
+                {-0.5, 0.5, 0},
+                {0, -0.5, 1},
+                {0.5, 0, -0.5}
         };
         MatrixReal E = new MatrixReal();
         E.setContent(expected);
         E.setColumns(3);
         E.setRows(3);
 
+        double[][] expected1 = {
+                {1, 0, 0},
+                {0, 1, 0},
+                {0, 0, 1}
+        };
+        MatrixReal E1 = new MatrixReal();
+        E1.setContent(expected1);
+        E1.setColumns(3);
+        E1.setRows(3);
+
+
         B.print("B");
         E.print("E");
 
         MatrixReal C = new MatrixReal();
-        C.mult(A,B,C);
+        C.mult(A, B, C);
 
         C.print("C");
         Assert.assertTrue(B.equals(E));
-
+        Assert.assertTrue(C.equals(E1));
     }
 
 

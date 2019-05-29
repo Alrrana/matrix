@@ -122,7 +122,8 @@ public class Matrix {
 
     }
 
-    public void reverse(MatrixReal C) {
+    public MatrixReal reverse() {
+        MatrixReal C = new MatrixReal();
         if (columns != 0) {
             if (determinant == 0) {
                 determinant();
@@ -141,11 +142,12 @@ public class Matrix {
             C.setColumns(columns);
             C.setRows(rows);
 
-            C.transposition(C);
+           C= C.transposition();
 
         } else {
             System.out.print("Матрица не введена");
         }
+        return C;
 
     }
 

@@ -88,7 +88,8 @@ public class MatrixHelper {
         }
     }
 
-    public void sum(Matrix C) {
+    public Matrix sum() {
+        Matrix C = new Matrix();
         if (matrixA.getColumns() != 0 && matrixB.getColumns() != 0) {
 
             if (matrixA.getColumns() == matrixB.getColumns()) {
@@ -116,10 +117,11 @@ public class MatrixHelper {
         } else {
             System.out.print("Одна из матриц не введена");
         }
-
+        return C;
     }
 
-    public void sub(Matrix C) {
+    public Matrix sub() {
+        Matrix C = new Matrix();
         if (matrixA.getColumns() != 0 && matrixB.getColumns() != 0) {
 
 
@@ -148,10 +150,11 @@ public class MatrixHelper {
         } else {
             System.out.print("Одна из матриц не введена");
         }
-
+        return C;
     }
 
-    public void mult(Matrix C) {
+    public Matrix mult() {
+        Matrix C = new Matrix();
         if (matrixA.getColumns() != 0 && matrixB.getColumns() != 0) {
 
             if ((matrixB.getColumns() == matrixB.getRows() &&
@@ -197,7 +200,7 @@ public class MatrixHelper {
         } else {
             System.out.print("Одна из матриц не введена");
         }
-
+        return C;
     }
 
 }

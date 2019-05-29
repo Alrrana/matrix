@@ -170,8 +170,7 @@ class MatrixHelperTest {
         E.setRows(5);
 
 
-        Matrix C = new Matrix();
-        matrixHelper.sum(C);
+        Matrix C = matrixHelper.sum();
 
         C.print("C");
         E.print("E");
@@ -200,8 +199,7 @@ class MatrixHelperTest {
         E.setRows(5);
 
 
-        Matrix C = new Matrix();
-        matrixHelper.sub(C);
+        Matrix C = matrixHelper.sub();
 
         C.print("C");
         E.print("E");
@@ -238,8 +236,7 @@ class MatrixHelperTest {
         E.setRows(5);
 
 
-        Matrix C = new Matrix();
-        matrixHelper.mult(C);
+        Matrix C = matrixHelper.mult();
 
         C.print("C");
         E.print("E");
@@ -256,7 +253,7 @@ class MatrixHelperTest {
         A.setRows(5);
         matrixHelper.setMatrixA(A);
         int[][] second = {
-                { 1}
+                {1}
         };
         Matrix B = new Matrix();
         B.setContent(second);
@@ -272,8 +269,7 @@ class MatrixHelperTest {
         E.setRows(5);
 
 
-        Matrix C = new Matrix();
-        matrixHelper.mult(C);
+        Matrix C = matrixHelper.mult();
 
         C.print("C");
         E.print("E");
@@ -281,6 +277,7 @@ class MatrixHelperTest {
         Assert.assertTrue(C.equals(E));
 
     }
+
     @org.junit.jupiter.api.Test
     void multDifferent() {
         int[][] first = {
@@ -313,8 +310,7 @@ class MatrixHelperTest {
         E.setRows(1);
 
 
-        Matrix C = new Matrix();
-        matrixHelper.mult(C);
+        Matrix C = matrixHelper.mult();
 
         C.print("C");
         E.print("E");
@@ -351,12 +347,12 @@ class MatrixHelperTest {
 
         boolean flag = false;
 
-        Matrix C = new Matrix();
+        Matrix C;
         try {
-            matrixHelper.mult(C);
-        }catch(IllegalMatrixDimensionException ex){
+            C = matrixHelper.mult();
+        } catch (IllegalMatrixDimensionException ex) {
             ex.Message();
-            flag=true;
+            flag = true;
         }
 
         Assert.assertTrue(flag);
@@ -366,8 +362,6 @@ class MatrixHelperTest {
 //        Assert.assertFalse(C.equals(E));
 
     }
-
-
 
 
 }

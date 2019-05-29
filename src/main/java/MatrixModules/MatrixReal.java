@@ -84,7 +84,8 @@ public class MatrixReal {
         }
     }
 
-    public void transposition(MatrixReal B) {
+    public MatrixReal transposition() {
+        MatrixReal B = new MatrixReal();
         if (columns != 0) {
             if (columns == rows) {
                 double[][] b = new double[columns][rows];
@@ -103,7 +104,7 @@ public class MatrixReal {
             System.out.print("Матрица не введена");
         }
 
-
+        return B;
     }
     public void mult(Matrix A,MatrixReal B,MatrixReal C){
         if (A.getColumns() != 0 && B.getColumns() != 0) {
