@@ -3,7 +3,7 @@ package MatrixModules;
 
 import java.util.TreeSet;
 
-public class Matrix<ElType> {
+public class Matrix<ElType extends INums> {
     private int columns = 0;
     private int rows = 0;
     private ElType[][] content;
