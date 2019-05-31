@@ -11,6 +11,7 @@ interface Numeric<T> {
     Numeric<T> mult(Numeric<T> a);
     Numeric<T> mult(double a);
 
+    Numeric<T> div(Numeric<T> a);
     T getValue();
 
 }
@@ -56,6 +57,11 @@ class MyInt implements Numeric<Integer> {
 
     public Numeric<Integer> mult(double a) {
         return new MyInt(this.getValue() * (int)a);
+    }
+
+    @Override
+    public Numeric<Integer> div(Numeric<Integer> a) {
+        return new MyInt(this.getValue() / a.getValue());
     }
 
     @Override
@@ -106,6 +112,11 @@ class MyDouble implements Numeric<Double> {
 
     public Numeric<Double> mult(double a) {
         return new MyDouble(this.getValue() * a);
+    }
+
+    @Override
+    public Numeric<Double> div(Numeric<Double> a) {
+        return new MyDouble(this.getValue() / a.getValue());
     }
 
     @Override

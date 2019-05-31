@@ -1,16 +1,17 @@
 package MatrixModules;
 
-
-import java.lang.reflect.Array;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Matrix<ElType> {
+
+
     private Numeric<ElType> ZERO;
     private Class<Numeric<ElType>> clazz;
 
     private int columns = 0;
     private int rows = 0;
-    private Numeric<ElType>[][] content;
+    private ArrayList<ArrayList<Numeric<ElType>>> content;
     private Numeric<ElType> determinant;
 
     public Matrix(Numeric<ElType> ZERO, Class<Numeric<ElType>> clazz) {
@@ -26,10 +27,10 @@ public class Matrix<ElType> {
             return false;
         Matrix B = (Matrix) obj;
         if (rows == B.getRows() && columns == B.getColumns()) {
-            Numeric<ElType>[][] b = B.getContent();
+            ArrayList<ArrayList<Numeric<ElType>>> b = B.getContent();
             for (int i = 0; i < columns; i++) {
                 for (int j = 0; j < rows; j++) {
-                    if (!content[i][j].equals(b[i][j])) {
+                    if (!content.get(i).get(j).equals(b.get(i).get(j))) {
                         return false;
                     }
                 }
@@ -41,6 +42,18 @@ public class Matrix<ElType> {
         return true;
     }
 
+    public Numeric<ElType> getZERO() {
+        return ZERO;
+    }
+
+    public void setZERO(Numeric<ElType> ZERO) {
+        this.ZERO = ZERO;
+    }
+
+    public Class<Numeric<ElType>> getClazz() {
+        return clazz;
+    }
+
 
     public void setDeterminant(Numeric<ElType> determinant) {
         this.determinant = determinant;
@@ -50,11 +63,11 @@ public class Matrix<ElType> {
         return determinant;
     }
 
-    public void setContent(Numeric<ElType>[][] content) {
+    public void setContent(ArrayList<ArrayList<Numeric<ElType>>> content) {
         this.content = content;
     }
 
-    public Numeric<ElType>[][] getContent() {
+    public ArrayList<ArrayList<Numeric<ElType>>> getContent() {
         return content;
     }
 
@@ -79,76 +92,77 @@ public class Matrix<ElType> {
     }
 
 
-    private Numeric<ElType> determinant(Numeric<ElType>[][] a, int n) {
+    private Numeric<ElType> determinant(ArrayList<ArrayList<Numeric<ElType>>> a, int n) {
 
         Numeric<ElType> tempD = this.ZERO;
         if (n == 1) {
-            tempD = a[0][0];
+            tempD = a.get(0).get(0);
         } else if (n == 2) {
-            tempD = a[0][0].mult(a[1][1]).sub(a[1][0].mult(a[0][1]));
+            tempD = a.get(0).get(0).mult(a.get(1).get(1)).sub(a.get(1).get(0).mult(a.get(0).get(1)));
         } else { // NxN matrix
             for (int j1 = 0; j1 < n; j1++) {
-                Numeric<ElType>[][] t = deteminantMinor(a, n, j1);
-                tempD = tempD.sum(a[0][j1].mult(Math.pow(-1.0, 1.0 + j1 + 1.0)).mult(determinant(t, n - 1)));
+                ArrayList<ArrayList<Numeric<ElType>>> t = deteminantMinor(a, n, j1);
+                tempD = tempD.sum(a.get(0).get(j1).mult(Math.pow(-1.0, 1.0 + j1 + 1.0)).mult(determinant(t, n - 1)));
             }
         }
         return tempD;
     }
 
     @SuppressWarnings("unchecked")
-    private Numeric<ElType>[][] deteminantMinor(Numeric<ElType>[][] A, int n, int j1) {
+    private ArrayList<ArrayList<Numeric<ElType>>> deteminantMinor(ArrayList<ArrayList<Numeric<ElType>>> A, int n, int j1) {
 
-        Numeric<ElType>[][] t = (Numeric<ElType>[][]) Array.newInstance(this.clazz, n, n);
+        ArrayList<ArrayList<Numeric<ElType>>> t = new ArrayList<>();
         for (int i = 1; i < n; i++) {
             int j2 = 0;
             for (int j = 0; j < n; j++) {
-                if (j == j1){
+                if (j == j1) {
                     continue;
                 }
-                t[i - 1][j2] = A[i][j];
+                t.get(i - 1).add(A.get(i).get(j));
                 j2++;
             }
         }
-        Array.newInstance();
         return t;
     }
 
 
-    public void transposition(Matrix B) {
+    public Matrix transposition() {
+        Matrix C = new Matrix(this.getZERO(), this.getClazz());
         if (columns != 0) {
             if (columns == rows) {
-                int[][] b = new int[columns][rows];
+                ArrayList<ArrayList<Numeric<ElType>>> c = new ArrayList<>();
                 for (int i = 0; i < columns; i++) {
                     for (int j = 0; j < rows; j++) {
-                        b[j][i] = content[i][j];
+                        c.get(j).add(content.get(i).get(j));
                     }
                 }
-                B.setContent(b);
-                B.setRows(rows);
-                B.setColumns(columns);
+                C.setContent(c);
+                C.setRows(rows);
+                C.setColumns(columns);
             } else {
                 System.out.print("Размерности матрицы не совпадают");
             }
         } else {
             System.out.print("Матрица не введена");
-        }
 
+        }
+        return C;
 
     }
 
-    public OldMatrixReal reverse() {
-        OldMatrixReal C = new OldMatrixReal();
+    public Matrix reverse() {
+        Matrix C = new Matrix(this.getZERO(), this.getClazz());
         if (columns != 0) {
             determinant();
             if (determinant.equalsZero()) {
                 // Нет определителя - нет обратной матрицы
                 return C;
             }
-            Numeric<ElType>[][] c = new Numeric<ElType>[columns][rows];
+            ArrayList<ArrayList<Numeric<ElType>>> c = new ArrayList<>();
 
             for (int i = 0; i < columns; i++) {
                 for (int j = 0; j < rows; j++) {
-                    c[i][j] = determinant(Minor(content, i, j), rows - 1) * Math.pow(-1.0, i + j) / determinant;
+                    c.get(i).add(determinant(Minor(content, i, j), rows - 1).mult(Math.pow(-1.0, i + j)).div(determinant));
                 }
                 System.out.println();
             }
@@ -167,9 +181,9 @@ public class Matrix<ElType> {
 
     }
 
-    private int[][] Minor(int[][] a, int I, int J) {
+    private ArrayList<ArrayList<Numeric<ElType>>> Minor(ArrayList<ArrayList<Numeric<ElType>>> a, int I, int J) {
 
-        int[][] t = new int[columns - 1][rows - 1];
+        ArrayList<ArrayList<Numeric<ElType>>> t = new ArrayList<>();
         for (int i = 0; i < columns; i++) {
             boolean isRowDeleted = I < i;
             int resultRowIndex = isRowDeleted ? i - 1 : i;
@@ -178,7 +192,7 @@ public class Matrix<ElType> {
                 int resultColIndex = isColDeleted ? j - 1 : j;
 
                 if (I != i && J != j)
-                    t[resultRowIndex][resultColIndex] = a[i][j];
+                    t.get(resultRowIndex).add(a.get(i).get(j));
             }
         }
         return t;
@@ -189,7 +203,7 @@ public class Matrix<ElType> {
         System.out.println("Матрица " + Name + ": ");
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
-                System.out.print(content[i][j] + "\t");
+                System.out.print(content.get(i).get(j) + "\t");
             }
             System.out.println();
         }
@@ -199,7 +213,7 @@ public class Matrix<ElType> {
         System.out.println("Матрица : ");
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
-                System.out.print(content[i][j] + "\t");
+                System.out.print(content.get(i).get(j) + "\t");
             }
             System.out.println();
         }
@@ -207,18 +221,18 @@ public class Matrix<ElType> {
 
 
     public Matrix sum(Matrix A, Matrix B) {
-        Matrix C = new Matrix();
+        Matrix C = new Matrix(A.getZERO(), A.getClazz());
         if (A.getColumns() != 0 && B.getColumns() != 0) {
 
             if (A.getColumns() == B.getColumns()) {
 
-                Numeric<ElType>[][] a = A.getContent();
-                Numeric<ElType>[][] b = B.getContent();
-                Numeric<ElType>[][] c = new Numeric<ElType>[B.getColumns()][B.getColumns()];
+                ArrayList<ArrayList<Numeric<ElType>>> a = A.getContent();
+                ArrayList<ArrayList<Numeric<ElType>>> b = B.getContent();
+                ArrayList<ArrayList<Numeric<ElType>>> c = new ArrayList<>();
 
                 for (int i = 0; i < B.getColumns(); i++) {
                     for (int j = 0; j < B.getColumns(); j++) {
-                        c[i][j] = a[i][j].sum(b[i][j]);
+                        c.get(i).add(a.get(i).get(j).sum(b.get(i).get(j)));
                     }
 
                 }
@@ -239,19 +253,19 @@ public class Matrix<ElType> {
     }
 
     public Matrix sub(Matrix A, Matrix B) {
-        Matrix C = new Matrix();
+        Matrix C = new Matrix(A.getZERO(), A.getClazz());
         if (A.getColumns() != 0 && B.getColumns() != 0) {
 
 
             if (A.getColumns() == B.getColumns()) {
 
-                Numeric<ElType>[][] a = A.getContent();
-                Numeric<ElType>[][] b = B.getContent();
-                Numeric<ElType>[][] c = new Numeric<ElType>[B.getColumns()][B.getColumns()];
+                ArrayList<ArrayList<Numeric<ElType>>> a = A.getContent();
+                ArrayList<ArrayList<Numeric<ElType>>> b = B.getContent();
+                ArrayList<ArrayList<Numeric<ElType>>> c = new ArrayList<>();
 
                 for (int i = 0; i < B.getColumns(); i++) {
                     for (int j = 0; j < B.getColumns(); j++) {
-                        c[i][j] = a[i][j].sub(b[i][j]);
+                        c.get(i).add(a.get(i).get(j).sub(b.get(i).get(j)));
                     }
 
                 }
@@ -272,7 +286,7 @@ public class Matrix<ElType> {
     }
 
     public Matrix mult(Matrix A, Matrix B) {
-        Matrix C = new Matrix();
+        Matrix C = new Matrix(A.getZERO(), A.getClazz());
         if (A.getColumns() != 0 && B.getColumns() != 0) {
 
             if ((B.getColumns() == B.getRows() &&
@@ -294,14 +308,21 @@ public class Matrix<ElType> {
                 if (A.getColumns() == B.getRows() ||
                         A.getRows() == B.getColumns()) {
 
-                    int[][] a = A.getContent();
-                    int[][] b = B.getContent();
-                    int[][] c = new int[B.getColumns()][B.getRows()];
+                    ArrayList<ArrayList<Numeric<ElType>>> a = A.getContent();
+                    ArrayList<ArrayList<Numeric<ElType>>> b = B.getContent();
+                    ArrayList<ArrayList<Numeric<ElType>>> c = new ArrayList<>();
 
-                    for (int i = 0; i < A.getColumns(); ++i)
-                        for (int j = 0; j < B.getRows(); ++j)
-                            for (int k = 0; k < B.getColumns(); ++k)
-                                c[i][j] += a[i][k] * b[k][j];
+                    Numeric<ElType> temp = ZERO;
+
+                    for (int i = 0; i < A.getColumns(); ++i) {
+                        for (int j = 0; j < B.getRows(); ++j) {
+                            temp=ZERO;
+                            for (int k = 0; k < B.getColumns(); ++k) {
+                                temp = temp.sum(a.get(i).get(k).mult(b.get(k).get(j)));
+                            }
+                            c.get(i).add(temp);
+                        }
+                    }
 
                     C.setContent(c);
                     C.setColumns(A.getColumns());
@@ -319,6 +340,49 @@ public class Matrix<ElType> {
             System.out.print("Одна из матриц не введена");
         }
         return C;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected InputHelper inputHelper = new InputHelper(); //ToDo
+    private final Random random = new Random();
+
+    public void setInputHelper(InputHelper inputHelper) {
+        this.inputHelper = inputHelper;
+    }
+
+    public int oneRandomInt() {
+        return random.nextInt(100);
+    }
+
+    public void create(int n) {
+        ArrayList<ArrayList<Numeric<ElType>>> array = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print("Введите элемент массива: ");
+                array.get(i).add(new Numeric<ElType>(inputHelper.parser("Введено не число , попробуйте ещё раз \n")));
+            }
+        }
+    }
+
+    public void create() {
+        System.out.print("Введите количество элементов массива: ");
+        int n = inputHelper.parserLength();
+        create(n);
+    }
+
+    public void createRandom(int n) {
+        int[][] array = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                array[i][j] = oneRandomInt();
+            }
+        }
+    }
+
+    public void createRandom() {
+        int n = inputHelper.parserLength();
+        createRandom(n);
     }
 
 
