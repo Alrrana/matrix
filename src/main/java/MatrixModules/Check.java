@@ -2,9 +2,7 @@ package MatrixModules;
 
 public class Check {
     public static void main(String[] args) {
-        Matrix A = new Matrix();
-        MatrixHelper matrixHelper = new MatrixHelper();
-        matrixHelper.setMatrixA(A);
+        Matrix A = new Matrix(0,Numeric<Integer>);
 
         matrixHelper.createRandom(5);
         matrixHelper.print();
