@@ -1,14 +1,22 @@
 package MatrixModules;
 
 
+import java.lang.reflect.Array;
 import java.util.TreeSet;
 
-public class Matrix<ElType extends INums> {
+public class Matrix<ElType> {
+    private Numeric<ElType> ZERO;
+    private Class<Numeric<ElType>> clazz;
+
     private int columns = 0;
     private int rows = 0;
-    private ElType[][] content;
-    private ElType determinant;
+    private Numeric<ElType>[][] content;
+    private Numeric<ElType> determinant;
 
+    public Matrix(Numeric<ElType> ZERO, Class<Numeric<ElType>> clazz) {
+        this.ZERO = ZERO;
+        this.clazz = clazz;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -18,13 +26,12 @@ public class Matrix<ElType extends INums> {
             return false;
         Matrix B = (Matrix) obj;
         if (rows == B.getRows() && columns == B.getColumns()) {
-            int[][] b = B.getContent();
+            Numeric<ElType>[][] b = B.getContent();
             for (int i = 0; i < columns; i++) {
-                for (int j = 0; j < rows; j++) {4
-                    if (obj.getClass()==Integer.class)
-                        if (content[i][j] != b[i][j]) {
-                            return false;
-                        }
+                for (int j = 0; j < rows; j++) {
+                    if (!content[i][j].equals(b[i][j])) {
+                        return false;
+                    }
                 }
             }
         } else {
@@ -32,23 +39,22 @@ public class Matrix<ElType extends INums> {
         }
 
         return true;
-         new TreeSet<String>();
     }
 
 
-    public void setDeterminant(ElType determinant) {
+    public void setDeterminant(Numeric<ElType> determinant) {
         this.determinant = determinant;
     }
 
-    public ElType getDeterminant() {
+    public Numeric<ElType> getDeterminant() {
         return determinant;
     }
 
-    public void setContent(ElType[][] content) {
+    public void setContent(Numeric<ElType>[][] content) {
         this.content = content;
     }
 
-    public ElType[][] getContent() {
+    public Numeric<ElType>[][] getContent() {
         return content;
     }
 
@@ -72,34 +78,38 @@ public class Matrix<ElType extends INums> {
         determinant = determinant(content, rows);
     }
 
-    private long determinant(ElType[][] a, int n) {
 
-        long tempD = 0;
-        if (n == 1) tempD = a[0][0];
+    private Numeric<ElType> determinant(Numeric<ElType>[][] a, int n) {
 
-        else if (n == 2) tempD = a[0][0] * a[1][1] - a[1][0] * a[0][1];
-            // NxN matrix
-        else {
+        Numeric<ElType> tempD = this.ZERO;
+        if (n == 1) {
+            tempD = a[0][0];
+        } else if (n == 2) {
+            tempD = a[0][0].mult(a[1][1]).sub(a[1][0].mult(a[0][1]));
+        } else { // NxN matrix
             for (int j1 = 0; j1 < n; j1++) {
-                int[][] t = deteminantMinor(a, n, j1);
-                tempD += Math.pow(-1.0, 1.0 + j1 + 1.0) * a[0][j1] * determinant(t, n - 1);
+                Numeric<ElType>[][] t = deteminantMinor(a, n, j1);
+                tempD = tempD.sum(a[0][j1].mult(Math.pow(-1.0, 1.0 + j1 + 1.0)).mult(determinant(t, n - 1)));
             }
         }
         return tempD;
     }
 
+    @SuppressWarnings("unchecked")
+    private Numeric<ElType>[][] deteminantMinor(Numeric<ElType>[][] A, int n, int j1) {
 
-    private ElType[][] deteminantMinor(ElType[][] A, int n, int j1) {
-        ElType[][] t = new ElType[n - 1][n - 1];
+        Numeric<ElType>[][] t = (Numeric<ElType>[][]) Array.newInstance(this.clazz, n, n);
         for (int i = 1; i < n; i++) {
             int j2 = 0;
             for (int j = 0; j < n; j++) {
-                if (j == j1)
+                if (j == j1){
                     continue;
+                }
                 t[i - 1][j2] = A[i][j];
                 j2++;
             }
         }
+        Array.newInstance();
         return t;
     }
 
@@ -129,10 +139,12 @@ public class Matrix<ElType extends INums> {
     public OldMatrixReal reverse() {
         OldMatrixReal C = new OldMatrixReal();
         if (columns != 0) {
-            if (determinant == 0) {
-                determinant();
+            determinant();
+            if (determinant.equalsZero()) {
+                // Нет определителя - нет обратной матрицы
+                return C;
             }
-            double[][] c = new double[columns][rows];
+            Numeric<ElType>[][] c = new Numeric<ElType>[columns][rows];
 
             for (int i = 0; i < columns; i++) {
                 for (int j = 0; j < rows; j++) {
@@ -174,25 +186,140 @@ public class Matrix<ElType extends INums> {
 
 
     public void print(String Name) {
-        int[][] array = content;
         System.out.println("Матрица " + Name + ": ");
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
-                System.out.print(array[i][j] + "\t");
+                System.out.print(content[i][j] + "\t");
             }
             System.out.println();
         }
     }
 
     public void print() {
-        int[][] array = content;
         System.out.println("Матрица : ");
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
-                System.out.print(array[i][j] + "\t");
+                System.out.print(content[i][j] + "\t");
             }
             System.out.println();
         }
     }
+
+
+    public Matrix sum(Matrix A, Matrix B) {
+        Matrix C = new Matrix();
+        if (A.getColumns() != 0 && B.getColumns() != 0) {
+
+            if (A.getColumns() == B.getColumns()) {
+
+                Numeric<ElType>[][] a = A.getContent();
+                Numeric<ElType>[][] b = B.getContent();
+                Numeric<ElType>[][] c = new Numeric<ElType>[B.getColumns()][B.getColumns()];
+
+                for (int i = 0; i < B.getColumns(); i++) {
+                    for (int j = 0; j < B.getColumns(); j++) {
+                        c[i][j] = a[i][j].sum(b[i][j]);
+                    }
+
+                }
+
+                C.setContent(c);
+                C.setColumns(B.getColumns());
+                C.setRows(B.getColumns());
+
+            } else {
+                System.out.print("Размерность матриц не совпадает");
+            }
+
+
+        } else {
+            System.out.print("Одна из матриц не введена");
+        }
+        return C;
+    }
+
+    public Matrix sub(Matrix A, Matrix B) {
+        Matrix C = new Matrix();
+        if (A.getColumns() != 0 && B.getColumns() != 0) {
+
+
+            if (A.getColumns() == B.getColumns()) {
+
+                Numeric<ElType>[][] a = A.getContent();
+                Numeric<ElType>[][] b = B.getContent();
+                Numeric<ElType>[][] c = new Numeric<ElType>[B.getColumns()][B.getColumns()];
+
+                for (int i = 0; i < B.getColumns(); i++) {
+                    for (int j = 0; j < B.getColumns(); j++) {
+                        c[i][j] = a[i][j].sub(b[i][j]);
+                    }
+
+                }
+
+                C.setContent(c);
+                C.setColumns(B.getColumns());
+                C.setRows(B.getColumns());
+
+            } else {
+                System.out.print("Размерность матриц не совпадает");
+            }
+
+
+        } else {
+            System.out.print("Одна из матриц не введена");
+        }
+        return C;
+    }
+
+    public Matrix mult(Matrix A, Matrix B) {
+        Matrix C = new Matrix();
+        if (A.getColumns() != 0 && B.getColumns() != 0) {
+
+            if ((B.getColumns() == B.getRows() &&
+                    B.getColumns() == 1)
+                    ||
+                    (A.getColumns() == A.getRows() &&
+                            A.getColumns() == 1)) {
+                if (B.getRows() == 1) {
+                    C.setContent(A.getContent());
+                    C.setColumns(A.getColumns());
+                    C.setRows(A.getRows());
+                } else {
+                    C.setContent(B.getContent());
+                    C.setColumns(B.getColumns());
+                    C.setRows(B.getRows());
+                }
+            } else {
+
+                if (A.getColumns() == B.getRows() ||
+                        A.getRows() == B.getColumns()) {
+
+                    int[][] a = A.getContent();
+                    int[][] b = B.getContent();
+                    int[][] c = new int[B.getColumns()][B.getRows()];
+
+                    for (int i = 0; i < A.getColumns(); ++i)
+                        for (int j = 0; j < B.getRows(); ++j)
+                            for (int k = 0; k < B.getColumns(); ++k)
+                                c[i][j] += a[i][k] * b[k][j];
+
+                    C.setContent(c);
+                    C.setColumns(A.getColumns());
+                    C.setRows(B.getRows());
+
+                } else {
+                    System.out.print("Размерность матриц не совпадает");
+                    throw new IllegalMatrixDimensionException("Нельзя перемножать матрицы разного размера");
+//                    throw new IllegalArgumentException();
+                }
+            }
+
+
+        } else {
+            System.out.print("Одна из матриц не введена");
+        }
+        return C;
+    }
+
 
 }
