@@ -2,7 +2,7 @@ package MatrixModules;
 
 import java.util.Random;
 
-public class MatrixHelper {
+public class MatrixHelper extends Matrix {
 
     protected InputHelper inputHelper = new InputHelper();
     private final Random random = new Random();
@@ -11,39 +11,15 @@ public class MatrixHelper {
         this.inputHelper = inputHelper;
     }
 
-    public int oneRandomInt() {
-        return random.nextInt(100);
+    public int oneRandomInt(int n) {
+        return random.nextInt(n);
     }
 
-    public void create(int n) {
-        int[][] array = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print("Введите элемент массива: ");
-                array[i][j] = inputHelper.parser("Введено не число , попробуйте ещё раз \n");
-            }
-        }
+    public double oneRandomDouble(int znakiDoZap,int znakiPosleZap ){
+        int n = oneRandomInt((int)Math.pow(10.0,(double) znakiDoZap)) ;
+        int m = oneRandomInt((int)Math.pow(10.0,(double) znakiPosleZap));
+        double f = n+m/Math.pow(10.0,(double) znakiPosleZap);
+        return f;
     }
-
-    public void create() {
-        System.out.print("Введите количество элементов массива: ");
-        int n = inputHelper.parserLength();
-        create(n);
-    }
-
-    public void createRandom(int n) {
-        int[][] array = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                array[i][j] = oneRandomInt();
-            }
-        }
-    }
-
-    public void createRandom() {
-        int n = inputHelper.parserLength();
-        createRandom(n);
-    }
-
 
 }
