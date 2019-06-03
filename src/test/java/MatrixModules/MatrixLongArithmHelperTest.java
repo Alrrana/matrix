@@ -22,10 +22,10 @@ class MatrixLongArithmHelperTest {
         };
 
         inputHelper.setIn(t);
-        Matrix A = matrixHelper.create(5, 5, 5);
+        Matrix A = matrixHelper.create(5, 5);
 
         inputHelper.setI(-1);
-        Matrix E = matrixHelper.create(5, 5, 5);
+        Matrix E = matrixHelper.create(5, 5);
 
         A.print("A");
         E.print("E");
@@ -50,22 +50,20 @@ class MatrixLongArithmHelperTest {
     void determinant() {
         matrixHelper.setInputHelper(inputHelper);
         String[] t = {
-                "61", "23", "69", "55", "97",
-                "49", "47", "85", "34", "5",
-                "8", "74", "8", "98", "29",
-                "57", "47", "9", "76", "57",
-                "52", "62", "40", "49", "16",
+                "2", "2", "4",
+                "4", "2", "4",
+                "2", "2", "2"
         };
 
         inputHelper.setIn(t);
-        Matrix A = matrixHelper.create(5, 5, 5);
+        Matrix A = matrixHelper.create(3, 3);
         A.determinant();
-        int d = (int) A.getDeterminant().getValue();
+        String d = A.getDeterminant().getValue().toString();
 
         A.print("A");
         System.out.println(d);
 
-        Assert.assertEquals(d, 419765848);
+        Assert.assertEquals(d, "8");
     }
 
     @Test
@@ -80,7 +78,7 @@ class MatrixLongArithmHelperTest {
         };
 
         inputHelper.setIn(t);
-        Matrix A = matrixHelper.create(5, 5, 5);
+        Matrix A = matrixHelper.create(5, 5);
 
 
         String[] t1 = {
@@ -93,7 +91,7 @@ class MatrixLongArithmHelperTest {
 
         inputHelper.setI(-1);
         inputHelper.setIn(t1);
-        Matrix E = matrixHelper.create(5, 5, 5);
+        Matrix E = matrixHelper.create(5, 5);
 
         A = A.transposition();
 
@@ -115,7 +113,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(first);
-        Matrix A = matrixHelper.create(3, 3, 5);
+        Matrix A = matrixHelper.create(3, 3);
 
 
         String[] second = {
@@ -125,7 +123,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(second);
-        Matrix B = matrixHelper.create(3, 3, 5);
+        Matrix B = matrixHelper.create(3, 3);
 
 
         String[] expected = {
@@ -135,7 +133,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(expected);
-        Matrix E = matrixHelper.create(3, 3, 5);
+        Matrix E = matrixHelper.create(3, 3);
 
         A.print("A");
         A.print("B");
@@ -156,7 +154,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(first);
-        Matrix A = matrixHelper.create(3, 3, 5);
+        Matrix A = matrixHelper.create(3, 3);
 
 
         String[] second = {
@@ -166,7 +164,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(second);
-        Matrix B = matrixHelper.create(3, 3, 5);
+        Matrix B = matrixHelper.create(3, 3);
 
 
         String[] expected = {
@@ -176,7 +174,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(expected);
-        Matrix E = matrixHelper.create(3, 3, 5);
+        Matrix E = matrixHelper.create(3, 3);
 
         A.print("A");
         A.print("B");
@@ -197,7 +195,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(first);
-        Matrix A = matrixHelper.create(3, 3, 5);
+        Matrix A = matrixHelper.create(3, 3);
 
 
         String[] second = {
@@ -207,7 +205,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(second);
-        Matrix B = matrixHelper.create(3, 3, 5);
+        Matrix B = matrixHelper.create(3, 3);
 
 
         String[] expected = {
@@ -217,7 +215,7 @@ class MatrixLongArithmHelperTest {
         };
         inputHelper.setI(-1);
         inputHelper.setIn(expected);
-        Matrix E = matrixHelper.create(3, 3, 5);
+        Matrix E = matrixHelper.create(3, 3);
 
         A.print("A");
         A.print("B");

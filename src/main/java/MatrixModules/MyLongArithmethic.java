@@ -44,10 +44,17 @@ public class MyLongArithmethic implements Numeric<LongArithmethic> {
     @Override
     public Numeric<LongArithmethic> mult(double a) {
         return new MyLongArithmethic(LongArithmeticMath.mul(value,
-                                                                    new LongArithmethicImpl(
-                                                                            ((Double) a).toString()
-                                                                    )));
+                new LongArithmethicImpl(
+                        Integer.toString(((Double) a).intValue())
+                )));
     }
+
+//    public static void main(String[] args) {
+//        Double a = 2.0;
+//        new LongArithmethicImpl(
+//                Integer.toString(((Double) a).intValue())
+//        );
+//    }
 
     @Override
     public Numeric<LongArithmethic> div(Numeric<LongArithmethic> a) {

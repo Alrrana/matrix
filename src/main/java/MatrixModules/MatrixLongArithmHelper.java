@@ -11,7 +11,7 @@ public class MatrixLongArithmHelper extends MatrixHelper {
         this.inputHelper = inputHelper;
     }
 
-    public Matrix create(int m, int n, int maxDigitLength) {
+    public Matrix create(int m, int n) {
         List<List<Numeric<LongArithmethic>>> c = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             c.add(new ArrayList<>());
@@ -36,7 +36,7 @@ public class MatrixLongArithmHelper extends MatrixHelper {
         int n = inputHelper.parserLength();
         System.out.print("Введите количество элементов массива M: ");
         int m = inputHelper.parserLength();
-        create(m, n, 5);
+        create(m, n);
     }
 
     public Matrix createRandom(int n, int m,int digitMaxLength) {
