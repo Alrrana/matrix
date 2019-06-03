@@ -9,6 +9,10 @@ public class InputHelperStub extends InputHelper {
         this.in = in;
     }
 
+    public void setI(int i) {
+        this.i = i;
+    }
+
     public String input() {
         i++;
         return in[i];

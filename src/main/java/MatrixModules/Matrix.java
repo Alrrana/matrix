@@ -19,7 +19,7 @@ public class Matrix<ElType> {
         this.ZERO = ZERO;
     }
 
-    Matrix (){
+    Matrix() {
     }
 
     @Override
@@ -52,8 +52,6 @@ public class Matrix<ElType> {
     public void setZERO(Numeric<ElType> ZERO) {
         this.ZERO = ZERO;
     }
-
-
 
 
     public void setDeterminant(Numeric<ElType> determinant) {
@@ -113,7 +111,7 @@ public class Matrix<ElType> {
     private List<List<Numeric<ElType>>> deteminantMinor(List<List<Numeric<ElType>>> A, int n, int j1) {
 
         List<List<Numeric<ElType>>> t = new ArrayList<>();
-        for(int i = 0; i<columns;i++){
+        for (int i = 0; i < columns; i++) {
             t.add(new ArrayList<>());
         }
         for (int i = 1; i < n; i++) {
@@ -135,7 +133,7 @@ public class Matrix<ElType> {
         if (columns != 0) {
             if (columns == rows) {
                 List<List<Numeric<ElType>>> c = new ArrayList<>();
-                for(int i = 0; i<columns;i++){
+                for (int i = 0; i < columns; i++) {
                     c.add(new ArrayList<>());
                 }
                 for (int i = 0; i < columns; i++) {
@@ -166,13 +164,14 @@ public class Matrix<ElType> {
                 return C;
             }
             List<List<Numeric<ElType>>> c = new ArrayList<>();
-            for(int i = 0; i<columns;i++){
+            for (int i = 0; i < columns; i++) {
                 c.add(new ArrayList<>());
             }
 
             for (int i = 0; i < columns; i++) {
                 for (int j = 0; j < rows; j++) {
                     c.get(i).add(determinant(Minor(content, i, j), rows - 1).mult(Math.pow(-1.0, i + j)).div(determinant));
+
                 }
                 System.out.println();
             }
@@ -194,7 +193,7 @@ public class Matrix<ElType> {
     private List<List<Numeric<ElType>>> Minor(List<List<Numeric<ElType>>> a, int I, int J) {
 
         List<List<Numeric<ElType>>> t = new ArrayList<>();
-        for(int i = 0; i<columns;i++){
+        for (int i = 0; i < columns; i++) {
             t.add(new ArrayList<>());
         }
         for (int i = 0; i < columns; i++) {
@@ -216,7 +215,7 @@ public class Matrix<ElType> {
         System.out.println("Матрица " + Name + ": ");
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
-                System.out.print(content.get(i).get(j) + "\t");
+                System.out.print(content.get(i).get(j).getValue() + "\t");
             }
             System.out.println();
         }
@@ -233,7 +232,8 @@ public class Matrix<ElType> {
     }
 
 
-    public Matrix sum(Matrix A, Matrix B) {
+    public Matrix sum(Matrix B) {
+        Matrix A = this;
         Matrix C = new Matrix(A.getZERO());
         if (A.getColumns() != 0 && B.getColumns() != 0) {
 
@@ -242,7 +242,7 @@ public class Matrix<ElType> {
                 List<List<Numeric<ElType>>> a = A.getContent();
                 List<List<Numeric<ElType>>> b = B.getContent();
                 List<List<Numeric<ElType>>> c = new ArrayList<>();
-                for(int i = 0; i<columns;i++){
+                for (int i = 0; i < columns; i++) {
                     c.add(new ArrayList<>());
                 }
 
@@ -269,7 +269,8 @@ public class Matrix<ElType> {
         return C;
     }
 
-    public Matrix sub(Matrix A, Matrix B) {
+    public Matrix sub(Matrix B) {
+        Matrix A = this;
         Matrix C = new Matrix(A.getZERO());
         if (A.getColumns() != 0 && B.getColumns() != 0) {
 
@@ -279,7 +280,7 @@ public class Matrix<ElType> {
                 List<List<Numeric<ElType>>> a = A.getContent();
                 List<List<Numeric<ElType>>> b = B.getContent();
                 List<List<Numeric<ElType>>> c = new ArrayList<>();
-                for(int i = 0; i<columns;i++){
+                for (int i = 0; i < columns; i++) {
                     c.add(new ArrayList<>());
                 }
                 for (int i = 0; i < B.getColumns(); i++) {
@@ -304,7 +305,8 @@ public class Matrix<ElType> {
         return C;
     }
 
-    public Matrix mult(Matrix A, Matrix B) {
+    public Matrix mult(Matrix B) {
+        Matrix A = this;
         Matrix C = new Matrix(A.getZERO());
         if (A.getColumns() != 0 && B.getColumns() != 0) {
 
@@ -330,7 +332,7 @@ public class Matrix<ElType> {
                     List<List<Numeric<ElType>>> a = A.getContent();
                     List<List<Numeric<ElType>>> b = B.getContent();
                     List<List<Numeric<ElType>>> c = new ArrayList<>();
-                    for(int i = 0; i<columns;i++){
+                    for (int i = 0; i < columns; i++) {
                         c.add(new ArrayList<>());
                     }
 
@@ -338,7 +340,7 @@ public class Matrix<ElType> {
 
                     for (int i = 0; i < A.getColumns(); ++i) {
                         for (int j = 0; j < B.getRows(); ++j) {
-                            temp=ZERO;
+                            temp = ZERO;
                             for (int k = 0; k < B.getColumns(); ++k) {
                                 temp = temp.sum(a.get(i).get(k).mult(b.get(k).get(j)));
                             }

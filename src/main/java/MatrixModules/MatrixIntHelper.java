@@ -5,6 +5,10 @@ import java.util.List;
 
 public class MatrixIntHelper extends MatrixHelper {
 
+    public void setInputHelper(InputHelper inputHelper) {
+        this.inputHelper = inputHelper;
+    }
+
     public Matrix create(int n, int m) {
         List<List<Numeric<Integer>>> c = new ArrayList<>();
         for (int i = 0; i < n; i++) {
