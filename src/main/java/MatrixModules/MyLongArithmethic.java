@@ -1,46 +1,63 @@
 package MatrixModules;
 
-import LongMath.LongArithmeticImpl;
+import LongMath.*;
 
-public class MyLongArithmethic implements Numeric<LongArithmeticImpl> {
+public class MyLongArithmethic implements Numeric<LongArithmethic> {
+
+    LongArithmethic value = new LongArithmethicImpl();
+
+    public MyLongArithmethic(LongArithmethic value) {
+        this.value = value;
+    }
 
     @Override
-    public boolean equals(Numeric<LongArithmeticImpl> a) {
-        return false;
+    public boolean equals(Numeric<LongArithmethic> a) {
+        if (this.getValue() == null || a.getValue() == null)
+            return false;
+        if (this.value.compareTo(a.getValue()) == 0)
+            return true;
+        else return false;
     }
 
     @Override
     public boolean equalsZero() {
         return false;
+
     }
 
     @Override
-    public Numeric<LongArithmeticImpl> sum(Numeric<LongArithmeticImpl> a) {
-        return null;
+    public Numeric<LongArithmethic> sum(Numeric<LongArithmethic> a) {
+//        return null;
+        return new MyLongArithmethic(LongArithmeticMath.sum(value, a.getValue()));
     }
 
     @Override
-    public Numeric<LongArithmeticImpl> sub(Numeric<LongArithmeticImpl> a) {
-        return null;
+    public Numeric<LongArithmethic> sub(Numeric<LongArithmethic> a) {
+        return new MyLongArithmethic(LongArithmeticMath.sub(value, a.getValue()));
     }
 
     @Override
-    public Numeric<LongArithmeticImpl> mult(Numeric<LongArithmeticImpl> a) {
-        return null;
+    public Numeric<LongArithmethic> mult(Numeric<LongArithmethic> a) {
+        return new MyLongArithmethic(LongArithmeticMath.mul(value, a.getValue()));
     }
 
     @Override
-    public Numeric<LongArithmeticImpl> mult(double a) {
-        return null;
+    public Numeric<LongArithmethic> mult(double a) {
+        return new MyLongArithmethic(LongArithmeticMath.mul(value,
+                                                                    new LongArithmethicImpl(
+                                                                            ((Double) a).toString()
+                                                                    )));
     }
 
     @Override
-    public Numeric<LongArithmeticImpl> div(Numeric<LongArithmeticImpl> a) {
-        return null;
+    public Numeric<LongArithmethic> div(Numeric<LongArithmethic> a) {
+        return new MyLongArithmethic(LongArithmeticMath.div(value, a.getValue()));
     }
 
     @Override
-    public LongArithmeticImpl getValue() {
-        return null;
+    public LongArithmethic getValue() {
+        return value;
     }
+
+
 }

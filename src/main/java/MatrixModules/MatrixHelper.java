@@ -22,4 +22,15 @@ public class MatrixHelper extends Matrix {
         return f;
     }
 
+    public String oneRandomDigitsString(int length){
+        char[] digits = {'0','1','2','3','4','5','6','7','8','9'};
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0 ; i< length;i++){
+
+            builder.append(random.nextInt(10));
+        }
+        return builder.toString();
+
+    }
+
 }

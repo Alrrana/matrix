@@ -1,9 +1,9 @@
 package LongMath;
 
 enum LongConst {
-    ZERO(new LongArithmeticImpl("0")),
-    ONE(new LongArithmeticImpl("1")),
-    TWO(new LongArithmeticImpl("2")) ;
+    ZERO(new LongArithmethicImpl("0")),
+    ONE(new LongArithmethicImpl("1")),
+    TWO(new LongArithmethicImpl("2")) ;
 
     private LongArithmethic value;
 

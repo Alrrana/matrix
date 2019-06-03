@@ -1,6 +1,6 @@
 package LongMath;
 
-enum Sign {
+public enum Sign {
     PLUS, MINUS;
     public Sign reverse() { return this == PLUS ? MINUS : PLUS; }
 }

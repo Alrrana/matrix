@@ -1,52 +1,34 @@
 package MatrixModules;
 
+import LongMath.LongArithmethic;
+import LongMath.LongArithmethicImpl;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.math.NumberUtils;
 
-public class MatrixDblHelper extends MatrixHelper {
+public class MatrixLongArithmHelper extends MatrixHelper {
+    public void setInputHelper(InputHelper inputHelper) {
+        this.inputHelper = inputHelper;
+    }
 
-    public Matrix create(int n, int m) {
-        List<List<Numeric<Double>>> c = new ArrayList<>();
+    public Matrix create(int m, int n, int maxDigitLength) {
+        List<List<Numeric<LongArithmethic>>> c = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             c.add(new ArrayList<>());
         }
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 System.out.print("Введите элемент массива: ");
-                c.get(i).add(new MyDouble(inputHelper.parserDouble("Введено не число , попробуйте ещё раз \n")));
+                c.get(i).add(new MyLongArithmethic(new LongArithmethicImpl(inputHelper.parserLongArithm("Введено не число , попробуйте ещё раз \n"))));
             }
         }
-        Matrix C = new Matrix(new MyInt(0));
+        Matrix C = new Matrix(new MyLongArithmethic(new LongArithmethicImpl("0")));
         C.setContent(c);
         C.setColumns(n);
         C.setRows(m);
 
         return C;
 
-    }
-    public Matrix cast(Matrix A){
-        Matrix C = new Matrix(new MyDouble(0.0));
-        int n = A.getColumns();
-        int m = A.getRows();
-        List<List<Numeric<Double>>> c = new ArrayList<>();
-        List<List<Numeric<Double>>> a = A.getContent();
-
-        for (int i = 0; i < n; i++) {
-            c.add(new ArrayList<>());
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                c.get(i).add(new MyDouble(
-                       NumberUtils.toDouble(((a.get(i).get(j).getValue()).toString()))
-                ));
-            }
-        }
-        C.setContent(c);
-        C.setColumns(n);
-        C.setRows(m);
-
-        return C;
     }
 
     public void create() {
@@ -54,22 +36,21 @@ public class MatrixDblHelper extends MatrixHelper {
         int n = inputHelper.parserLength();
         System.out.print("Введите количество элементов массива M: ");
         int m = inputHelper.parserLength();
-        create(n, m);
-
+        create(m, n, 5);
     }
 
-    public Matrix createRandom(int n, int m) {
-        List<List<Numeric<Double>>> c = new ArrayList<>();
+    public Matrix createRandom(int n, int m,int digitMaxLength) {
+        List<List<Numeric<LongArithmethic>>> c = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             c.add(new ArrayList<>());
         }
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                c.get(i).add(new MyDouble(oneRandomDouble(oneRandomInt(6), oneRandomInt(8))));
+                System.out.print("Введите элемент массива: ");
+                c.get(i).add(new MyLongArithmethic(new LongArithmethicImpl(oneRandomDigitsString(digitMaxLength))));
             }
         }
-
-        Matrix C = new Matrix(new MyDouble(0.0));
+        Matrix C = new Matrix(new MyLongArithmethic(null));
         C.setContent(c);
         C.setColumns(n);
         C.setRows(m);
@@ -77,19 +58,19 @@ public class MatrixDblHelper extends MatrixHelper {
         return C;
     }
 
-    public void createRandom() {
+    public void createRandom(int d) {
         System.out.print("Введите количество элементов массива N: ");
         int n = inputHelper.parserLength();
         System.out.print("Введите количество элементов массива M: ");
         int m = inputHelper.parserLength();
-        createRandom(n, m);
+        createRandom(n, m,d);
     }
 
     public void createFullRandom() {
         int n = oneRandomInt(10);
         int m = oneRandomInt(10);
-        createRandom(n, m);
+        int d = oneRandomInt(10);
+        createRandom(n, m,d);
     }
-
 
 }

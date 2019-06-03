@@ -18,7 +18,7 @@ public class LongArithmeticMath {
     public static LongArithmethic sum(LongArithmethic addendum, LongArithmethic term) {
         LongArithmethic a = addendum;
         LongArithmethic b = term;
-        LongArithmethic result = new LongArithmeticImpl("0");
+        LongArithmethic result = new LongArithmethicImpl("0");
         result.setSign(a.getSign());
         if (a.getSign() == Sign.PLUS && b.getSign() == Sign.MINUS) {
             b.setSign(Sign.PLUS);
@@ -44,7 +44,7 @@ public class LongArithmeticMath {
     public static LongArithmethic mul(LongArithmethic multiplied, LongArithmethic factor) {
         LongArithmethic a = multiplied;
         LongArithmethic b = factor;
-        LongArithmethic result = new LongArithmeticImpl("0");
+        LongArithmethic result = new LongArithmethicImpl("0");
         if (a.getSign() != b.getSign()) {
             result.setSign(Sign.MINUS);
         }
@@ -79,7 +79,7 @@ public class LongArithmeticMath {
         LongArithmethic b = factor;
         Stack<LongArithmethic> rows = new Stack<>();
         Stack<Thread> mulHelper = new Stack<>();
-        LongArithmethic result = new LongArithmeticImpl("0");
+        LongArithmethic result = new LongArithmethicImpl("0");
         if (a.getSign() != b.getSign()) {
             result.setSign(Sign.MINUS);
         }
@@ -102,7 +102,7 @@ public class LongArithmeticMath {
 
     private static LongArithmethic mulHelp(int digit, int i, LongArithmethic a) {
         int tmp1, tmp = 0;
-        LongArithmethic result = new LongArithmeticImpl("0");
+        LongArithmethic result = new LongArithmethicImpl("0");
         for (int j = 0; j < a.getLength(); ++j) {
             tmp1 = result.getDigit(j + i);
             result.setDigit((byte) ((a.getDigit(j) * digit + tmp1 + tmp) % 10), j + i);
@@ -121,7 +121,7 @@ public class LongArithmeticMath {
         LongArithmethic b = factor;
         Stack<Future<LongArithmethic>> futures = new Stack<>();
         ExecutorService threadPool = Executors.newFixedThreadPool(8);
-        LongArithmethic result = new LongArithmeticImpl("0");
+        LongArithmethic result = new LongArithmethicImpl("0");
         try {
             result.setValue("0");
         } catch (IOException ignored) {
@@ -160,7 +160,7 @@ public class LongArithmeticMath {
         LongArithmethic b = factor;
         Stack<Future<LongArithmethic>> futures = new Stack<>();
         ExecutorService threadPool = Executors.newFixedThreadPool(threadsCount);
-        LongArithmethic result = new LongArithmeticImpl("0");
+        LongArithmethic result = new LongArithmethicImpl("0");
         try {
             result.setValue("0");
         } catch (IOException ignored) {
@@ -199,7 +199,7 @@ public class LongArithmeticMath {
     }
 
     public static LongArithmethic masSum(Stack<LongArithmethic> terms) {
-        LongArithmethic result = new LongArithmeticImpl("0");
+        LongArithmethic result = new LongArithmethicImpl("0");
         try {
             result.setValue("0");
         } catch (IOException ignored) {
@@ -243,7 +243,7 @@ public class LongArithmeticMath {
         }
 
         int maxLength = a.getLength() > b.getLength() ? a.getLength() : b.getLength();
-        LongArithmethic c = new LongArithmeticImpl("0");
+        LongArithmethic c = new LongArithmethicImpl("0");
 
         if (a.compareTo(b) == -1) {
             LongArithmethic temp = a;
