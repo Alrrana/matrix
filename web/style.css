@@ -1,0 +1,34 @@
+body{
+    background:#6E9DB8 ;
+}
+div.name{
+    height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: Lora;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+
+    color: #000000;
+}
+div.block-round{
+
+}
+div.block-round-content{
+    background:  #CADAE3;
+}
+
+.r1, .r2,  .r3, .r4 {
+    display:  block; /* Блочный элемент */
+    height:  1px; /* Высота */
+    background:  #CADAE3; /* Цвет фона */
+    overflow: hidden; /* Для IE6 */
+}
+.r1 { margin: 0 5px; }
+.r2 { margin: 0 3px; }
+.r3 { margin: 0 2px; }
+.r4 { margin: 0 1px; height: 2px; }
