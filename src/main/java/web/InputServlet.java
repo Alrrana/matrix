@@ -31,27 +31,19 @@ public class InputServlet extends HttpServlet {
 
         String matrix = request.getParameter("matrix");
 
-
-        PrintWriter out = response.getWriter();
-        try {
-            out.println(matrix);
-            out.println("matrix POST");
-
-
-        } finally {
-            out.close();
-        }
-
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         InputHelperStub inputHelper = new InputHelperStub();
         matrixHelper.setInputHelper(inputHelper);
         Matrix A;
-        PrintWriter out = response.getWriter();
+//        PrintWriter out = response.getWriter();
 
         String matrix = request.getParameter("matrix");
+        if(matrix==null){
+            request.setAttribute("sizeEx", "123");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
         String[] firstSplitByN;
         List<String> secondSplitBySpace = new ArrayList<>();
         String[] temp;
@@ -76,27 +68,23 @@ public class InputServlet extends HttpServlet {
             inputHelper.setIn(it3);
 //            проверка размерностей
             if ((secondSplitBySpace.size() / firstSplitByN.length) % 1 != 0) {
-                request.setAttribute("sizeEx", true);
+                request.setAttribute("sizeEx", "123");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
-                throw new IOException("Длина строк введенного массива не совпадает" + secondSplitBySpace.size() / firstSplitByN.length);
+               // throw new IOException("Длина строк введенного массива не совпадает" + secondSplitBySpace.size() / firstSplitByN.length);
 
             }
 
             A = matrixHelper.create(firstSplitByN.length, secondSplitBySpace.size() / firstSplitByN.length);
             A.print("A");
 
+
+            request.setAttribute("success", "123");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
 //
-        try {
-            out.println(matrix);
-            out.println("matrix GET");
-
-
-        } finally {
-            out.close();
-        }
 
     }
 }

@@ -30,13 +30,22 @@
                     "</div>");
         }
     %>
+    <%
+        if (request.getAttribute("success")!=null) {
+            response.getWriter().println("<div class=\"w3-panel w3-green w3-display-container w3-card-4 w3-round\">\n" +
+                    "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
+                    "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey\">×</span>\n" +
+                    "   <h5>Matrix successfully created!</h5>\n" +
+                    "</div>");
+        }
+    %>
 
     <div class="block-round-content">
         <tr>
             <td>
                 <form action="input" method="GET">
                     <br> A:
-                    <textarea rows="5" cols="60" name="matrix"></textarea>
+                    <textarea rows="10" cols="10" name="matrix"></textarea>
                     <br>
                     <input type="submit" value="Submit"/>
                 </form>
@@ -44,7 +53,7 @@
             <td>
                 <form action="input" method="GET">
                     <br>B:
-                    <textarea rows="5" cols="60" name="matrix"></textarea>
+                    <textarea rows="10" cols="10" name="matrix"></textarea>
                     <br>
                     <input type="submit" value="Submit"/>
                 </form>
