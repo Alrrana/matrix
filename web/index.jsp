@@ -12,28 +12,57 @@
     <meta charset="UTF-8">
     <title>$Title$</title>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="name">Ввод матрицы</div>
-<div class="block-round">
-    <span class="r1"></span><span class="r2"></span><span class="r3"></span><span class="r4"></span>
-    <div class="block-round-content">
-
-        <label>1</label>
-        <input type="text" name="matrixA" id="matrixA" value="${matrixA}">
-        <form action="${pageContext.request.contextPath}/input" method="post">
-            <button>Ввести</button>
-        </form>
-
-        <label>2</label>
-        <input type="text" name="matrixB" id="matrixB" value="${matrixB}">
-        <form action="${pageContext.request.contextPath}/input" method="post">
-            <button>Ввести</button>
-        </form>
-
-    <span class="r4"></span><span class="r3"></span><span class="r2"></span><span class="r1"></span>
+<div class="w3-container w3-blue-grey w3-opacity w3-right-align">
+    <h1>Матрицы</h1>
 </div>
+<div class="w3-light-blue">
+<%--    <span class="r1"></span><span class="r2"></span><span class="r3"></span><span class="r4"></span>--%>
+
+    <%
+        if (request.getAttribute("sizeEx")!=null) {
+            response.getWriter().println("<div class=\"w3-panel w3-green w3-display-container w3-card-4 w3-round\">\n" +
+                    "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
+                    "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey\">×</span>\n" +
+                    "   <h5>FUCKING ERROR  HAPPENED!</h5>\n" +
+                    "</div>");
+        }
+    %>
+
+    <div class="block-round-content">
+        <tr>
+            <td>
+                <form action="input" method="GET">
+                    <br> A:
+                    <textarea rows="5" cols="60" name="matrix"></textarea>
+                    <br>
+                    <input type="submit" value="Submit"/>
+                </form>
+            </td>
+            <td>
+                <form action="input" method="GET">
+                    <br>B:
+                    <textarea rows="5" cols="60" name="matrix"></textarea>
+                    <br>
+                    <input type="submit" value="Submit"/>
+                </form>
+            </td>
+        </tr>
+        <%--        <label>A:--%>
+        <%--        <input type="text" name="matrix">--%>
+        <%--            <button onclick="location.href='/input'">Ввести</button>--%>
+        <%--        </label>--%>
+
+        <%--        <label>2</label>--%>
+        <%--        <input type="text" name="matrix" value="${matrix}">--%>
+        <%--        <form action="${pageContext.request.contextPath}/input" method="post">--%>
+        <%--            <button>Ввести</button>--%>
+        <%--        </form>--%>
+
+        <span class="r4"></span><span class="r3"></span><span class="r2"></span><span class="r1"></span>
+    </div>
 </div>
 $END$
 </body>
