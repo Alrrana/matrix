@@ -9,70 +9,35 @@
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="title"/>
+    <meta name="keywords" content="title"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$Title$</title>
-
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" link href="css/style.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/js.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Play:400,700&display=swap&subset=cyrillic" rel="stylesheet">
 </head>
 <body>
-<div class="w3-container w3-blue-grey w3-opacity w3-right-align">
-    <h1>Матрицы</h1>
-</div>
-<div class="w3-light-blue">
-<%--    <span class="r1"></span><span class="r2"></span><span class="r3"></span><span class="r4"></span>--%>
-
-    <%
-        if (request.getAttribute("sizeEx")!=null) {
-            response.getWriter().println("<div class=\"w3-panel w3-green w3-display-container w3-card-4 w3-round\">\n" +
-                    "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
-                    "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey\">×</span>\n" +
-                    "   <h5>FUCKING ERROR  HAPPENED!</h5>\n" +
-                    "</div>");
-        }
-    %>
-    <%
-        if (request.getAttribute("success")!=null) {
-            response.getWriter().println("<div class=\"w3-panel w3-green w3-display-container w3-card-4 w3-round\">\n" +
-                    "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
-                    "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey\">×</span>\n" +
-                    "   <h5>Matrix successfully created!</h5>\n" +
-                    "</div>");
-        }
-    %>
-
-    <div class="block-round-content">
-        <tr>
-            <td>
-                <form action="input" method="GET">
-                    <br> A:
-                    <textarea rows="10" cols="10" name="matrix"></textarea>
-                    <br>
-                    <input type="submit" value="Submit"/>
-                </form>
-            </td>
-            <td>
-                <form action="input" method="GET">
-                    <br>B:
-                    <textarea rows="10" cols="10" name="matrix"></textarea>
-                    <br>
-                    <input type="submit" value="Submit"/>
-                </form>
-            </td>
-        </tr>
-        <%--        <label>A:--%>
-        <%--        <input type="text" name="matrix">--%>
-        <%--            <button onclick="location.href='/input'">Ввести</button>--%>
-        <%--        </label>--%>
-
-        <%--        <label>2</label>--%>
-        <%--        <input type="text" name="matrix" value="${matrix}">--%>
-        <%--        <form action="${pageContext.request.contextPath}/input" method="post">--%>
-        <%--            <button>Ввести</button>--%>
-        <%--        </form>--%>
-
-        <span class="r4"></span><span class="r3"></span><span class="r2"></span><span class="r1"></span>
+<div class="wrapper">
+    <div class="form">
+        <input type="text" name="row" placeholder="Количество полей">
+        <input type="text" name="col" placeholder="Количество колонок">
+        <button name="goA">ВЫПОЛНИТЬ</button>
+        <input type="hidden" id="forResponse"/>
     </div>
+    <div class="block"><div id="containerA"></div></div>
+
+    <div class="form">
+        <input type="text" name="rowB" placeholder="Количество полей">
+        <input type="text" name="colB" placeholder="Количество колонок">
+        <button name="goB">ВЫПОЛНИТЬ</button>
+        <input type="hidden" id="forResponseB"/>
+    </div>
+    <div class="block"><div id="containerB"></div></div>
 </div>
-$END$
+
 </body>
 </html>

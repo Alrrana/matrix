@@ -1,0 +1,277 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	outline: none;
+}
+
+body {
+	background: #0d0d0f;
+	color: #fff;
+	font-size: 14px;
+	font-family: 'Play', sans-serif;
+}
+/*====================================================*/
+/*====================================================*/
+/*====================================================*/
+a {
+	-webkit-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	transition:all 0.3s ease;
+	text-decoration: none;
+	cursor: pointer;
+	color: #fff;
+}
+
+b, th, strong, h1, h2, h3, h4, h5, h6 {
+	
+}
+/*====================================================*/
+/*====================================================*/
+/*====================================================*/
+input, select, textarea {
+	color:#fff;
+	font-size: 14px;
+	font-family: 'Play', sans-serif;
+}
+
+::-webkit-input-placeholder { 
+	color:#fff;
+	-webkit-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	transition:all 0.3s ease; 
+}
+:-moz-placeholder { 
+	color:#fff;
+	-webkit-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	transition:all 0.3s ease; 
+}
+::-moz-placeholder { 
+	color:#fff; 
+	-webkit-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	transition:all 0.3s ease; 
+}
+:-ms-input-placeholder { 
+	color:#fff;
+	-webkit-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	transition:all 0.3s ease; 
+}
+
+textarea::-webkit-input-placeholder { 
+	color:#fff;
+	-webkit-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	transition:all 0.3s ease; 
+}
+textarea:-moz-placeholder { 
+	color:#fff;
+	-webkit-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	transition:all 0.3s ease; 
+}
+textarea::-moz-placeholder { 
+	color:#fff; 
+	-webkit-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	transition:all 0.3s ease; 
+}
+textarea:-ms-input-placeholder { 
+	color:#fff;
+	-webkit-transition:all 0.3s ease; 
+	-moz-transition:all 0.3s ease; 
+	-o-transition:all 0.3s ease; 
+	transition:all 0.3s ease; 
+}
+
+input:focus::-webkit-input-placeholder,
+textarea:focus::-webkit-input-placeholder { 
+	-webkit-transform:scale(0.9); 
+	-moz-transform:scale(0.9); 
+	-o-transform:scale(0.9); 
+	transform:scale(0.9); 
+	opacity:0; 
+}
+input:focus:-moz-placeholder,
+textarea:focus:-moz-placeholder { 
+	-webkit-transform:scale(0.9); 
+	-moz-transform:scale(0.9); 
+	-o-transform:scale(0.9);
+	transform:scale(0.9); 
+	opacity:0; 
+}
+input:focus::-moz-placeholder,
+textarea:focus::-moz-placeholder { 
+	-webkit-transform:scale(0.9); 
+	-moz-transform:scale(0.9); 
+	-o-transform:scale(0.9); 
+	transform:scale(0.9); 
+	opacity:0; 
+}
+input:focus:-ms-input-placeholder,
+textarea:focus:-ms-input-placeholder { 
+	-webkit-transform:scale(0.9); 
+	-moz-transform:scale(0.9); 
+	-o-transform:scale(0.9); 
+	transform:scale(0.9); 
+	opacity:0;
+}
+/*====================================================*/
+/*====================================================*/
+/*====================================================*/
+.wrapper {
+	position: relative;
+	display: block;
+	width: 100%;
+	max-width: 1920px;
+	padding-top: 100px;
+}
+
+.form {
+	position: relative;
+	display: block;
+	width: calc(100% - 32px);
+	max-width: 350px;
+	margin: 0 auto;
+	background: #111;
+	border: 1px solid rgba(255,255,255,0.2);
+	padding: 15px;
+}
+
+input {
+	position: relative;
+	display: block;
+	width: calc(100%);
+	background: #000 linear-gradient(315deg, rgba(29, 150, 184, 0.9), rgba(62, 62, 255, 0.9));
+	border: none;
+	margin: 3px auto;
+	padding: 0 0px;
+	text-align: center;
+	color: #fff;
+	font-size: 14px;
+	height: 25px;
+}
+
+input:focus {
+	background: #000 linear-gradient(315deg, rgba(29, 150, 184, 0.5), rgba(62, 62, 255, 0.5));
+}
+
+button {
+	position: relative;
+	display: block;
+	width: 100%;
+	background: #000 linear-gradient(315deg, rgba(30, 202, 233, 0.9), rgba(80, 2, 255, 0.9));
+	border: none;
+	margin: 3px auto;
+	padding: 0 15px;
+	text-align: center;
+	color: #fff;
+	font-size: 14px;
+	height: 45px;
+	cursor: pointer;
+}
+
+button:hover {
+	background: #000 linear-gradient(315deg, rgba(30, 202, 233, 0.5), rgba(80, 2, 255, 0.5));
+}
+
+/*.block {
+	position: relative;
+	display: grid;
+	width: calc(100% - 52px);
+	max-width: 1600px;
+	margin: 50px auto;
+	background: #111;
+	border: 1px solid rgba(255,255,255,0.2);
+	padding: 15px;
+	grid-template-columns: repeat(5, 1fr);
+	grid-gap: 10px;
+}
+
+.block .item {
+	position: relative;
+	display: inline-block;
+	width: calc(100% - 22px);
+	max-width: 300px;
+	padding: 10px;
+	background: #000;
+	border: 1px solid rgba(255,255,255,0.1);
+}
+
+@media screen and (max-width: 1000px) {
+	.block {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+@media screen and (max-width: 700px) {
+	.block {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+@media screen and (max-width: 400px) {
+	.block {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}*/
+
+.block {
+	position: relative;
+	display: block;
+	width: calc(100% - 20px);
+	overflow: hidden;
+	overflow-x: auto;
+	margin: 100px auto 50px;
+}
+
+.block #container {
+	position: relative;
+	display: inline-flex;
+}
+
+.block .item {
+	position: relative;
+	display: inline-block;
+	float: left;
+	width: 50px;
+	margin-left: 10px;
+}
+
+.block .item:first-child {
+	margin-left: 0;
+}
+
+.block::-webkit-scrollbar { width: 3px; height: 5px; z-index: 1000;}
+.block::-webkit-scrollbar-button {  background-color: #0e5596; height: 0;}
+.block::-webkit-scrollbar-track {  background-color: #05192c;}
+.block::-webkit-scrollbar-track-piece { background-color: #05192c;}
+.block::-webkit-scrollbar-thumb { height: 50px !important; background-color: #0e5596; border-radius: 5px;}
+.block::-webkit-scrollbar-corner { background-color: #05192c;}
+.block::-webkit-resizer { background-color: #0e5596;}
+/*====================================================*/
+/*====================================================*/
+/*====================================================*/
+
+/*====================================================*/
+/*====================================================*/
+/*====================================================*/
+
+/*====================================================*/
+/*====================================================*/
+/*====================================================*/
+
+/*====================================================*/
+/*====================================================*/
+/*====================================================*/
+
+/*====================================================*/
+/*====================================================*/
+/*====================================================*/
