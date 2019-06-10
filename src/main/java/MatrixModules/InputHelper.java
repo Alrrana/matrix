@@ -39,6 +39,17 @@ public class InputHelper {
         return n;
     }
 
+    public static boolean isLong(String input){
+        Pattern pattern = Pattern.compile("^(-|\\+)?[0-9]+$");
+        Matcher matcher;
+        matcher = pattern.matcher(input);
+        if (matcher.matches()) {
+           return true;
+        } else {
+           return false;
+        }
+    }
+
     public String parserLongArithm(String Message) {
         Pattern pattern = Pattern.compile("^(-|\\+)?[0-9]+$");
         Matcher matcher;

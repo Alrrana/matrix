@@ -1,6 +1,7 @@
 //==============================
 $(document).ready(function () {
     $('.form').on('click', 'button[name="goA"]', function () {
+
         var row = $(this).parent().find('input[name="row"]').val();
         var col = $(this).parent().find('input[name="col"]').val();
         var container = document.getElementById("containerA");
@@ -8,6 +9,11 @@ $(document).ready(function () {
             container.removeChild(container.lastChild);
         }
 
+        $('#containerA').append('<div class="form"> ' +
+            '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
+            '<button name="inputA" onclick="inpA()">Ввести матрицу</button>' +
+            '</form> '
+            + '</div>');
         for (i = 0; i < col; i++) {
             $('#containerA').append('<div class="item"></div>');
         }
@@ -16,6 +22,7 @@ $(document).ready(function () {
                 $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + i + '" placeholder="_"></div>');
             })
         }
+        // $('#containerA').append();
 
     });
 
@@ -31,6 +38,11 @@ $(document).ready(function () {
             container.removeChild(container.lastChild);
         }
 
+        $('#containerB').append('<div class="form"> ' +
+            '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
+            '<button name="inputB" onclick="inpB()">Ввести матрицу</button>' +
+            '</form> '
+            + '</div>');
         for (i = 0; i < col; i++) {
             $('#containerB').append('<div class="item"></div>');
         }
@@ -46,6 +58,28 @@ $(document).ready(function () {
     });
 
 });
+
+function inpA() {
+    var mas = [];
+
+    $('#containerA input').each(function () {
+        // o.push();
+        mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
+    })
+    alert("Матрица успешно введена");
+    $('#forResponseA').val(JSON.stringify(mas));
+}
+
+function inpB() {
+    var mas = [];
+
+    $('#containerB input').each(function () {
+        // o.push();
+        mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
+    })
+    alert("Матрица успешно введена");
+    $('#forResponseB').val(JSON.stringify(mas));
+}
 
 //==============================
 // function addFields(){

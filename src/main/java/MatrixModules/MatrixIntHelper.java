@@ -48,6 +48,25 @@ public class MatrixIntHelper extends MatrixHelper {
         return C;
 
     }
+    public Matrix create(int n, int m,String a[][]) {
+        List<List<Numeric<Integer>>> c = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            c.add(new ArrayList<>());
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                System.out.print("Введите элемент массива: ");
+                c.get(i).add(new MyInt(Integer.valueOf(a[i][j])));
+            }
+        }
+        Matrix C = new Matrix(new MyInt(0));
+        C.setContent(c);
+        C.setColumns(n);
+        C.setRows(m);
+
+        return C;
+
+    }
 
 
 

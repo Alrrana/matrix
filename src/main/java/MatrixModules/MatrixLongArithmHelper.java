@@ -11,6 +11,26 @@ public class MatrixLongArithmHelper extends MatrixHelper {
         this.inputHelper = inputHelper;
     }
 
+    public Matrix create(int m, int n,String [][]a) {
+        List<List<Numeric<LongArithmethic>>> c = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            c.add(new ArrayList<>());
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                System.out.print("Введите элемент массива: ");
+                c.get(i).add(new MyLongArithmethic(new LongArithmethicImpl(a[i][j])));
+            }
+        }
+        Matrix C = new Matrix(new MyLongArithmethic(new LongArithmethicImpl("0")));
+        C.setContent(c);
+        C.setColumns(n);
+        C.setRows(m);
+
+        return C;
+
+    }
+
     public Matrix create(int m, int n) {
         List<List<Numeric<LongArithmethic>>> c = new ArrayList<>();
         for (int i = 0; i < n; i++) {
