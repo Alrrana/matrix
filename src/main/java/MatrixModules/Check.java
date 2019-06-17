@@ -9,12 +9,10 @@ public class Check {
         A = matrixIntHelper.createRandom(5, 5);
         A.print("A");
 
-        Matrix R = caster.cast(A);
-        R.print("R");
-
         A.determinant();
         System.out.println(A.getDeterminant().getValue());
 
+        System.out.println(A.printStr());
 
 //        Matrix B = matrixIntHelper.createRandom(5, 5);
 //        B.print("B");

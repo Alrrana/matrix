@@ -66,7 +66,7 @@ function inpA() {
         // o.push();
         mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
     })
-    alert("Матрица успешно введена");
+    // alert("Матрица успешно введена");
     $('#forResponseA').val(JSON.stringify(mas));
 }
 
@@ -77,7 +77,7 @@ function inpB() {
         // o.push();
         mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
     })
-    alert("Матрица успешно введена");
+    // alert("Матрица успешно введена");
     $('#forResponseB').val(JSON.stringify(mas));
 }
 

@@ -37,6 +37,8 @@
         <input type="hidden" id="forResponseB"/>
     </div>
     <div class="block"><div id="containerB"></div></div>
+    ${matrixA.printStr()}
+    ${matrixB.printStr()}
 </div>
 
 </body>

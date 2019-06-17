@@ -65,29 +65,29 @@ public class MatrixDblHelper extends MatrixHelper {
 
     }
 
-    public Matrix cast(Matrix A){
-        Matrix C = new Matrix(new MyDouble(0.0));
-        int n = A.getColumns();
-        int m = A.getRows();
-        List<List<Numeric<Double>>> c = new ArrayList<>();
-        List<List<Numeric<Double>>> a = A.getContent();
-
-        for (int i = 0; i < n; i++) {
-            c.add(new ArrayList<>());
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                c.get(i).add(new MyDouble(
-                       NumberUtils.toDouble(((a.get(i).get(j).getValue()).toString()))
-                ));
-            }
-        }
-        C.setContent(c);
-        C.setColumns(n);
-        C.setRows(m);
-
-        return C;
-    }
+//    public Matrix cast(Matrix A){
+//        Matrix C = new Matrix(new MyDouble(0.0));
+//        int n = A.getColumns();
+//        int m = A.getRows();
+//        List<List<Numeric<Double>>> c = new ArrayList<>();
+//        List<List<Numeric<Double>>> a = A.getContent();
+//
+//        for (int i = 0; i < n; i++) {
+//            c.add(new ArrayList<>());
+//        }
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < m; j++) {
+//                c.get(i).add(new MyDouble(
+//                       NumberUtils.toDouble(((a.get(i).get(j).getValue()).toString()))
+//                ));
+//            }
+//        }
+//        C.setContent(c);
+//        C.setColumns(n);
+//        C.setRows(m);
+//
+//        return C;
+//    }
 
     public void create() {
         System.out.print("Введите количество элементов массива N: ");

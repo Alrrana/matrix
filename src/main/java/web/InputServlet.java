@@ -25,15 +25,19 @@ public class InputServlet extends HttpServlet {
         MatrixTypeDetector matrixTypeDetector = new MatrixTypeDetector();
 
         String mas = request.getParameter("forResponseA");
+        Matrix A=null;
         if (mas != null) {
-            Matrix A = matrixTypeDetector.gimmeMatrix(mas);
+            A = matrixTypeDetector.gimmeMatrix(mas);
             A.print();
         }
         mas = request.getParameter("forResponseB");
+        Matrix B=null;
         if (mas != null) {
-            Matrix B = matrixTypeDetector.gimmeMatrix(mas);
+            B = matrixTypeDetector.gimmeMatrix(mas);
             B.print();
         }
+        request.setAttribute("matrixA",A);
+        request.setAttribute("matrixB",B);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 

@@ -11,54 +11,59 @@ public class MatrixTypeDetector extends MatrixHelper {
         row = Integer.valueOf(parsed[parsed.length - 6]) + 1;
         String[][] res = new String[row][col];
         for (int i = 7; i < parsed.length; i += 12) {
+            if(parsed[i]=="")
+                return null;
             res[Integer.valueOf(parsed[i + 4])][Integer.valueOf(parsed[i + 8])] = parsed[i];
         }
         return res;
     }
 
     public static int defineType(String[][] input) {
-        boolean itsInt = false;//1
-        boolean itsLong = false;//3
-        boolean itsDouble = false;//2
-        try {
-            for (int i = 0; i < row; i++) {
-                for (int j = 0; j < col; j++) {
-                    int temp = Integer.valueOf(input[i][j]);
-                }
-            }
-            itsInt = true;
-        } catch (NumberFormatException ex) {
+        if(input!=null) {
+            boolean itsInt = false;//1
+            boolean itsLong = false;//3
+            boolean itsDouble = false;//2
             try {
                 for (int i = 0; i < row; i++) {
                     for (int j = 0; j < col; j++) {
-                        double temp = Double.valueOf(input[i][j]);
+                        int temp = Integer.valueOf(input[i][j]);
                     }
                 }
-                itsDouble = true;
-            } catch (Exception ex1) {
+                itsInt = true;
+            } catch (NumberFormatException ex) {
                 try {
                     for (int i = 0; i < row; i++) {
-                        for (int j = 0; j < col && InputHelper.isLong(input[i][j]); j++) {
+                        for (int j = 0; j < col; j++) {
+                            double temp = Double.valueOf(input[i][j]);
                         }
-
                     }
-                    itsLong = true;
-                } catch (Exception ex2) {
-                    System.out.println(ex);
+                    itsDouble = true;
+                } catch (Exception ex1) {
+                    try {
+                        for (int i = 0; i < row; i++) {
+                            for (int j = 0; j < col && InputHelper.isLong(input[i][j]); j++) {
+                            }
+
+                        }
+                        itsLong = true;
+                    } catch (Exception ex2) {
+                        System.out.println(ex);
+                    }
                 }
+            } catch (Exception ex) {
+                System.out.println(ex);
             }
-        } catch (Exception ex) {
-            System.out.println(ex);
+            if (itsInt) {
+                return 1;
+            }
+            if (itsDouble) {
+                return 2;
+            }
+            if (itsLong) {
+                return 3;
+            } else return 0;
         }
-        if (itsInt) {
-            return 1;
-        }
-        if (itsDouble) {
-            return 2;
-        }
-        if (itsLong) {
-            return 3;
-        } else return 0;
+        else return 0;
     }
 
     MatrixIntHelper intHelper = new MatrixIntHelper();
