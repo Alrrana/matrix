@@ -23,6 +23,7 @@ public class InputServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MatrixTypeDetector matrixTypeDetector = new MatrixTypeDetector();
+        HttpSession session = request.getSession();
 
         String mas;
         Matrix A = null;
@@ -33,7 +34,8 @@ public class InputServlet extends HttpServlet {
                 A = matrixTypeDetector.gimmeMatrix(mas);
                 A.print();
             }
-            request.setAttribute("matrixA", A);
+
+            session.setAttribute("matrixA", A);
         }
         Matrix B = null;
         if (request.getParameter("forResponseB") != null) {
@@ -43,7 +45,7 @@ public class InputServlet extends HttpServlet {
                 B = matrixTypeDetector.gimmeMatrix(mas);
                 B.print();
             }
-            request.setAttribute("matrixB", B);
+            session.setAttribute("matrixB", B);
         }
 
 

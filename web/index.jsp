@@ -31,8 +31,8 @@
     <div class="block">
         <div id="containerA">
 
-                <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
-                </form>
+            <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
+            </form>
 
         </div>
     </div>
@@ -45,14 +45,23 @@
     </div>
     <div class="block">
         <div id="containerB">
-
-                <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
+            <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
+            </form>
+        </div>
+    </div>
+    <div class="block">
+        <div id="containerRes">
+            <div class="form">
+                <form action="sum" method="post"><input type="hidden" name="sum" id="sum"/>
+                    <button name="sum">Sum</button>
                 </form>
+            </div>
 
         </div>
     </div>
-    ${matrixA.printStr()}
-    ${matrixB.printStr()}
+    ${MatrixRes.printStr()}
+    <%--    ${matrixA.printStr()}--%>
+    <%--    ${matrixB.printStr()}--%>
 </div>
 
 </body>

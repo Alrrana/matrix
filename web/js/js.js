@@ -8,7 +8,8 @@ $(document).ready(function () {
         while (container.hasChildNodes()) {
             container.removeChild(container.lastChild);
         }
-        if ($(document).find('input[name="row"]').val() !== "" && $(document).find('input[name="col"]').val() !== "") {
+        if ($(document).find('input[name="row"]').val() !== "" && $(document).find('input[name="col"]').val() !== ""
+            && $(document).find('input[name="row"]').val() > 0 && $(document).find('input[name="col"]').val() > 0) {
 
             $('#containerA').append('<div class="form"> ' +
                 '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
@@ -28,7 +29,7 @@ $(document).ready(function () {
         } else {
             $('#containerA').append(
                 '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-                '</form> ' );
+                '</form> ');
         }
     });
 
@@ -44,7 +45,8 @@ $(document).ready(function () {
             container.removeChild(container.lastChild);
         }
 
-        if ($(document).find('input[name="rowB"]').val() !== "" && $(document).find('input[name="colB"]').val() !== "") {
+        if ($(document).find('input[name="rowB"]').val() !== "" && $(document).find('input[name="colB"]').val() !== ""
+            && $(document).find('input[name="rowB"]').val() > 0 && $(document).find('input[name="colB"]').val() > 0) {
 
             $('#containerB').append('<div class="form"> ' +
                 '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
@@ -65,7 +67,8 @@ $(document).ready(function () {
         } else {
             $('#containerB').append(
                 '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-                '</form> '                 );
+                '</form> ');
+
         }
     });
 
@@ -78,7 +81,7 @@ function inpA() {
     $('#containerA input').each(function () {
         if ($(this).attr("col") !== undefined) {
             if ($(this).val() === "") {
-                // alert("Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col"));
+                alert("Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col"));
                 can = false;
             }
             mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
@@ -87,7 +90,6 @@ function inpA() {
 
     if (can) {
         $('#forResponseA').val(JSON.stringify(mas));
-
     }
 }
 

@@ -229,6 +229,7 @@ public class Matrix<ElType> {
             for (int j = 0; j < rows; j++) {
                 builder.append(content.get(i).get(j).getValue().toString() + " ");
             }
+            builder.append("\n");
         }
         return builder.toString();
     }
@@ -261,7 +262,7 @@ public class Matrix<ElType> {
 
                 for (int i = 0; i < B.getColumns(); i++) {
                     for (int j = 0; j < B.getColumns(); j++) {
-                        c.get(i).add(a.get(i).get(j).sum(b.get(i).get(j))); //ToDo
+                        c.get(i).add(a.get(i).get(j).sum(b.get(i).get(j)));
                     }
 
                 }
