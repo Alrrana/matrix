@@ -10,8 +10,8 @@ public class MatrixTypeDetector extends MatrixHelper {
         col = Integer.valueOf(parsed[parsed.length - 2]) + 1;
         row = Integer.valueOf(parsed[parsed.length - 6]) + 1;
         String[][] res = new String[row][col];
-        for (int i = 7; i < parsed.length; i += 12) {
-            if(parsed[i]=="")
+        for (int i = 3; i < parsed.length; i += 12) {
+            if(parsed[i].equals(""))
                 return null;
             res[Integer.valueOf(parsed[i + 4])][Integer.valueOf(parsed[i + 8])] = parsed[i];
         }

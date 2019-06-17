@@ -24,20 +24,29 @@ public class InputServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MatrixTypeDetector matrixTypeDetector = new MatrixTypeDetector();
 
-        String mas = request.getParameter("forResponseA");
-        Matrix A=null;
-        if (mas != null) {
-            A = matrixTypeDetector.gimmeMatrix(mas);
-            A.print();
+        String mas;
+        Matrix A = null;
+        if (request.getParameter("forResponseA") != null) {
+            mas = request.getParameter("forResponseA");
+            A = null;
+            if (!mas.equals("")) {
+                A = matrixTypeDetector.gimmeMatrix(mas);
+                A.print();
+            }
+            request.setAttribute("matrixA", A);
         }
-        mas = request.getParameter("forResponseB");
-        Matrix B=null;
-        if (mas != null) {
-            B = matrixTypeDetector.gimmeMatrix(mas);
-            B.print();
+        Matrix B = null;
+        if (request.getParameter("forResponseB") != null) {
+            mas = request.getParameter("forResponseB");
+            B = null;
+            if (!mas.equals("")) {
+                B = matrixTypeDetector.gimmeMatrix(mas);
+                B.print();
+            }
+            request.setAttribute("matrixB", B);
         }
-        request.setAttribute("matrixA",A);
-        request.setAttribute("matrixB",B);
+
+
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 

@@ -28,15 +28,29 @@
         <button name="goA">Задать размерность</button>
 
     </div>
-    <div class="block"><div id="containerA"></div></div>
+    <div class="block">
+        <div id="containerA">
+
+                <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
+                </form>
+
+        </div>
+    </div>
 
     <div class="form">
         <input type="text" name="rowB" placeholder="Количество полей">
         <input type="text" name="colB" placeholder="Количество колонок">
         <button name="goB">Задать размерность</button>
-        <input type="hidden" id="forResponseB"/>
+
     </div>
-    <div class="block"><div id="containerB"></div></div>
+    <div class="block">
+        <div id="containerB">
+
+                <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
+                </form>
+
+        </div>
+    </div>
     ${matrixA.printStr()}
     ${matrixB.printStr()}
 </div>
