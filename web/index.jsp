@@ -29,12 +29,7 @@
 
     </div>
     <div class="block">
-        <div id="containerA">
-
-                <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
-                </form>
-
-        </div>
+        <div id="containerA"></div>
     </div>
 
     <div class="form">
@@ -44,12 +39,18 @@
 
     </div>
     <div class="block">
-        <div id="containerB">
+        <div id="containerB"></div>
+    </div>
+   <input type="hidden" name="forResponseA" id="forResponseA"/>
+    </form>
+   <input type="hidden" name="forResponseB" id="forResponseB"/>
+    </form>
 
-                <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
-                </form>
+   <div class="form">
+    <form action="input" method="post">
+        <input type="hidden" name="action" id="action"/><button name="input" onclick="inp()">Ввести матрицы</button>
+        </form>
 
-        </div>
     </div>
     ${matrixA.printStr()}
     ${matrixB.printStr()}

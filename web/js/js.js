@@ -10,11 +10,6 @@ $(document).ready(function () {
         }
         if ($(document).find('input[name="row"]').val() !== "" && $(document).find('input[name="col"]').val() !== "") {
 
-            $('#containerA').append('<div class="form"> ' +
-                '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-                '<button name="inputA" onclick="inpA()">Ввести матрицу</button>' +
-                '</form> '
-                + '</div>');
             for (i = 0; i < col; i++) {
                 $('#containerA').append('<div class="item"></div>');
             }
@@ -26,9 +21,7 @@ $(document).ready(function () {
             // $('#containerA').append();}
 
         } else {
-            $('#containerA').append(
-                '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-                '</form> ' );
+
         }
     });
 
@@ -46,11 +39,7 @@ $(document).ready(function () {
 
         if ($(document).find('input[name="rowB"]').val() !== "" && $(document).find('input[name="colB"]').val() !== "") {
 
-            $('#containerB').append('<div class="form"> ' +
-                '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-                '<button name="inputB" onclick="inpB()">Ввести матрицу</button>' +
-                '</form> '
-                + '</div>');
+
             for (i = 0; i < col; i++) {
                 $('#containerB').append('<div class="item"></div>');
             }
@@ -63,9 +52,7 @@ $(document).ready(function () {
                 })
             }
         } else {
-            $('#containerB').append(
-                '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-                '</form> '                 );
+
         }
     });
 
@@ -108,6 +95,11 @@ function inpB() {
     if (can) {
         $('#forResponseB').val(JSON.stringify(mas));
     }
+}
+function inp() {
+    inpA();
+    inpB();
+
 }
 
 //==============================
