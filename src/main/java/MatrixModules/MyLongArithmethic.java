@@ -30,7 +30,10 @@ public class MyLongArithmethic implements Numeric<LongArithmethic> {
 //        return null;
         return new MyLongArithmethic(LongArithmeticMath.sum(value, a.getValue()));
     }
-
+    @Override
+    public String toString() {
+        return this.getValue().toString();
+    }
     @Override
     public Numeric<LongArithmethic> sub(Numeric<LongArithmethic> a) {
         return new MyLongArithmethic(LongArithmeticMath.sub(value, a.getValue()));

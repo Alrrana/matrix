@@ -25,6 +25,11 @@ public class MyInt implements Numeric<Integer> {
     }
 
     @Override
+    public String toString() {
+        return this.getValue().toString();
+    }
+
+    @Override
     public Numeric<Integer> sum(Numeric<Integer> a) {
         return new MyInt(this.getValue() + a.getValue());
     }

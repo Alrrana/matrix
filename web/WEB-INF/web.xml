@@ -3,16 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-
-    <servlet>
-        <servlet-name>inputServlet</servlet-name>
-        <servlet-class>web.InputServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>inputServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
+<!--//input-->
+<!--    <servlet>-->
+<!--        <servlet-name>inputServlet</servlet-name>-->
+<!--        <servlet-class>web.InputServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>inputServlet</servlet-name>-->
+<!--        <url-pattern>/</url-pattern>-->
+<!--    </servlet-mapping>-->
+<!--OPERATIONS-->
     <servlet>
         <servlet-name>sumServlet</servlet-name>
         <servlet-class>web.SumServlet</servlet-class>
@@ -22,6 +22,26 @@
         <url-pattern>/sum</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>subServlet</servlet-name>
+        <servlet-class>web.SubServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>subServlet</servlet-name>
+        <url-pattern>/sub</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>multServlet</servlet-name>
+        <servlet-class>web.MultServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>multServlet</servlet-name>
+        <url-pattern>/mult</url-pattern>
+    </servlet-mapping>
+
+
+    <!--STATIC LInKS TO JS AND CSS-->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/js/*</url-pattern>

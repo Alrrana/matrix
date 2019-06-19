@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 
 <html lang="en">
 <head>
@@ -53,15 +55,42 @@
         <div id="containerRes">
             <div class="form">
                 <form action="sum" method="post"><input type="hidden" name="sum" id="sum"/>
-                    <button name="sum">Sum</button>
+                    <button name="sum" onclick="sumFunc()">Sum</button>
+                </form>
+                <form action="sub" method="post"><input type="hidden" name="sub" id="sub"/>
+                    <button name="sub" onclick="subFunc()">Subtract</button>
+                </form>
+                <form action="mult" method="post"><input type="hidden" name="mult" id="mult"/>
+                    <button name="mult" onclick="multFunc()">Mult</button>
                 </form>
             </div>
 
         </div>
     </div>
-    ${MatrixRes.printStr()}
-    <%--    ${matrixA.printStr()}--%>
-    <%--    ${matrixB.printStr()}--%>
+
+    <div class="form">
+        <p>Введенная матрица A:</p>
+        <c:forEach var="List1" items="${matrixA.getContent()}">
+            <p>${List1.toString()}</p>
+        </c:forEach>
+        <p>Введенная матрица B:</p>
+        <c:forEach var="List1" items="${matrixB.getContent()}">
+            <p>${List1.toString()}</p>
+        </c:forEach>
+        <p>Result:</p>
+        <c:forEach var="List1" items="${MatrixRes.getContent()}">
+            <%--        <c:forEach var="num" items="${List1}">--%>
+            <p>${List1.toString()}</p>
+            <%--        </c:forEach>--%>
+            <%--        <p></p>--%>
+        </c:forEach>
+    </div>
+
+
+    <%--    <c:if test="${MatrixRes!=null}">--%>
+    <%--    </c:if>--%>
+    ${matrixA.printStr()}
+    ${matrixB.printStr()}
 </div>
 
 </body>

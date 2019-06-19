@@ -22,6 +22,7 @@ public class Matrix<ElType> {
     Matrix() {
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null)
@@ -220,11 +221,24 @@ public class Matrix<ElType> {
             System.out.println();
         }
     }
-    public String printStr() {
-        if (this.content==null){
+
+    public String printStr(int num) {
+        if (this.content == null) {
             return "";
         }
-        StringBuilder builder= new StringBuilder();
+        StringBuilder builder = new StringBuilder();
+        for (int j = 0; j < rows; j++) {
+            builder.append(content.get(num).get(j).getValue().toString() + " ");
+        }
+
+        return builder.toString();
+    }
+
+    public String printStr() {
+        if (this.content == null) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
                 builder.append(content.get(i).get(j).getValue().toString() + " ");

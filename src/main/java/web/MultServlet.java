@@ -13,7 +13,7 @@ import java.io.IOException;
 
 //@WebServlet(name = "InputServlet", urlPatterns = "/input")
 
-public class SumServlet extends HttpServlet {
+public class MultServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -23,17 +23,23 @@ public class SumServlet extends HttpServlet {
         Integer Bcols = (Integer) session.getAttribute("matrixBcols");
         Integer Brows = (Integer) session.getAttribute("matrixBrows");
 
-        if ((Acols != null) && (Bcols != null) && (Arows != null) && (Brows != null) &&
-                ((Acols == Bcols && Arows == Brows))) {
 
-            if (session.getAttribute("matrixA") != null && session.getAttribute("matrixB") != null) {
+        if ((Acols != null) && (Bcols != null) && (Arows != null) && (Brows != null) &&
+                (Acols.equals(Brows)) || (Arows.equals(Bcols))
+                || (Acols.equals(Bcols) && Arows.equals(Brows))) {
+
+
+            String answer = request.getParameter("mult");
+            if ((session.getAttribute("matrixA") != null && session.getAttribute("matrixB") != null)
+                    ) {
                 Matrix A = (Matrix) session.getAttribute("matrixA");
                 Matrix B = (Matrix) session.getAttribute("matrixB");
-                Matrix C = A.sum(B);
+                Matrix C = A.mult(B);
                 request.setAttribute("MatrixRes", C);
                 session.setAttribute("MatrixRes", C);
             }
         }
+
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 

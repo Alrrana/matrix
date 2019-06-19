@@ -6,6 +6,7 @@ import MatrixModules.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@WebServlet(name = "InputServlet", urlPatterns = "/input")
+@WebServlet(name = "InputServlet", urlPatterns = "/input")
 
 public class InputServlet extends HttpServlet {
 
@@ -33,6 +34,8 @@ public class InputServlet extends HttpServlet {
             if (!mas.equals("")) {
                 A = matrixTypeDetector.gimmeMatrix(mas);
                 A.print();
+                session.setAttribute("matrixArows", A.getRows());
+                session.setAttribute("matrixAcols", A.getColumns());
             }
 
             session.setAttribute("matrixA", A);
@@ -44,24 +47,19 @@ public class InputServlet extends HttpServlet {
             if (!mas.equals("")) {
                 B = matrixTypeDetector.gimmeMatrix(mas);
                 B.print();
+                System.out.println(B.getColumns()+" "+ B.getRows());
+                session.setAttribute("matrixBrows", B.getRows());
+                session.setAttribute("matrixBcols", B.getColumns());
             }
             session.setAttribute("matrixB", B);
         }
 
 
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-//        PrintWriter out = response.getWriter();
-
-        String mas = request.getParameter("forResponseA");
-        System.out.println(mas);
-        String[] parsed = mas.split("\"");
-        for (int i = 0; i < parsed.length; i++) {
-            System.out.println(parsed[i] + " " + i);
-        }
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }
 

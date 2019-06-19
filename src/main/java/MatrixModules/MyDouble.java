@@ -19,7 +19,10 @@ public class MyDouble implements Numeric<Double> {
         return false;
     }
 
-
+    @Override
+    public String toString() {
+        return this.getValue().toString();
+    }
     @Override
     public boolean equals(Numeric<Double> a) {
         if (this.getValue() == null || a.getValue() == null)
