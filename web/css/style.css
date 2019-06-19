@@ -133,7 +133,7 @@ textarea:focus:-ms-input-placeholder {
 	display: block;
 	width: 100%;
 	max-width: 1920px;
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 .form {
@@ -236,7 +236,10 @@ button:hover {
 	position: relative;
 	display: inline-flex;
 }
-
+.custom {
+	display: inline-block;
+	text-align: center;
+}
 .block .item {
 	position: relative;
 	display: inline-block;

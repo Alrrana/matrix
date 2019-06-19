@@ -24,31 +24,57 @@
 </head>
 <body>
 <div class="wrapper">
-    <div class="form">
-        <input type="text" name="row" placeholder="Количество полей">
-        <input type="text" name="col" placeholder="Количество колонок">
-        <button name="goA">Задать размерность</button>
+    <div class="custom">
+        <div class="form">
 
-    </div>
-    <div class="block">
-        <div id="containerA">
+            <div class="custom">
+                <input type="text" onkeyup="goA()" name="row" placeholder="Количество полей">
+                <input type="text" onkeyup="goA()" name="col" placeholder="Количество колонок">
+                <%--            <button type="hidden" name="goA">Задать размерность</button>--%>
+            </div>
+            <div class="custom"
+            <%--             style="position: relative; left: 384px; top: -7px;"--%>
+            >
+                <p>Введенная матрица A:</p>
+                <c:forEach var="List1" items="${matrixA.getContent()}">
+                    <p>${List1.toString()}</p>
+                </c:forEach>
+            </div>
+        </div>
 
-            <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
-            </form>
+        <div class="block">
+            <div id="containerA">
 
+                <form action="input"  method="post">
+                    <input type="hidden" name="forResponseA" id="forResponseA"/>
+                </form>
+
+            </div>
         </div>
     </div>
+    <div class="custom">
+        <div class="form">
+            <div class="custom">
+                <input type="text" onkeyup="goB()" name="rowB" placeholder="Количество полей">
+                <input type="text" onkeyup="goB()" name="colB" placeholder="Количество колонок">
+                <%--            <button name="goB">Задать размерность</button>--%>
+            </div>
+            <div class="custom"
+            <%--             style="position: relative; left: 384px; top: -7px;"--%>
+            >
+                <p>Введенная матрица B:</p>
+                <c:forEach var="List1" items="${matrixB.getContent()}">
+                    <p>${List1.toString()}</p>
+                </c:forEach>
+            </div>
 
-    <div class="form">
-        <input type="text" name="rowB" placeholder="Количество полей">
-        <input type="text" name="colB" placeholder="Количество колонок">
-        <button name="goB">Задать размерность</button>
-
-    </div>
-    <div class="block">
-        <div id="containerB">
-            <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
-            </form>
+        </div>
+        <div class="block">
+            <div id="containerB">
+                <form action="input" onkeyup="inpB()" method="post">
+                    <input type="hidden" name="forResponseB" id="forResponseB"/>
+                </form>
+            </div>
         </div>
     </div>
     <div class="block">
@@ -69,14 +95,6 @@
     </div>
 
     <div class="form">
-        <p>Введенная матрица A:</p>
-        <c:forEach var="List1" items="${matrixA.getContent()}">
-            <p>${List1.toString()}</p>
-        </c:forEach>
-        <p>Введенная матрица B:</p>
-        <c:forEach var="List1" items="${matrixB.getContent()}">
-            <p>${List1.toString()}</p>
-        </c:forEach>
         <p>Result:</p>
         <c:forEach var="List1" items="${MatrixRes.getContent()}">
             <%--        <c:forEach var="num" items="${List1}">--%>

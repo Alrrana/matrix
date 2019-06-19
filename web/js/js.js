@@ -1,82 +1,76 @@
 //==============================
-$(document).ready(function () {
-    $('.form').on('click', 'button[name="goA"]', function () {
+function goA() {
 
-        var row = $(this).parent().find('input[name="row"]').val();
-        var col = $(this).parent().find('input[name="col"]').val();
-        var container = document.getElementById("containerA");
-        while (container.hasChildNodes()) {
-            container.removeChild(container.lastChild);
+    var row = $(document).find('input[name="row"]').val();
+    var col = $(document).find('input[name="col"]').val();
+    var container = document.getElementById("containerA");
+    while (container.hasChildNodes()) {
+        container.removeChild(container.lastChild);
+    }
+    if ($(document).find('input[name="row"]').val() !== "" && $(document).find('input[name="col"]').val() !== ""
+        && $(document).find('input[name="row"]').val() > 0 && $(document).find('input[name="col"]').val() > 0) {
+
+        $('#containerA').append('<div class="form"> ' +
+            '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
+            '<button name="inputA" onclick="inpA()">Ввести матрицу</button>' +
+            '</form> '
+            + '</div>');
+        for (i = 0; i < col; i++) {
+            $('#containerA').append('<div class="item"></div>');
         }
-        if ($(document).find('input[name="row"]').val() !== "" && $(document).find('input[name="col"]').val() !== ""
-            && $(document).find('input[name="row"]').val() > 0 && $(document).find('input[name="col"]').val() > 0) {
-
-            $('#containerA').append('<div class="form"> ' +
-                '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-                '<button name="inputA" onclick="inpA()">Ввести матрицу</button>' +
-                '</form> '
-                + '</div>');
-            for (i = 0; i < col; i++) {
-                $('#containerA').append('<div class="item"></div>');
-            }
-            for (i = 0; i < row; i++) {
-                $('#containerA .item').each(function (index) {
-                    $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + i + '" placeholder="_"></div>');
-                })
-            }
-            sessionStorage.setItem("matrixAcols", col);
-            sessionStorage.setItem("matrixArows", row);
-            // $('#containerA').append();}
-
-        } else {
-            $('#containerA').append(
-                '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-                '</form> ');
+        for (i = 0; i < row; i++) {
+            $('#containerA .item').each(function (index) {
+                $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + i + '" placeholder="_"></div>');
+            })
         }
-    });
+        sessionStorage.setItem("matrixAcols", col);
+        sessionStorage.setItem("matrixArows", row);
+        // $('#containerA').append();}
+
+    } else {
+        $('#containerA').append(
+            '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
+            '</form> ');
+    }
+}
 
 
-});
+function goB() {
+    var row = $(document).find('input[name="rowB"]').val();
+    var col = $(document).find('input[name="colB"]').val();
+    var container = document.getElementById("containerB");
+    while (container.hasChildNodes()) {
+        container.removeChild(container.lastChild);
+    }
 
-$(document).ready(function () {
-    $('.form').on('click', 'button[name="goB"]', function () {
-        var row = $(this).parent().find('input[name="rowB"]').val();
-        var col = $(this).parent().find('input[name="colB"]').val();
-        var container = document.getElementById("containerB");
-        while (container.hasChildNodes()) {
-            container.removeChild(container.lastChild);
+    if ($(document).find('input[name="rowB"]').val() !== "" && $(document).find('input[name="colB"]').val() !== ""
+        && $(document).find('input[name="rowB"]').val() > 0 && $(document).find('input[name="colB"]').val() > 0) {
+
+        sessionStorage.setItem("matrixBcols", col);
+        sessionStorage.setItem("matrixBrows", row);
+        $('#containerB').append('<div class="form"> ' +
+            '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
+            '<button name="inputB" onclick="inpB()">Ввести матрицу</button>' +
+            '</form> '
+            + '</div>');
+        for (i = 0; i < col; i++) {
+            $('#containerB').append('<div class="item"></div>');
         }
-
-        if ($(document).find('input[name="rowB"]').val() !== "" && $(document).find('input[name="colB"]').val() !== ""
-            && $(document).find('input[name="rowB"]').val() > 0 && $(document).find('input[name="colB"]').val() > 0) {
-
-            sessionStorage.setItem("matrixBcols", col);
-            sessionStorage.setItem("matrixBrows", row);
-            $('#containerB').append('<div class="form"> ' +
-                '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-                '<button name="inputB" onclick="inpB()">Ввести матрицу</button>' +
-                '</form> '
-                + '</div>');
-            for (i = 0; i < col; i++) {
-                $('#containerB').append('<div class="item"></div>');
-            }
-            for (i = 0; i < row; i++) {
+        for (i = 0; i < row; i++) {
 
 
-                $('#containerB .item').each(function (index) {
-                    $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + i + '" placeholder="_"></div>');
-                    // alert("123");
-                })
-            }
-        } else {
-            $('#containerB').append(
-                '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-                '</form> ');
-
+            $('#containerB .item').each(function (index) {
+                $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+                // alert("123");
+            })
         }
-    });
+    } else {
+        $('#containerB').append(
+            '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
+            '</form> ');
 
-});
+    }
+}
 
 function inpA() {
     var mas = [];
