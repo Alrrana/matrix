@@ -10,17 +10,17 @@ function goA() {
     if ($(document).find('input[name="row"]').val() !== "" && $(document).find('input[name="col"]').val() !== ""
         && $(document).find('input[name="row"]').val() > 0 && $(document).find('input[name="col"]').val() > 0) {
 
-        $('#containerA').append('<div class="form"> ' +
-            '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-            '<button name="inputA" onclick="inpA()">Ввести матрицу</button>' +
-            '</form> '
-            + '</div>');
+        // $('#containerA').append('<div class="form"> ' +
+        //     '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
+        //     '<button name="inputA" onclick="inpA()">Ввести матрицу</button>' +
+        //     '</form> '
+        //     + '</div>');
         for (i = 0; i < col; i++) {
             $('#containerA').append('<div class="item"></div>');
         }
         for (i = 0; i < row; i++) {
             $('#containerA .item').each(function (index) {
-                $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + i + '" placeholder="_"></div>');
+                $(this).append('<div class="col"><input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_"></div>');
             })
         }
         sessionStorage.setItem("matrixAcols", col);
@@ -28,9 +28,9 @@ function goA() {
         // $('#containerA').append();}
 
     } else {
-        $('#containerA').append(
-            '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-            '</form> ');
+        // $('#containerA').append(
+        //     '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
+        //     '</form> ');
     }
 }
 
@@ -48,11 +48,11 @@ function goB() {
 
         sessionStorage.setItem("matrixBcols", col);
         sessionStorage.setItem("matrixBrows", row);
-        $('#containerB').append('<div class="form"> ' +
-            '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-            '<button name="inputB" onclick="inpB()">Ввести матрицу</button>' +
-            '</form> '
-            + '</div>');
+        // $('#containerB').append('<div class="form"> ' +
+        //     '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
+        //     '<button name="inputB" onclick="inpB()">Ввести матрицу</button>' +
+        //     '</form> '
+        //     + '</div>');
         for (i = 0; i < col; i++) {
             $('#containerB').append('<div class="item"></div>');
         }
@@ -60,14 +60,14 @@ function goB() {
 
 
             $('#containerB .item').each(function (index) {
-                $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+                $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
                 // alert("123");
             })
         }
     } else {
-        $('#containerB').append(
-            '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-            '</form> ');
+        // $('#containerB').append(
+        //     '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
+        //     '</form> ');
 
     }
 }
@@ -79,14 +79,16 @@ function inpA() {
     $('#containerA input').each(function () {
         if ($(this).attr("col") !== undefined) {
             if ($(this).val() === "") {
-                alert("Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col"));
+                // alert("Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col"));
                 can = false;
             }
             mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
         }
     })
-
+ alert(can);
     if (can) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST','InputServlet',true);
         $('#forResponseA').val(JSON.stringify(mas));
     }
 }
@@ -98,7 +100,7 @@ function inpB() {
     $('#containerB input').each(function () {
         if ($(this).attr("col") !== undefined) {
             if ($(this).val() === "") {
-                alert("Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col"));
+                // alert("Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col"));
                 can = false;
             }
             mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});

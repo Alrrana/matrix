@@ -32,7 +32,7 @@
                 <input type="text" onkeyup="goA()" name="col" placeholder="Количество колонок">
                 <%--            <button type="hidden" name="goA">Задать размерность</button>--%>
             </div>
-            <div class="custom"
+            <div class="custom" name="existA"
             <%--             style="position: relative; left: 384px; top: -7px;"--%>
             >
                 <p>Введенная матрица A:</p>
@@ -59,7 +59,7 @@
                 <input type="text" onkeyup="goB()" name="colB" placeholder="Количество колонок">
                 <%--            <button name="goB">Задать размерность</button>--%>
             </div>
-            <div class="custom"
+            <div class="custom"  name="existB"
             <%--             style="position: relative; left: 384px; top: -7px;"--%>
             >
                 <p>Введенная матрица B:</p>
