@@ -22,14 +22,18 @@
     <script type="text/javascript" src="js/js.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Play:400,700&display=swap&subset=cyrillic" rel="stylesheet">
 </head>
-<body>
+<body onload="init()">
 <div class="wrapper">
     <div class="custom">
         <div class="form">
 
             <div class="custom">
-                <input type="text" onkeyup="goA()" name="row" placeholder="Количество полей">
-                <input type="text" onkeyup="goA()" name="col" placeholder="Количество колонок">
+
+                <button name="AplusColA" onclick="plusColA()">+ plusColA</button>
+                <button name="AplusRowA" onclick="plusRowA()">+ plusRowA</button>
+                <button name="AminusColA" onclick="minusColA()">- minusColA</button>
+                <button name="AminusRowA" onclick="minusRowA()">- minusRowA</button>
+                <button name="Clear" onclick="init()">Очистить</button>
                 <%--            <button type="hidden" name="goA">Задать размерность</button>--%>
             </div>
             <div class="custom"
@@ -40,24 +44,34 @@
                     <p>${List1.toString()}</p>
                 </c:forEach>
             </div>
+
+            <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
+                <button name="inputA" onclick="inpA()">Ввести матрицу</button>
+            </form>
+
         </div>
 
         <div class="block">
             <div id="containerA">
 
-                <form action="input"  method="post">
-                    <input type="hidden" name="forResponseA" id="forResponseA"/>
-                </form>
+                <%--                <form action="input" method="post">--%>
+                <%--                    <input type="hidden" name="forResponseA" id="forResponseA"/>--%>
+                <%--                </form>--%>
 
             </div>
         </div>
     </div>
     <div class="custom">
         <div class="form">
+
             <div class="custom">
-                <input type="text" onkeyup="goB()" name="rowB" placeholder="Количество полей">
-                <input type="text" onkeyup="goB()" name="colB" placeholder="Количество колонок">
-                <%--            <button name="goB">Задать размерность</button>--%>
+
+                <button name="BplusColB" onclick="plusColB()">+ plusColB</button>
+                <button name="BplusRowB" onclick="plusRowB()">+ plusRowB</button>
+                <button name="BminusColB" onclick="minusColB()">- minusColB</button>
+                <button name="BminusRowB" onclick="minusRowB()">- minusRowB</button>
+                <button name="Clear" onclick="init()">Очистить</button>
+                <%--            <button name="plusB">Задать размерность</button>--%>
             </div>
             <div class="custom"
             <%--             style="position: relative; left: 384px; top: -7px;"--%>
@@ -67,43 +81,47 @@
                     <p>${List1.toString()}</p>
                 </c:forEach>
             </div>
+            <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
+                <button name="inputB" onclick="inpB()">Ввести матрицу</button>
 
+            </form>
         </div>
         <div class="block">
             <div id="containerB">
-                <form action="input" onkeyup="inpB()" method="post">
-                    <input type="hidden" name="forResponseB" id="forResponseB"/>
-                </form>
+                <%--                <form action="input" onkeyup="inpB()" method="post">--%>
+                <%--                    <input type="hidden" name="forResponseB" id="forResponseB"/>--%>
+                <%--                </form>--%>
             </div>
         </div>
     </div>
-    <div class="block">
-        <div id="containerRes">
-            <div class="form">
-                <form action="sum" method="post"><input type="hidden" name="sum" id="sum"/>
-                    <button name="sum" onclick="sumFunc()">Sum</button>
-                </form>
-                <form action="sub" method="post"><input type="hidden" name="sub" id="sub"/>
-                    <button name="sub" onclick="subFunc()">Subtract</button>
-                </form>
-                <form action="mult" method="post"><input type="hidden" name="mult" id="mult"/>
-                    <button name="mult" onclick="multFunc()">Mult</button>
-                </form>
-            </div>
+    <div class="custom" style="vertical-align:top">
+        <div class="block1">
+            <div id="containerRes">
+                <div class="form">
+                    <form action="sum" method="post"><input type="hidden" name="sum" id="sum"/>
+                        <button name="sum" onclick="sumFunc()">Sum</button>
+                    </form>
+                    <form action="sub" method="post"><input type="hidden" name="sub" id="sub"/>
+                        <button name="sub" onclick="subFunc()">Subtract</button>
+                    </form>
+                    <form action="mult" method="post"><input type="hidden" name="mult" id="mult"/>
+                        <button name="mult" onclick="multFunc()">Mult</button>
+                    </form>
+                </div>
 
+            </div>
+        </div>
+
+        <div class="form">
+            <p>Result:</p>
+            <c:forEach var="List1" items="${MatrixRes.getContent()}">
+                <%--        <c:forEach var="num" items="${List1}">--%>
+                <p>${List1.toString()}</p>
+                <%--        </c:forEach>--%>
+                <%--        <p></p>--%>
+            </c:forEach>
         </div>
     </div>
-
-    <div class="form">
-        <p>Result:</p>
-        <c:forEach var="List1" items="${MatrixRes.getContent()}">
-            <%--        <c:forEach var="num" items="${List1}">--%>
-            <p>${List1.toString()}</p>
-            <%--        </c:forEach>--%>
-            <%--        <p></p>--%>
-        </c:forEach>
-    </div>
-
 
     <%--    <c:if test="${MatrixRes!=null}">--%>
     <%--    </c:if>--%>

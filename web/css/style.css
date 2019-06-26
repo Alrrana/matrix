@@ -232,6 +232,16 @@ button:hover {
 	margin: 100px auto 50px;
 }
 
+
+.block1 {
+	position: relative;
+	display: block;
+	width: calc(100%);
+	overflow: hidden;
+	overflow-x: auto;
+	margin: 0px auto 50px;
+}
+
 .block #container {
 	position: relative;
 	display: inline-flex;

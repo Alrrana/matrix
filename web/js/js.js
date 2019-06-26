@@ -1,113 +1,230 @@
 //==============================
-function goA() {
+function sinit() {
+}
 
-    var row = $(document).find('input[name="row"]').val();
-    var col = $(document).find('input[name="col"]').val();
-    var container = document.getElementById("containerA");
-    while (container.hasChildNodes()) {
-        container.removeChild(container.lastChild);
+function init() {
+    sessionStorage.setItem("matrixAcols", 3);
+    sessionStorage.setItem("matrixArows", 3);
+    sessionStorage.setItem("matrixBcols", 3);
+    sessionStorage.setItem("matrixBrows", 3);
+    while (containerA.hasChildNodes()) {
+        containerA.removeChild(containerA.lastChild);
     }
-    if ($(document).find('input[name="row"]').val() !== "" && $(document).find('input[name="col"]').val() !== ""
-        && $(document).find('input[name="row"]').val() > 0 && $(document).find('input[name="col"]').val() > 0) {
+    while (containerB.hasChildNodes()) {
+        containerB.removeChild(containerB.lastChild);
+    }
 
-        $('#containerA').append('<div class="form"> ' +
-            '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-            '<button name="inputA" onclick="inpA()">Ввести матрицу</button>' +
-            '</form> '
-            + '</div>');
-        for (i = 0; i < col; i++) {
-            $('#containerA').append('<div class="item"></div>');
-        }
-        for (i = 0; i < row; i++) {
-            $('#containerA .item').each(function (index) {
-                $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + i + '" placeholder="_"></div>');
-            })
-        }
-        sessionStorage.setItem("matrixAcols", col);
-        sessionStorage.setItem("matrixArows", row);
-        // $('#containerA').append();}
+    for (let i = 0; i < 3; i++) {
+        $('#containerA').append('<div class="item"></div>');
+    }
+    for (let i = 0; i < 3; i++) {
+        $('#containerA .item').each(function (index) {
+            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+        })
+    }
+    for (let i = 0; i < 3; i++) {
+        $('#containerB').append('<div class="item"></div>');
+    }
 
-    } else {
-        $('#containerA').append(
-            '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
-            '</form> ');
+    for (let i = 0; i < 3; i++) {
+        $('#containerB .item').each(function (index) {
+            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+        })
     }
 }
 
+function plusRowA() {
+    var row = parseInt(sessionStorage.getItem("matrixArows")) + 1;
 
-function goB() {
-    var row = $(document).find('input[name="rowB"]').val();
-    var col = $(document).find('input[name="colB"]').val();
-    var container = document.getElementById("containerB");
-    while (container.hasChildNodes()) {
-        container.removeChild(container.lastChild);
-    }
-
-    if ($(document).find('input[name="rowB"]').val() !== "" && $(document).find('input[name="colB"]').val() !== ""
-        && $(document).find('input[name="rowB"]').val() > 0 && $(document).find('input[name="colB"]').val() > 0) {
-
-        sessionStorage.setItem("matrixBcols", col);
-        sessionStorage.setItem("matrixBrows", row);
-        $('#containerB').append('<div class="form"> ' +
-            '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-            '<button name="inputB" onclick="inpB()">Ввести матрицу</button>' +
-            '</form> '
-            + '</div>');
-        for (i = 0; i < col; i++) {
-            $('#containerB').append('<div class="item"></div>');
-        }
-        for (i = 0; i < row; i++) {
-
-
-            $('#containerB .item').each(function (index) {
-                $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
-                // alert("123");
-            })
-        }
-    } else {
-        $('#containerB').append(
-            '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
-            '</form> ');
-
-    }
+    $('#containerA .item').each(function (index) {
+        $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
+    })
+    sessionStorage.setItem("matrixArows", row);
 }
+
+function plusColA() {
+    var row = sessionStorage.getItem("matrixArows");
+    var col = parseInt(sessionStorage.getItem("matrixAcols")) + 1;
+    while (containerA.hasChildNodes()) {
+        containerA.removeChild(containerA.lastChild);
+    }
+
+    for (let i = 0; i < col; i++) {
+        $('#containerA').append('<div class="item"></div>');
+    }
+    for (let i = 0; i < row; i++) {
+        $('#containerA .item').each(function (index) {
+            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+        })
+    }
+    sessionStorage.setItem("matrixAcols", col);
+
+
+    // var t = '<div class="item">';
+    //
+    // for (i = 0; i < row; i++) {
+    //     t += '<div class=\"col\"><input type=\"text\" col=\"' + col - 1 + '\" row=\"' + i + '" placeholder="_"></div>';
+    // }
+    // t += '</div>';
+    // $('#containerA').append(t);
+}
+
+function minusColA() {
+    var col = parseInt(sessionStorage.getItem("matrixArows")) - 1;
+
+    containerA.removeChild(containerA.lastChild);
+
+    sessionStorage.setItem("matrixAcols", col);
+}
+
+function minusRowA() {
+    var row = parseInt(sessionStorage.getItem("matrixArows")) - 1;
+    var col = sessionStorage.getItem("matrixAcols");
+    while (containerA.hasChildNodes()) {
+        containerA.removeChild(containerA.lastChild);
+    }
+
+    for (let i = 0; i < col; i++) {
+        $('#containerA').append('<div class="item"></div>');
+    }
+    for (let i = 0; i < row; i++) {
+        $('#containerA .item').each(function (index) {
+            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+        })
+    }
+    sessionStorage.setItem("matrixArows", row);
+
+
+    // var t = '<div class="item">';
+    //
+    // for (i = 0; i < row; i++) {
+    //     t += '<div class=\"col\"><input type=\"text\" col=\"' + col - 1 + '\" row=\"' + i + '" placeholder="_"></div>';
+    // }
+    // t += '</div>';
+    // $('#containerA').append(t);
+}
+
+
+//=====================================================================================================
+
+
+function plusRowB() {
+    var row = parseInt(sessionStorage.getItem("matrixBrows")) + 1;
+
+    $('#containerB .item').each(function (index) {
+        $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
+    })
+    sessionStorage.setItem("matrixBrows", row);
+}
+
+function plusColB() {
+    var row = sessionStorage.getItem("matrixBrows");
+    var col = parseInt(sessionStorage.getItem("matrixBcols")) + 1;
+    while (containerB.hasChildNodes()) {
+        containerB.removeChild(containerB.lastChild);
+    }
+
+    for (let i = 0; i < col; i++) {
+        $('#containerB').append('<div class="item"></div>');
+    }
+    for (let i = 0; i < row; i++) {
+        $('#containerB .item').each(function (index) {
+            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+        })
+    }
+    sessionStorage.setItem("matrixBcols", col);
+
+
+    // var t = '<div class="item">';
+    //
+    // for (i = 0; i < row; i++) {
+    //     t += '<div class=\"col\"><input type=\"text\" col=\"' + col - 1 + '\" row=\"' + i + '" placeholder="_"></div>';
+    // }
+    // t += '</div>';
+    // $('#containerB').append(t);
+}
+
+function minusColB() {
+    var col = parseInt(sessionStorage.getItem("matrixBrows")) - 1;
+
+    containerB.removeChild(containerB.lastChild);
+
+    sessionStorage.setItem("matrixBcols", col);
+}
+
+function minusRowB() {
+    var row = parseInt(sessionStorage.getItem("matrixBrows")) - 1;
+    var col = sessionStorage.getItem("matrixBcols");
+    while (containerB.hasChildNodes()) {
+        containerB.removeChild(containerB.lastChild);
+    }
+
+    for (let i = 0; i < col; i++) {
+        $('#containerB').append('<div class="item"></div>');
+    }
+    for (let i = 0; i < row; i++) {
+        $('#containerB .item').each(function (index) {
+            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+        })
+    }
+    sessionStorage.setItem("matrixBrows", row);
+
+
+    // var t = '<div class="item">';
+    //
+    // for (i = 0; i < row; i++) {
+    //     t += '<div class=\"col\"><input type=\"text\" col=\"' + col - 1 + '\" row=\"' + i + '" placeholder="_"></div>';
+    // }
+    // t += '</div>';
+    // $('#containerB').append(t);
+}
+
+
+//=====================================================================================================
 
 function inpA() {
     var mas = [];
     var can = true;
+    var t = "";
 
     $('#containerA input').each(function () {
         if ($(this).attr("col") !== undefined) {
             if ($(this).val() === "") {
-                alert("Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col"));
-                can = false;
+                t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
+                // can = false;
+            } else {
+                mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
             }
-            mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
         }
     })
 
-    if (can) {
+    if (JSON.stringify(mas) === "[]") {
+        alert("No input");
+    } else {
         $('#forResponseA').val(JSON.stringify(mas));
     }
 }
 
 function inpB() {
     var mas = [];
-    var can = true;
-
+    var t = "";
     $('#containerB input').each(function () {
         if ($(this).attr("col") !== undefined) {
             if ($(this).val() === "") {
-                alert("Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col"));
-                can = false;
+                t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
+                // can = false;
+            } else {
+                mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
             }
-            mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
         }
     })
 
-    if (can) {
+    if (JSON.stringify(mas) === "[]") {
+        alert("No input");
+    } else {
         $('#forResponseB').val(JSON.stringify(mas));
     }
+
 }
 
 function multFunc() {
@@ -177,3 +294,79 @@ function subFunc() {
 //         container.appendChild(document.createElement("br"));
 //     }         
 // }
+
+//
+//
+// function goA() {
+//
+//     var row = sessionStorage.getItem("matrixAcols") + 1;
+//     var col = sessionStorage.getItem("matrixArows" + 1);
+//     while (container.hasChildNodes()) {
+//         container.removeChild(container.lastChild);
+//     }
+//     if ($(document).find('input[name="row"]').val() !== "" && $(document).find('input[name="col"]').val() !== ""
+//         && $(document).find('input[name="row"]').val() > 0 && $(document).find('input[name="col"]').val() > 0) {
+//
+//         $('#containerA').append('<div class="form"> ' +
+//             '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
+//             '<button name="inputA" onclick="inpA()">Ввести матрицу</button>' +
+//             '</form> '
+//             + '</div>');
+//         for (i = 0; i < col; i++) {
+//             $('#containerA').append('<div class="item"></div>');
+//         }
+//         for (i = 0; i < row; i++) {
+//             $('#containerA .item').each(function (index) {
+//                 $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + i + '" placeholder="_"></div>');
+//             })
+//         }
+//         sessionStorage.setItem("matrixAcols", col);
+//         sessionStorage.setItem("matrixArows", row);
+//         // $('#containerA').append();}
+//
+//     } else {
+//         $('#containerA').append(
+//             '<form action="input" method="post"> <input type="hidden" name="forResponseA" id="forResponseA"/>' +
+//             '</form> ');
+//     }
+// }
+//
+//
+// function plusB() {
+//     var row = sessionStorage.setItem("matrixBcols", 3) + 1;
+//
+//     var col = sessionStorage.setItem("matrixBrows", 3) + 1;
+//     var container = document.getElementById("containerB");
+//     while (container.hasChildNodes()) {
+//         container.removeChild(container.lastChild);
+//     }
+//
+//     if ($(document).find('input[name="rowB"]').val() !== "" && $(document).find('input[name="colB"]').val() !== ""
+//         && $(document).find('input[name="rowB"]').val() > 0 && $(document).find('input[name="colB"]').val() > 0) {
+//
+//         sessionStorage.setItem("matrixBcols", col);
+//         sessionStorage.setItem("matrixBrows", row);
+//         $('#containerB').append('<div class="form"> ' +
+//             '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
+//             '<button name="inputB" onclick="inpB()">Ввести матрицу</button>' +
+//             '</form> '
+//             + '</div>');
+//         for (i = 0; i < col; i++) {
+//             $('#containerB').append('<div class="item"></div>');
+//         }
+//         for (i = 0; i < row; i++) {
+//
+//
+//             $('#containerB .item').each(function (index) {
+//                 $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+//                 // alert("123");
+//             })
+//         }
+//     } else {
+//         $('#containerB').append(
+//             '<form action="input" method="post"> <input type="hidden" name="forResponseB" id="forResponseB"/>' +
+//             '</form> ');
+//
+//     }
+// }
+//
