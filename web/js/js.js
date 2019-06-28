@@ -19,7 +19,7 @@ function init() {
     }
     for (let i = 0; i < 3; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     for (let i = 0; i < 3; i++) {
@@ -28,16 +28,22 @@ function init() {
 
     for (let i = 0; i < 3; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
+    document.getElementById('inputA').style.visibility = 'hidden';
+    document.getElementById('inputB').style.visibility = 'hidden';
+    document.getElementById('sum').style.visibility = 'hidden';
+    document.getElementById('sub').style.visibility = 'hidden';
+    document.getElementById('mult').style.visibility = 'hidden';
+
 }
 
 function plusRowA() {
     var row = parseInt(sessionStorage.getItem("matrixArows")) + 1;
 
     $('#containerA .item').each(function (index) {
-        $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
+        $(this).append('<div class="col"><input onkeyup="inpA()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
     })
     sessionStorage.setItem("matrixArows", row);
 }
@@ -54,7 +60,7 @@ function plusColA() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixAcols", col);
@@ -89,7 +95,7 @@ function minusRowA() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixArows", row);
@@ -112,7 +118,7 @@ function plusRowB() {
     var row = parseInt(sessionStorage.getItem("matrixBrows")) + 1;
 
     $('#containerB .item').each(function (index) {
-        $(this).append('<div class="col"><input type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
+        $(this).append('<div class="col"><input onkeyup="inpB()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
     })
     sessionStorage.setItem("matrixBrows", row);
 }
@@ -129,7 +135,7 @@ function plusColB() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixBcols", col);
@@ -164,7 +170,7 @@ function minusRowB() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixBrows", row);
@@ -182,6 +188,100 @@ function minusRowB() {
 
 //=====================================================================================================
 
+function isEmpty(obj) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+function mascheck(input) {
+
+    var parsed = input.split('\"');
+    var col = parseInt(parsed[parsed.length - 2]) + 1;
+    var row = parseInt(parsed[parsed.length - 6]) + 1;
+    var res = new Array(row);
+    for (let i = 0; i < row; i++) {
+        res[i] = new Array(col);
+    }
+
+    let logic = false;
+    for (let i = 3; i < parsed.length; i += 12
+    ) {
+        if (parsed[i] === "")
+            return false;
+
+        try {
+            res[parsed[i + 4]][parsed[i + 8]] = parsed[i];
+        } catch (e) {
+            logic = true;
+        }
+    }
+    if (logic)
+        return false;
+    if (row > 1) {
+        var lastlen = res[0].length;
+        for (let c = 1; c < row; c++) {
+            if (lastlen != res[c].length) {
+                // alert("ALARM");
+                return false;
+            }
+        }
+    }
+
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            if (isEmpty(res[i][j]))
+            // alert("ALARM");
+                return false;
+        }
+    }
+
+    return true;
+    // alert(input + "\n col is " + col + "   row is" + row + "\n" + res);
+
+    // for (let c = 0; c < col; c++) {
+    //     let currentRows = 0;
+    //
+    //     for (let r = 0; r < row; r++) {
+    //
+    //         if (r * 8 + 3 + c * row < parsed.length) {
+    //             currentRows++;
+    //         }
+    //     }
+    //     if (currentRows < row) {
+    //         alert(" Oops currentRows = " + currentRows + " when rows = " + row)
+    //     }
+    // }
+
+
+    // if (res.length < (col ) * (row ))
+    // {
+    //     alert("Malo res.len="+res.length+" expLen="+(col ) * (row ))
+    // }
+    // if(res.length > (col ) * (row)){
+    //     alert("Mnogo")
+    // }
+
+    // let expCol = 0;
+    // for (let c = 3 + 4; c < parsed.length; c += 3 + 4) {
+    //     if (parsed[c]===col)
+    //     expCol++;
+    // }
+    // if (expCol !== col) {
+    //     alert("ALARM  expCol =" + expCol+" col ="+col)
+    // }
+    // let expRow = 0;
+    // for (let r = 3 + 8; r< parsed.length; r += 3 + 8) {
+    //     expRow++;
+    // }
+    // if (expRow !== row) {
+    //     alert("ALARM  expRow =" + expRow+" row ="+row)
+    // }
+}
+
+
 function inpA() {
     var mas = [];
     var can = true;
@@ -198,11 +298,22 @@ function inpA() {
         }
     })
 
+
     if (JSON.stringify(mas) === "[]") {
         alert("No input");
+        document.getElementById('inputA').style.visibility = 'hidden';
     } else {
-        $('#forResponseA').val(JSON.stringify(mas));
+        if (mascheck(JSON.stringify(mas))) {
+            $('#forResponseA').val(JSON.stringify(mas));
+            document.getElementById('inputA').style.visibility = 'visible';
+        } else {
+            document.getElementById('inputA').style.visibility = 'hidden';
+        }
     }
+    subFunc();
+    multFunc();
+    sumFunc();
+
 }
 
 function inpB() {
@@ -221,9 +332,16 @@ function inpB() {
 
     if (JSON.stringify(mas) === "[]") {
         alert("No input");
+        document.getElementById('inputB').style.visibility = 'hidden';
     } else {
-        $('#forResponseB').val(JSON.stringify(mas));
+        if (mascheck(JSON.stringify(mas))) {
+            $('#forResponseB').val(JSON.stringify(mas));
+            document.getElementById('inputB').style.visibility = 'visible';
+        } else {
+            document.getElementById('inputB').style.visibility = 'hidden';
+        }
     }
+
 
 }
 
@@ -240,9 +358,14 @@ function multFunc() {
         || (Acols === Bcols && Arows === Brows)) {
 
         $('#mult').val("yes");
+
+
+        document.getElementById('mult').style.visibility = 'visible';
+
     } else {
         alert("Умножение невозможно, так как матрицы разной размерности");
         $('#mult').val("no");
+        document.getElementById('mult').style.visibility = 'hidden';
     }
 }
 
@@ -257,8 +380,11 @@ function sumFunc() {
 
     if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
         (Acols === Bcols && Arows === Brows)) {
+        document.getElementById('sum').style.visibility = 'visible';
+
     } else {
-        alert("Сложение невозможно, так как матрицы разной размерности");
+        document.getElementById('sum').style.visibility = 'hidden';
+
     }
 }
 
@@ -273,8 +399,10 @@ function subFunc() {
     if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
         (Acols === Bcols && Arows === Brows)) {
 
+        document.getElementById('sub').style.visibility = 'visible';
+
     } else {
-        alert("Вычитание невозможно, так как матрицы разной размерности");
+        document.getElementById('sub').style.visibility = 'hidden';
     }
 }
 

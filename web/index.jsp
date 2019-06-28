@@ -46,7 +46,7 @@
             </div>
 
             <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
-                <button name="inputA" onclick="inpA()">Ввести матрицу</button>
+                <button name="inputA" id="inputA" onclick="inpA()">Ввести матрицу</button>
             </form>
 
         </div>
@@ -82,7 +82,7 @@
                 </c:forEach>
             </div>
             <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
-                <button name="inputB" onclick="inpB()">Ввести матрицу</button>
+                <button name="inputB" id="inputB" onclick="inpB()">Ввести матрицу</button>
 
             </form>
         </div>
@@ -98,14 +98,14 @@
         <div class="block1">
             <div id="containerRes">
                 <div class="form">
-                    <form action="sum" method="post"><input type="hidden" name="sum" id="sum"/>
-                        <button name="sum" onclick="sumFunc()">Sum</button>
+                    <form action="sum" method="post"><input type="hidden" name="sum" />
+                        <button name="sum" id="sum" onclick="sumFunc()">Sum</button>
                     </form>
-                    <form action="sub" method="post"><input type="hidden" name="sub" id="sub"/>
-                        <button name="sub" onclick="subFunc()">Subtract</button>
+                    <form action="sub" method="post"><input type="hidden" name="sub" />
+                        <button name="sub" id="sub" onclick="subFunc()">Subtract</button>
                     </form>
-                    <form action="mult" method="post"><input type="hidden" name="mult" id="mult"/>
-                        <button name="mult" onclick="multFunc()">Mult</button>
+                    <form action="mult" method="post"><input type="hidden" name="mult" />
+                        <button name="mult" id="mult" onclick="multFunc()">Mult</button>
                     </form>
                 </div>
 
