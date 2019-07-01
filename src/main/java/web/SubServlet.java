@@ -17,13 +17,14 @@ public class SubServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Integer Acols = (Integer) session.getAttribute("matrixAcols");
-        Integer Arows = (Integer) session.getAttribute("matrixArows");
-        Integer Bcols = (Integer) session.getAttribute("matrixBcols");
-        Integer Brows = (Integer) session.getAttribute("matrixBrows");
 
-        if ((Acols != null) && (Bcols != null) && (Arows != null) && (Brows != null) &&
-                ((Acols == Bcols && Arows == Brows))) {
+        Integer aCols = (Integer) session.getAttribute("matrixAcols");
+        Integer aRows = (Integer) session.getAttribute("matrixArows");
+        Integer bCols = (Integer) session.getAttribute("matrixBcols");
+        Integer bRows = (Integer) session.getAttribute("matrixBrows");
+
+        if ((aCols != null) && (bCols != null) && (aRows != null) && (bRows != null) &&
+                ((aCols .equals(bCols) && aRows .equals(bRows)))) {
 
 
             if (session.getAttribute("matrixA") != null && session.getAttribute("matrixB") != null) {

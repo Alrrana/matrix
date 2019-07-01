@@ -33,7 +33,9 @@
                 <button name="AplusRowA" onclick="plusRowA()">+ plusRowA</button>
                 <button name="AminusColA" onclick="minusColA()">- minusColA</button>
                 <button name="AminusRowA" onclick="minusRowA()">- minusRowA</button>
-                <button name="Clear" onclick="init()">Очистить</button>
+                <form action="clearMA" method="post"><input type="hidden"/>
+                    <button  onclick="clearM('#matrixA','Acols','Arows')">Очистить</button>
+                </form>
                 <%--            <button type="hidden" name="goA">Задать размерность</button>--%>
             </div>
             <div class="custom"
@@ -46,13 +48,19 @@
             </div>
 
             <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
-                <button name="inputA" id="inputA" onclick="inpA()">Ввести матрицу</button>
+                <button name="inputA" id="inputA" onclick="allChecks()">Ввести матрицу</button>
             </form>
 
         </div>
 
         <div class="block">
             <div id="containerA">
+                <form>
+                    <input type="hidden" name="Bcols" id="Bcols"/>
+                </form>
+                <form>
+                    <input type="hidden" name="Bcols" id="Brows"/>
+                </form>
 
                 <%--                <form action="input" method="post">--%>
                 <%--                    <input type="hidden" name="forResponseA" id="forResponseA"/>--%>
@@ -70,7 +78,9 @@
                 <button name="BplusRowB" onclick="plusRowB()">+ plusRowB</button>
                 <button name="BminusColB" onclick="minusColB()">- minusColB</button>
                 <button name="BminusRowB" onclick="minusRowB()">- minusRowB</button>
-                <button name="Clear" onclick="init()">Очистить</button>
+                <form action="clearMB" method="post"><input type="hidden"/>
+                    <button  onclick="clearM('#matrixB','Bcols','Brows')">Очистить</button>
+                </form>
                 <%--            <button name="plusB">Задать размерность</button>--%>
             </div>
             <div class="custom"
@@ -82,7 +92,7 @@
                 </c:forEach>
             </div>
             <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
-                <button name="inputB" id="inputB" onclick="inpB()">Ввести матрицу</button>
+                <button name="inputB" id="inputB" onclick="allChecks()">Ввести матрицу</button>
 
             </form>
         </div>
@@ -91,6 +101,12 @@
                 <%--                <form action="input" onkeyup="inpB()" method="post">--%>
                 <%--                    <input type="hidden" name="forResponseB" id="forResponseB"/>--%>
                 <%--                </form>--%>
+                <form>
+                    <input type="hidden" name="Acols" id="Acols"/>
+                </form>
+                <form>
+                    <input type="hidden" name="Acols" id="Arows"/>
+                </form>
             </div>
         </div>
     </div>
@@ -98,13 +114,13 @@
         <div class="block1">
             <div id="containerRes">
                 <div class="form">
-                    <form action="sum" method="post"><input type="hidden" name="sum" />
+                    <form action="sum" method="post"><input type="hidden" name="sum"/>
                         <button name="sum" id="sum" onclick="sumFunc()">Sum</button>
                     </form>
-                    <form action="sub" method="post"><input type="hidden" name="sub" />
+                    <form action="sub" method="post"><input type="hidden" name="sub"/>
                         <button name="sub" id="sub" onclick="subFunc()">Subtract</button>
                     </form>
-                    <form action="mult" method="post"><input type="hidden" name="mult" />
+                    <form action="mult" method="post"><input type="hidden" name="mult"/>
                         <button name="mult" id="mult" onclick="multFunc()">Mult</button>
                     </form>
                 </div>
@@ -127,6 +143,10 @@
     <%--    </c:if>--%>
     ${matrixA.printStr()}
     ${matrixB.printStr()}
+
+    <c:forEach items="${sessionScope}" var="attr">
+        ${attr.key}=${attr.value}<br>
+    </c:forEach>
 </div>
 
 </body>

@@ -23,6 +23,25 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>clearAServlet</servlet-name>
+        <servlet-class>web.ClearServletA</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>clearAServlet</servlet-name>
+        <url-pattern>/clearMA</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>clearBServlet</servlet-name>
+        <servlet-class>web.ClearServletB</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>clearBServlet</servlet-name>
+        <url-pattern>/clearMB</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>subServlet</servlet-name>
         <servlet-class>web.SubServlet</servlet-class>
     </servlet>

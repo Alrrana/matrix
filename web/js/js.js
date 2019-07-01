@@ -33,11 +33,21 @@ function init() {
     }
     document.getElementById('inputA').style.visibility = 'hidden';
     document.getElementById('inputB').style.visibility = 'hidden';
-    document.getElementById('sum').style.visibility = 'hidden';
-    document.getElementById('sub').style.visibility = 'hidden';
-    document.getElementById('mult').style.visibility = 'hidden';
+    subCheck();
+    multCheck();
+    sumCheck();
 
 }
+
+function clearM(matrixId, col, row) {
+
+    $(matrixId).val(null);
+    allChecks();
+    init();
+    sessionStorage.setItem(col, null);
+    sessionStorage.setItem(row, null);
+}
+
 
 function plusRowA() {
     var row = parseInt(sessionStorage.getItem("matrixArows")) + 1;
@@ -196,6 +206,97 @@ function isEmpty(obj) {
     return true;
 }
 
+function mascheckA(input) {
+
+    var parsed = input.split('\"');
+    var col = parseInt(parsed[parsed.length - 2]) + 1;
+    var row = parseInt(parsed[parsed.length - 6]) + 1;
+    var res = new Array(row);
+    for (let i = 0; i < row; i++) {
+        res[i] = new Array(col);
+    }
+
+    let logic = false;
+    for (let i = 3; i < parsed.length; i += 12
+    ) {
+        if (parsed[i] === "")
+            return false;
+
+        try {
+            res[parsed[i + 4]][parsed[i + 8]] = parsed[i];
+        } catch (e) {
+            logic = true;
+        }
+    }
+    if (logic)
+        return false;
+    if (row > 1) {
+        var lastlen = res[0].length;
+        for (let c = 1; c < row; c++) {
+            if (lastlen != res[c].length) {
+                // alert("ALARM");
+                return false;
+            }
+        }
+    }
+
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            if (isEmpty(res[i][j]))
+            // alert("ALARM");
+                return false;
+        }
+    }
+
+
+    return [true, col, row];
+}
+
+function mascheckB(input) {
+
+    var parsed = input.split('\"');
+    var col = parseInt(parsed[parsed.length - 2]) + 1;
+    var row = parseInt(parsed[parsed.length - 6]) + 1;
+    var res = new Array(row);
+    for (let i = 0; i < row; i++) {
+        res[i] = new Array(col);
+    }
+
+    let logic = false;
+    for (let i = 3; i < parsed.length; i += 12
+    ) {
+        if (parsed[i] === "")
+            return false;
+
+        try {
+            res[parsed[i + 4]][parsed[i + 8]] = parsed[i];
+        } catch (e) {
+            logic = true;
+        }
+    }
+    if (logic)
+        return false;
+    if (row > 1) {
+        var lastlen = res[0].length;
+        for (let c = 1; c < row; c++) {
+            if (lastlen != res[c].length) {
+                // alert("ALARM");
+                return false;
+            }
+        }
+    }
+
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            if (isEmpty(res[i][j]))
+            // alert("ALARM");
+                return false;
+        }
+    }
+
+    return [true, col, row];
+}
+
 function mascheck(input) {
 
     var parsed = input.split('\"');
@@ -303,16 +404,16 @@ function inpA() {
         alert("No input");
         document.getElementById('inputA').style.visibility = 'hidden';
     } else {
-        if (mascheck(JSON.stringify(mas))) {
+        var res = mascheckA(JSON.stringify(mas));
+        if (res[0]) {
+            sessionStorage.setItem("Acols", res[1]);
+            sessionStorage.setItem("Arows", res[2]);
             $('#forResponseA').val(JSON.stringify(mas));
             document.getElementById('inputA').style.visibility = 'visible';
         } else {
             document.getElementById('inputA').style.visibility = 'hidden';
         }
     }
-    subFunc();
-    multFunc();
-    sumFunc();
 
 }
 
@@ -334,7 +435,10 @@ function inpB() {
         alert("No input");
         document.getElementById('inputB').style.visibility = 'hidden';
     } else {
-        if (mascheck(JSON.stringify(mas))) {
+        var res = mascheckB(JSON.stringify(mas));
+        if (res[0]) {
+            sessionStorage.setItem("Bcols", res[1]);
+            sessionStorage.setItem("Brows", res[2]);
             $('#forResponseB').val(JSON.stringify(mas));
             document.getElementById('inputB').style.visibility = 'visible';
         } else {
@@ -345,11 +449,18 @@ function inpB() {
 
 }
 
+function allChecks() {
+    subCheck();
+    multCheck();
+    sumCheck();
+}
+
+
 function multFunc() {
-    var Acols = sessionStorage.getItem("matrixAcols");
-    var Arows = sessionStorage.getItem("matrixArows");
-    var Bcols = sessionStorage.getItem("matrixBcols");
-    var Brows = sessionStorage.getItem("matrixBrows");
+    var Acols = sessionStorage.getItem("Acols");
+    var Arows = sessionStorage.getItem("Arows");
+    var Bcols = sessionStorage.getItem("Bcols");
+    var Brows = sessionStorage.getItem("Brows");
 
     // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
@@ -360,26 +471,79 @@ function multFunc() {
         $('#mult').val("yes");
 
 
-        document.getElementById('mult').style.visibility = 'visible';
+    } else {
+
+        $('#mult').val("no");
+
+    }
+}
+
+function sumFunc() {
+    var Acols = sessionStorage.getItem("Acols");
+    var Arows = sessionStorage.getItem("Arows");
+    var Bcols = sessionStorage.getItem("Bcols");
+    var Brows = sessionStorage.getItem("Brows");
+    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
+
+    if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+        (Acols === Bcols && Arows === Brows)) {
+
 
     } else {
-        alert("Умножение невозможно, так как матрицы разной размерности");
+
+
+    }
+}
+
+function subFunc() {
+    var Acols = sessionStorage.getItem("Acols");
+    var Arows = sessionStorage.getItem("Arows");
+    var Bcols = sessionStorage.getItem("Bcols");
+    var Brows = sessionStorage.getItem("Brows");
+
+    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
+
+    if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+        (Acols === Bcols && Arows === Brows)) {
+
+
+    } else {
+
+    }
+}
+
+
+function multCheck() {
+    var Acols = sessionStorage.getItem("Acols");
+    var Arows = sessionStorage.getItem("Arows");
+    var Bcols = sessionStorage.getItem("Bcols");
+    var Brows = sessionStorage.getItem("Brows");
+
+    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
+
+    if ((Acols != null) && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+        (Acols === Brows) || (Arows === Bcols)
+        || (Acols === Bcols && Arows === Brows))) {
+
+        $('#mult').val("yes");
+        document.getElementById('mult').style.visibility = 'visible';
+    } else {
+
         $('#mult').val("no");
         document.getElementById('mult').style.visibility = 'hidden';
     }
 }
 
 
-function sumFunc() {
-    var Acols = sessionStorage.getItem("matrixAcols");
-    var Arows = sessionStorage.getItem("matrixArows");
-    var Bcols = sessionStorage.getItem("matrixBcols");
-    var Brows = sessionStorage.getItem("matrixBrows");
-
+function sumCheck() {
+    var Acols = sessionStorage.getItem("Acols");
+    var Arows = sessionStorage.getItem("Arows");
+    var Bcols = sessionStorage.getItem("Bcols");
+    var Brows = sessionStorage.getItem("Brows");
     // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
-    if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Bcols && Arows === Brows)) {
+    if ((Acols != null) && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+        (Acols === Bcols && Arows === Brows))) {
         document.getElementById('sum').style.visibility = 'visible';
 
     } else {
@@ -388,21 +552,22 @@ function sumFunc() {
     }
 }
 
-function subFunc() {
-    var Acols = sessionStorage.getItem("matrixAcols");
-    var Arows = sessionStorage.getItem("matrixArows");
-    var Bcols = sessionStorage.getItem("matrixBcols");
-    var Brows = sessionStorage.getItem("matrixBrows");
+function subCheck() {
+    var Acols = sessionStorage.getItem("Acols");
+    var Arows = sessionStorage.getItem("Arows");
+    var Bcols = sessionStorage.getItem("Bcols");
+    var Brows = sessionStorage.getItem("Brows");
 
     // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
-    if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Bcols && Arows === Brows)) {
+    if ((Acols != null) && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+        (Acols === Bcols && Arows === Brows))) {
 
         document.getElementById('sub').style.visibility = 'visible';
 
     } else {
         document.getElementById('sub').style.visibility = 'hidden';
+
     }
 }
 
