@@ -275,7 +275,7 @@ public class Matrix<ElType> {
 
 
                 for (int i = 0; i < B.getColumns(); i++) {
-                    for (int j = 0; j < B.getColumns(); j++) {
+                    for (int j = 0; j < B.getRows(); j++) {
                         c.get(i).add(a.get(i).get(j).sum(b.get(i).get(j)));
                     }
 
@@ -283,7 +283,7 @@ public class Matrix<ElType> {
 
                 C.setContent(c);
                 C.setColumns(B.getColumns());
-                C.setRows(B.getColumns());
+                C.setRows(B.getRows());
 
             } else {
                 System.out.print("Размерность матриц не совпадает");
@@ -311,7 +311,7 @@ public class Matrix<ElType> {
                     c.add(new ArrayList<>());
                 }
                 for (int i = 0; i < B.getColumns(); i++) {
-                    for (int j = 0; j < B.getColumns(); j++) {
+                    for (int j = 0; j < B.getRows(); j++) {
                         c.get(i).add(a.get(i).get(j).sub(b.get(i).get(j)));
                     }
 
@@ -319,7 +319,7 @@ public class Matrix<ElType> {
 
                 C.setContent(c);
                 C.setColumns(B.getColumns());
-                C.setRows(B.getColumns());
+                C.setRows(B.getRows());
 
             } else {
                 System.out.print("Размерность матриц не совпадает");
