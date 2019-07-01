@@ -12,37 +12,22 @@ import java.io.IOException;
 
 //@WebServlet(name = "InputServlet", urlPatterns = "/input")
 
-public class MultServlet extends HttpServlet {
+public class MultServlet extends OperationServlet {
 
     private OperationPossibilityChecker checker = new MultChecker();
 
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-
-        Integer aCols = (Integer) session.getAttribute("matrixAcols");
-        Integer aRows = (Integer) session.getAttribute("matrixArows");
-        Integer bCols = (Integer) session.getAttribute("matrixBcols");
-        Integer bRows = (Integer) session.getAttribute("matrixBrows");
-
-        if (!checker.isPossible(aCols, aRows, bCols, bRows)) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-            return;
-        }
-
-        String answer = request.getParameter("mult");
-        if ((session.getAttribute("matrixA") != null && session.getAttribute("matrixB") != null)
-        ) {
-            Matrix A = (Matrix) session.getAttribute("matrixA");
-            Matrix B = (Matrix) session.getAttribute("matrixB");
-            Matrix C = A.mult(B);
-            request.setAttribute("MatrixRes", C);
-            session.setAttribute("MatrixRes", C);
-        }
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
+
+
+    @Override
+    boolean operationIsPossible(Integer aCols, Integer aRows, Integer bCols, Integer bRows) {
+        return checker.isPossible(aCols, aRows, bCols, bRows);
+    }
+
+    @Override
+    Matrix doOperation(Matrix A, Matrix B) {
+        return A.mult(B);
+    }
+
 }
