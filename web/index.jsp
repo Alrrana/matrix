@@ -50,6 +50,9 @@
             <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
                 <button name="inputA" id="inputA" onclick="allChecks()">Ввести матрицу</button>
             </form>
+            <form action="input" method="post">
+                <button name="inputA" id="plusOneA" onclick="plusOneAF()">Плюс один ко всем ячейкам матрицы</button>
+            </form>
 
         </div>
 
@@ -95,6 +98,7 @@
                 <button name="inputB" id="inputB" onclick="allChecks()">Ввести матрицу</button>
 
             </form>
+
         </div>
         <div class="block">
             <div id="containerB">

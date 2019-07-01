@@ -31,7 +31,7 @@ function init() {
             $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
-    document.getElementById('inputA').style.visibility = 'hidden';
+    document.getElementById('inputA').style.visibility = 'hidden';  document.getElementById('plusOneA').style.visibility = 'visible';// ToDo
     document.getElementById('inputB').style.visibility = 'hidden';
     subCheck();
     multCheck();
@@ -402,16 +402,17 @@ function inpA() {
 
     if (JSON.stringify(mas) === "[]") {
         alert("No input");
-        document.getElementById('inputA').style.visibility = 'hidden';
+        document.getElementById('inputA').style.visibility = 'hidden';  document.getElementById('plusOneA').style.visibility = 'visible';// ToDo
     } else {
         var res = mascheckA(JSON.stringify(mas));
         if (res[0]) {
             sessionStorage.setItem("Acols", res[1]);
             sessionStorage.setItem("Arows", res[2]);
             $('#forResponseA').val(JSON.stringify(mas));
-            document.getElementById('inputA').style.visibility = 'visible';
+            document.getElementById('inputA').style.visibility = 'visible'; document.getElementById('plusOneA').style.visibility = 'visible';
+
         } else {
-            document.getElementById('inputA').style.visibility = 'hidden';
+            document.getElementById('inputA').style.visibility = 'hidden';  document.getElementById('plusOneA').style.visibility = 'visible';// ToDo
         }
     }
 
@@ -571,6 +572,42 @@ function subCheck() {
     }
 }
 
+function plusOneAF() {
+    input = $('#forResponseA').val();
+    var parsed = input.split('\"');
+    var col = parseInt(parsed[parsed.length - 2]) + 1;
+    var row = parseInt(parsed[parsed.length - 6]) + 1;
+    var res = new Array(row);
+    for (let i = 0; i < row; i++) {
+        res[i] = new Array(col);
+    }
+
+    for (let i = 3; i < parsed.length; i += 12
+    ) {
+        if (parsed[i] === "")
+            return false;
+
+        try {
+            res[parsed[i + 4]][parsed[i + 8]] = parsed[i];
+        } catch (e) {
+        }
+    }
+
+
+    for (let i = 0; i < col; i++)
+        for (let j = 0; j < row; j++) {
+            res[i][j] = String(parseInt(res[i][j]) + 1);
+        }
+
+
+    var mas = [];
+    for (let i = 0; i < col; i++)
+        for (let j = 0; j < row; j++) {
+            mas.push({value: res[i][j], row: j, col: i});
+        }
+    alert(mas);
+    $('#forResponseA').val(JSON.stringify(mas));
+}
 
 //==============================
 // function addFields(){

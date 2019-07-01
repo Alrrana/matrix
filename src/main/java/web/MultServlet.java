@@ -1,13 +1,10 @@
 package web;
 
-import MatrixModules.*;
-
+import MatrixModules.Matrix;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 //@WebServlet(name = "InputServlet", urlPatterns = "/input")
@@ -19,14 +16,13 @@ public class MultServlet extends OperationServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
-
     @Override
-    boolean operationIsPossible(Integer aCols, Integer aRows, Integer bCols, Integer bRows) {
-        return checker.isPossible(aCols, aRows, bCols, bRows);
+    protected OperationPossibilityChecker getChecker() {
+        return checker;
     }
 
     @Override
-    Matrix doOperation(Matrix A, Matrix B) {
+    protected Matrix doOperation(Matrix A, Matrix B) {
         return A.mult(B);
     }
 

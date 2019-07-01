@@ -23,6 +23,7 @@ public class MyDouble implements Numeric<Double> {
     public String toString() {
         return this.getValue().toString();
     }
+
     @Override
     public boolean equals(Numeric<Double> a) {
         if (this.getValue() == null || a.getValue() == null)
@@ -37,6 +38,7 @@ public class MyDouble implements Numeric<Double> {
     public Numeric<Double> sum(Numeric<Double> a) {
         return new MyDouble(this.getValue() + a.getValue());
     }
+
 
     @Override
     public Numeric<Double> sub(Numeric<Double> a) {

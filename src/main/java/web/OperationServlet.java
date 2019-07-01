@@ -12,7 +12,20 @@ import java.io.IOException;
 
 public abstract class OperationServlet extends HttpServlet {
 
+    /**
+     * Метод возвращает экземпляр интерфейса, поверяющего допустимость конкретной операции.
+     *
+     * @return экземпляр OperationPossibilityChecker
+     */
+    protected abstract OperationPossibilityChecker getChecker();
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
@@ -21,7 +34,7 @@ public abstract class OperationServlet extends HttpServlet {
         Integer bCols = (Integer) session.getAttribute("matrixBcols");
         Integer bRows = (Integer) session.getAttribute("matrixBrows");
 
-        if (!(operationIsPossible(aCols, aRows, bCols, bRows))) {
+        if (!(getChecker().isPossible(aCols, aRows, bCols, bRows))) {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
             return;
         }
@@ -38,12 +51,16 @@ public abstract class OperationServlet extends HttpServlet {
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
-    abstract boolean operationIsPossible(Integer aCols, Integer aRows, Integer bCols, Integer bRows);
-
-    boolean matrixNotNull(HttpSession session) {
+    private boolean matrixNotNull(HttpSession session) {
         return (session.getAttribute("matrixA") != null && session.getAttribute("matrixB") != null);
     }
-    abstract Matrix doOperation(Matrix A, Matrix B);
 
-
+    /**
+     * Метод инкапсулирует бинарную операцию над матрицами
+     *
+     * @param A первый операнд
+     * @param B второй операнд
+     * @return результат выполнения операции в виде экземпляра Matrix
+     */
+    protected abstract Matrix doOperation(Matrix A, Matrix B);
 }

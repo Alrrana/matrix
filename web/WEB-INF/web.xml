@@ -71,4 +71,18 @@
     </servlet-mapping>
 
 
+
+<!--    <filter>-->
+<!--        <filter-name>FilterDemo</filter-name>-->
+<!--        <filter-class>web.TestFilter</filter-class>-->
+<!--    </filter>-->
+
+<!--    <filter-mapping>-->
+<!--        <filter-name>FilterDemo</filter-name>-->
+<!--        <url-pattern>/filterDemo</url-pattern>-->
+<!--    </filter-mapping>-->
+
+
+
+
 </web-app>
