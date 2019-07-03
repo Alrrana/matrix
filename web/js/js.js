@@ -2,6 +2,7 @@
 function sinit() {
 }
 
+
 function init() {
     sessionStorage.setItem("matrixAcols", 3);
     sessionStorage.setItem("matrixArows", 3);
@@ -31,21 +32,24 @@ function init() {
             $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
-    document.getElementById('inputA').style.visibility = 'hidden';  document.getElementById('plusOneA').style.visibility = 'visible';// ToDo
+    document.getElementById('inputA').style.visibility = 'hidden';
     document.getElementById('inputB').style.visibility = 'hidden';
     subCheck();
     multCheck();
     sumCheck();
+    plusCheck("A");
+    plusCheck("B");
 
 }
 
-function clearM(matrixId, col, row) {
+function clearM(matrixId, col, row, plus) {
 
     $(matrixId).val(null);
-    allChecks();
-    init();
     sessionStorage.setItem(col, null);
     sessionStorage.setItem(row, null);
+    document.getElementById(plus).style.visibility = 'hidden';
+    allChecks();
+    init();
 }
 
 
@@ -402,17 +406,17 @@ function inpA() {
 
     if (JSON.stringify(mas) === "[]") {
         alert("No input");
-        document.getElementById('inputA').style.visibility = 'hidden';  document.getElementById('plusOneA').style.visibility = 'visible';// ToDo
+        document.getElementById('inputA').style.visibility = 'hidden';
     } else {
         var res = mascheckA(JSON.stringify(mas));
         if (res[0]) {
             sessionStorage.setItem("Acols", res[1]);
             sessionStorage.setItem("Arows", res[2]);
             $('#forResponseA').val(JSON.stringify(mas));
-            document.getElementById('inputA').style.visibility = 'visible'; document.getElementById('plusOneA').style.visibility = 'visible';
+            document.getElementById('inputA').style.visibility = 'visible';
 
         } else {
-            document.getElementById('inputA').style.visibility = 'hidden';  document.getElementById('plusOneA').style.visibility = 'visible';// ToDo
+            document.getElementById('inputA').style.visibility = 'hidden';
         }
     }
 
@@ -450,7 +454,9 @@ function inpB() {
 
 }
 
-function allChecks() {
+function allChecks(plus) {
+    plusCheck("A");
+    plusCheck("B");
     subCheck();
     multCheck();
     sumCheck();
@@ -466,8 +472,7 @@ function multFunc() {
     // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
     if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Brows) || (Arows === Bcols)
-        || (Acols === Bcols && Arows === Brows)) {
+        (Acols === Brows) || (Arows === Bcols)) {
 
         $('#mult').val("yes");
 
@@ -522,9 +527,8 @@ function multCheck() {
 
     // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
-    if ((Acols != null) && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Brows) || (Arows === Bcols)
-        || (Acols === Bcols && Arows === Brows))) {
+    if ((Acols != null) && (Acols !== "null")&&(Arows!=="null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+        (Acols === Brows) || (Arows === Bcols))) {
 
         $('#mult').val("yes");
         document.getElementById('mult').style.visibility = 'visible';
@@ -543,7 +547,7 @@ function sumCheck() {
     var Brows = sessionStorage.getItem("Brows");
     // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
-    if ((Acols != null) && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+    if ((Acols != null) && (Acols !== "null")&&(Arows!=="null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
         (Acols === Bcols && Arows === Brows))) {
         document.getElementById('sum').style.visibility = 'visible';
 
@@ -561,7 +565,7 @@ function subCheck() {
 
     // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
-    if ((Acols != null) && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+    if ((Acols != null)  && (Acols !== "null")&&(Arows!=="null")&& (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
         (Acols === Bcols && Arows === Brows))) {
 
         document.getElementById('sub').style.visibility = 'visible';
@@ -572,41 +576,33 @@ function subCheck() {
     }
 }
 
-function plusOneAF() {
-    input = $('#forResponseA').val();
-    var parsed = input.split('\"');
-    var col = parseInt(parsed[parsed.length - 2]) + 1;
-    var row = parseInt(parsed[parsed.length - 6]) + 1;
-    var res = new Array(row);
-    for (let i = 0; i < row; i++) {
-        res[i] = new Array(col);
-    }
+function plusCheck(plus) {
+    if (plus === "A") {
+        var Acols = sessionStorage.getItem("Acols");
+        var Arows = sessionStorage.getItem("Arows");
+        if  ((Acols != null)&&(Arows!=null) && (Acols !== "null")&&(Arows!=="null") ) {
+            document.getElementById('plusOneA').style.visibility = 'visible';
 
-    for (let i = 3; i < parsed.length; i += 12
-    ) {
-        if (parsed[i] === "")
-            return false;
+        } else {
+            document.getElementById('plusOneA').style.visibility = 'hidden';
 
-        try {
-            res[parsed[i + 4]][parsed[i + 8]] = parsed[i];
-        } catch (e) {
         }
     }
+    if (plus === "B") {
+        var Bcols = sessionStorage.getItem("Bcols");
+        var Brows = sessionStorage.getItem("Brows");
 
 
-    for (let i = 0; i < col; i++)
-        for (let j = 0; j < row; j++) {
-            res[i][j] = String(parseInt(res[i][j]) + 1);
+
+        if ((Bcols != null)&&(Brows!=null) && (Bcols !== "null")&&(Brows!=="null") ) {
+
+            document.getElementById('plusOneB').style.visibility = 'visible';
+
+        } else {
+            document.getElementById('plusOneB').style.visibility = 'hidden';
+
         }
-
-
-    var mas = [];
-    for (let i = 0; i < col; i++)
-        for (let j = 0; j < row; j++) {
-            mas.push({value: res[i][j], row: j, col: i});
-        }
-    alert(mas);
-    $('#forResponseA').val(JSON.stringify(mas));
+    }
 }
 
 //==============================

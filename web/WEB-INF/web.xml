@@ -3,16 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-<!--//input-->
-<!--    <servlet>-->
-<!--        <servlet-name>inputServlet</servlet-name>-->
-<!--        <servlet-class>web.InputServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>inputServlet</servlet-name>-->
-<!--        <url-pattern>/</url-pattern>-->
-<!--    </servlet-mapping>-->
-<!--OPERATIONS-->
+    <!--//input-->
+    <!--    <servlet>-->
+    <!--        <servlet-name>inputServlet</servlet-name>-->
+    <!--        <servlet-class>web.InputServlet</servlet-class>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>inputServlet</servlet-name>-->
+    <!--        <url-pattern>/</url-pattern>-->
+    <!--    </servlet-mapping>-->
+    <!--OPERATIONS-->
+    <display-name>Matrix</display-name>
+
+
     <servlet>
         <servlet-name>sumServlet</servlet-name>
         <servlet-class>web.SumServlet</servlet-class>
@@ -42,6 +45,25 @@
 
 
     <servlet>
+        <servlet-name>plusAServlet</servlet-name>
+        <servlet-class>web.PlusOneToA</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>plusAServlet</servlet-name>
+        <url-pattern>/plusMA</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>plusBServlet</servlet-name>
+        <servlet-class>web.PlusOneToB</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>plusBServlet</servlet-name>
+        <url-pattern>/plusMB</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>subServlet</servlet-name>
         <servlet-class>web.SubServlet</servlet-class>
     </servlet>
@@ -60,7 +82,9 @@
     </servlet-mapping>
 
 
-    <!--STATIC LInKS TO JS AND CSS-->
+    <!--STATIC LINKS TO JS AND CSS-->
+
+
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/js/*</url-pattern>
@@ -71,18 +95,39 @@
     </servlet-mapping>
 
 
-
-<!--    <filter>-->
-<!--        <filter-name>FilterDemo</filter-name>-->
-<!--        <filter-class>web.TestFilter</filter-class>-->
-<!--    </filter>-->
-
-<!--    <filter-mapping>-->
-<!--        <filter-name>FilterDemo</filter-name>-->
-<!--        <url-pattern>/filterDemo</url-pattern>-->
-<!--    </filter-mapping>-->
+    <!--==============================================================================================-->
 
 
+    <filter>
+        <filter-name>FilterDemo</filter-name>
+        <filter-class>web.TestFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>FilterDemo</filter-name>
+        <url-pattern>/plusMA</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>FilterDemo1</filter-name>
+        <filter-class>web.TestFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>FilterDemo1</filter-name>
+        <url-pattern>/plusMB</url-pattern>
+    </filter-mapping>
+
+<!--==============================================================================================-->
+
+
+    <listener>
+        <listener-class>web.TestListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>web.SessionListener</listener-class>
+    </listener>
 
 
 </web-app>

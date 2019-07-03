@@ -72,7 +72,10 @@ public class MatrixTypeDetector extends MatrixHelper {
 
 
     public Matrix gimmeMatrix(String a) {
-        String[][] res = JSONparser(a);
+       return gimmeMatrix( JSONparser(a));
+    }
+
+    public Matrix gimmeMatrix(String [][] res) {
         int n = defineType(res);
         Matrix A;
         switch (n) {

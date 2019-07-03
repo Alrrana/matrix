@@ -22,6 +22,7 @@ public class SumServlet extends OperationServlet {
 
     @Override
     protected Matrix doOperation(Matrix A, Matrix B) {
+
         return A.sum(B);
     }
 

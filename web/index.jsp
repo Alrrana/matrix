@@ -15,7 +15,7 @@
     <meta name="description" content="title"/>
     <meta name="keywords" content="title"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$Title$</title>
+    <title>Matrix Calculator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" link href="css/style.css"/>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
@@ -34,7 +34,7 @@
                 <button name="AminusColA" onclick="minusColA()">- minusColA</button>
                 <button name="AminusRowA" onclick="minusRowA()">- minusRowA</button>
                 <form action="clearMA" method="post"><input type="hidden"/>
-                    <button  onclick="clearM('#matrixA','Acols','Arows')">Очистить</button>
+                    <button  onclick="clearM('#matrixA','Acols','Arows','plusOneA')">Очистить</button>
                 </form>
                 <%--            <button type="hidden" name="goA">Задать размерность</button>--%>
             </div>
@@ -48,10 +48,10 @@
             </div>
 
             <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
-                <button name="inputA" id="inputA" onclick="allChecks()">Ввести матрицу</button>
+                <button name="inputA" id="inputA" onclick="allChecks('plusOneA')">Ввести матрицу</button>
             </form>
-            <form action="input" method="post">
-                <button name="inputA" id="plusOneA" onclick="plusOneAF()">Плюс один ко всем ячейкам матрицы</button>
+            <form action="plusMA" method="post">
+                <button name="plusOneA" id="plusOneA" >Плюс один ко всем ячейкам матрицы</button>
             </form>
 
         </div>
@@ -82,7 +82,7 @@
                 <button name="BminusColB" onclick="minusColB()">- minusColB</button>
                 <button name="BminusRowB" onclick="minusRowB()">- minusRowB</button>
                 <form action="clearMB" method="post"><input type="hidden"/>
-                    <button  onclick="clearM('#matrixB','Bcols','Brows')">Очистить</button>
+                    <button  onclick="clearM('#matrixB','Bcols','Brows','plusOneB')">Очистить</button>
                 </form>
                 <%--            <button name="plusB">Задать размерность</button>--%>
             </div>
@@ -95,10 +95,11 @@
                 </c:forEach>
             </div>
             <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
-                <button name="inputB" id="inputB" onclick="allChecks()">Ввести матрицу</button>
-
+                <button name="inputB" id="inputB" onclick="allChecks('plusOneB')">Ввести матрицу</button>
             </form>
-
+            <form action="plusMB" method="post">
+                <button name="plusOneB" id="plusOneB" >Плюс один ко всем ячейкам матрицы</button>
+            </form>
         </div>
         <div class="block">
             <div id="containerB">

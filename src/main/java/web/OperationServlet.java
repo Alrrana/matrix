@@ -43,15 +43,21 @@ public abstract class OperationServlet extends HttpServlet {
 
             Matrix A = (Matrix) session.getAttribute("matrixA");
             Matrix B = (Matrix) session.getAttribute("matrixB");
-            System.out.println(A.getContent()+"    "+B.getContent());
+//            System.out.println(A.getContent()+"    "+B.getContent());
             Matrix C = doOperation(A,B);
-            request.setAttribute("MatrixRes", C);
-            session.setAttribute("MatrixRes", C);
+
+            returnRes(request, session, C );
+
         }
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
-    private boolean matrixNotNull(HttpSession session) {
+    protected void returnRes(HttpServletRequest request, HttpSession session, Matrix c) {
+        request.setAttribute("MatrixRes", c);
+        session.setAttribute("MatrixRes", c);
+    }
+
+    protected boolean matrixNotNull(HttpSession session) {
         return (session.getAttribute("matrixA") != null && session.getAttribute("matrixB") != null);
     }
 
