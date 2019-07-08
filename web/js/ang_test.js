@@ -1,25 +1,9 @@
 var test = angular.module("test", []);
 test.controller("testController", function ($scope, $http) {
-    $scope.aRows = 0;
-    $scope.bRows = 0;
-    $scope.aCols = 0;
-    $scope.bCols = 0;
-
-    $scope.sumFunc = function () {
-        aRows = sessionStorage.getItem("Arows");
-        aRows = sessionStorage.getItem("Arows");
-        aRows = sessionStorage.getItem("Arows");
-        aRows = sessionStorage.getItem("Arows");
-
-        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows))) {
-            document.getElementById('sum').style.visibility = 'visible';
-
-        } else {
-            document.getElementById('sum').style.visibility = 'hidden';
-
-        }
-    }
+    $scope.aRow = 0;
+    $scope.bRow = 0;
+    $scope.aCol = 0;
+    $scope.bCol = 0;
 
 
     //==============================
@@ -44,7 +28,7 @@ test.controller("testController", function ($scope, $http) {
         }
         for (let i = 0; i < 3; i++) {
             $('#containerA .item').each(function (index) {
-                $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+                $(this).append('<input ng-keyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
             })
         }
         for (let i = 0; i < 3; i++) {
@@ -53,7 +37,7 @@ test.controller("testController", function ($scope, $http) {
 
         for (let i = 0; i < 3; i++) {
             $('#containerB .item').each(function (index) {
-                $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+                $(this).append('<input ng-keyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
             })
         }
         document.getElementById('inputA').style.visibility = 'hidden';
@@ -77,151 +61,185 @@ test.controller("testController", function ($scope, $http) {
     }
 
 
-    $scope.plusRowA = function () {
-        var row = parseInt(sessionStorage.getItem("matrixArows")) + 1;
+    $scope.inputAFunc = function () {
+        allChecks();
+        $http({
+            method: 'POST',
+            data: "A",
+            data: $('#forResponseA').val(),
+            url: "/input"
+        }).then(function success(response) {
+            $scope.message = response.getAttribute("MatrixRes");
+            alert(response.getAttribute("MatrixRes"));
+        }, function error(response) {
+            alert("Something went wrong")
+        });
+    }
+    $scope.inputBFunc = function () {
+        allChecks();
 
-        $('#containerA .item').each(function (index) {
-            $(this).append('<div class="col"><input onkeyup="inpA()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
-        })
-        sessionStorage.setItem("matrixArows", row);
     }
 
-    $scope.plusColA = function () {
-        var row = sessionStorage.getItem("matrixArows");
-        var col = parseInt(sessionStorage.getItem("matrixAcols")) + 1;
-        while (containerA.hasChildNodes()) {
-            containerA.removeChild(containerA.lastChild);
-        }
-
-        for (let i = 0; i < col; i++) {
-            $('#containerA').append('<div class="item"></div>');
-        }
-        for (let i = 0; i < row; i++) {
-            $('#containerA .item').each(function (index) {
-                $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
-            })
-        }
-        sessionStorage.setItem("matrixAcols", col);
-
-
-        // var t = '<div class="item">';
-        //
-        // for (i = 0; i < row; i++) {
-        //     t += '<div class=\"col\"><input type=\"text\" col=\"' + col - 1 + '\" row=\"' + i + '" placeholder="_"></div>';
-        // }
-        // t += '</div>';
-        // $('#containerA').append(t);
-    }
-
-    $scope.minusColA = function () {
-        var col = parseInt(sessionStorage.getItem("matrixArows")) - 1;
-
-        containerA.removeChild(containerA.lastChild);
-
-        sessionStorage.setItem("matrixAcols", col);
-    }
-
-    $scope.minusRowA = function () {
-        var row = parseInt(sessionStorage.getItem("matrixArows")) - 1;
-        var col = sessionStorage.getItem("matrixAcols");
-        while (containerA.hasChildNodes()) {
-            containerA.removeChild(containerA.lastChild);
-        }
-
-        for (let i = 0; i < col; i++) {
-            $('#containerA').append('<div class="item"></div>');
-        }
-        for (let i = 0; i < row; i++) {
-            $('#containerA .item').each(function (index) {
-                $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
-            })
-        }
-        sessionStorage.setItem("matrixArows", row);
-
-
-        // var t = '<div class="item">';
-        //
-        // for (i = 0; i < row; i++) {
-        //     t += '<div class=\"col\"><input type=\"text\" col=\"' + col - 1 + '\" row=\"' + i + '" placeholder="_"></div>';
-        // }
-        // t += '</div>';
-        // $('#containerA').append(t);
+    $scope.allChecks = function () {
+        plusCheck("A");
+        plusCheck("B");
+        subCheck();
+        multCheck();
+        sumCheck();
     }
 
 
-//=====================================================================================================
+    $scope.multFunc = function () {
+        $scope.aCol = sessionStorage.getItem("Acols");
+        $scope.aRow = sessionStorage.getItem("Arows");
+        $scope.bCol = sessionStorage.getItem("Bcols");
+        $scope.bRow = sessionStorage.getItem("Brows");
+
+        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
+
+        if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+            (Acols === Brows) || (Arows === Bcols)) {
+
+            $('#mult').val("yes");
 
 
-    $scope.plusRowB = function () {
-        var row = parseInt(sessionStorage.getItem("matrixBrows")) + 1;
+        } else {
 
-        $('#containerB .item').each(function (index) {
-            $(this).append('<div class="col"><input onkeyup="inpB()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
-        })
-        sessionStorage.setItem("matrixBrows", row);
+            $('#mult').val("no");
+
+        }
     }
 
-    $scope.plusColB = function () {
-        var row = sessionStorage.getItem("matrixBrows");
-        var col = parseInt(sessionStorage.getItem("matrixBcols")) + 1;
-        while (containerB.hasChildNodes()) {
-            containerB.removeChild(containerB.lastChild);
-        }
+    $scope.sumFunc = function () {
+        $scope.aCol = sessionStorage.getItem("Acols");
+        $scope.aRow = sessionStorage.getItem("Arows");
+        $scope.bCol = sessionStorage.getItem("Bcols");
+        $scope.bRow = sessionStorage.getItem("Brows");
 
-        for (let i = 0; i < col; i++) {
-            $('#containerB').append('<div class="item"></div>');
-        }
-        for (let i = 0; i < row; i++) {
-            $('#containerB .item').each(function (index) {
-                $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
-            })
-        }
-        sessionStorage.setItem("matrixBcols", col);
+        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+            (Acols === Bcols && Arows === Brows))) {
+            $http({
+                method: 'POST',
+                url: "/sum"
+            }).then(function success(response) {
+                $scope.message = response.getAttribute("MatrixRes");
+                alert(response.getAttribute("MatrixRes"));
+            }, function error(response) {
+                alert("Something went wrong")
+            });
 
+        } else {
+            document.getElementById('sum').style.visibility = 'hidden';
 
-        // var t = '<div class="item">';
-        //
-        // for (i = 0; i < row; i++) {
-        //     t += '<div class=\"col\"><input type=\"text\" col=\"' + col - 1 + '\" row=\"' + i + '" placeholder="_"></div>';
-        // }
-        // t += '</div>';
-        // $('#containerB').append(t);
+        }
     }
 
-    $scope.minusColB = function () {
-        var col = parseInt(sessionStorage.getItem("matrixBrows")) - 1;
 
-        containerB.removeChild(containerB.lastChild);
+    $scope.subFunc = function () {
+        $scope.aCol = sessionStorage.getItem("Acols");
+        $scope.aRow = sessionStorage.getItem("Arows");
+        $scope.bCol = sessionStorage.getItem("Bcols");
+        $scope.bRow = sessionStorage.getItem("Brows");
 
-        sessionStorage.setItem("matrixBcols", col);
+        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
+
+        if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+            (Acols === Bcols && Arows === Brows)) {
+
+
+        } else {
+
+        }
     }
 
-    $scope.minusRowB = function () {
-        var row = parseInt(sessionStorage.getItem("matrixBrows")) - 1;
-        var col = sessionStorage.getItem("matrixBcols");
-        while (containerB.hasChildNodes()) {
-            containerB.removeChild(containerB.lastChild);
-        }
 
-        for (let i = 0; i < col; i++) {
-            $('#containerB').append('<div class="item"></div>');
-        }
-        for (let i = 0; i < row; i++) {
-            $('#containerB .item').each(function (index) {
-                $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
-            })
-        }
-        sessionStorage.setItem("matrixBrows", row);
+    $scope.multCheck = function () {
+        $scope.aCol = sessionStorage.getItem("Acols");
+        $scope.aRow = sessionStorage.getItem("Arows");
+        $scope.bCol = sessionStorage.getItem("Bcols");
+        $scope.bRow = sessionStorage.getItem("Brows");
 
+        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
-        // var t = '<div class="item">';
-        //
-        // for (i = 0; i < row; i++) {
-        //     t += '<div class=\"col\"><input type=\"text\" col=\"' + col - 1 + '\" row=\"' + i + '" placeholder="_"></div>';
-        // }
-        // t += '</div>';
-        // $('#containerB').append(t);
+        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+            (Acols === Brows) || (Arows === Bcols))) {
+
+            $('#mult').val("yes");
+            document.getElementById('mult').style.visibility = 'visible';
+        } else {
+
+            $('#mult').val("no");
+            document.getElementById('mult').style.visibility = 'hidden';
+        }
     }
+
+
+    $scope.sumCheck = function () {
+        $scope.aCol = sessionStorage.getItem("Acols");
+        $scope.aRow = sessionStorage.getItem("Arows");
+        $scope.bCol = sessionStorage.getItem("Bcols");
+        $scope.bRow = sessionStorage.getItem("Brows");
+        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
+
+        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+            (Acols === Bcols && Arows === Brows))) {
+            document.getElementById('sum').style.visibility = 'visible';
+
+        } else {
+            document.getElementById('sum').style.visibility = 'hidden';
+
+        }
+    }
+
+    $scope.subCheck = function () {
+        $scope.aCol = sessionStorage.getItem("Acols");
+        $scope.aRow = sessionStorage.getItem("Arows");
+        $scope.bCol = sessionStorage.getItem("Bcols");
+        $scope.bRow = sessionStorage.getItem("Brows");
+
+        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
+
+        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
+            (Acols === Bcols && Arows === Brows))) {
+
+            document.getElementById('sub').style.visibility = 'visible';
+
+        } else {
+            document.getElementById('sub').style.visibility = 'hidden';
+
+        }
+    }
+
+    $scope.plusCheck = function (plus) {
+        if (plus === "A") {
+            $scope.aCol = sessionStorage.getItem("Acols");
+            $scope.aRow = sessionStorage.getItem("Arows");
+            if ((Acols != null) && (Arows != null) && (Acols !== "null") && (Arows !== "null")) {
+                document.getElementById('plusOneA').style.visibility = 'visible';
+
+            } else {
+                document.getElementById('plusOneA').style.visibility = 'hidden';
+
+            }
+        }
+        if (plus === "B") {
+            $scope.bCol = sessionStorage.getItem("Bcols");
+            $scope.bRow = sessionStorage.getItem("Brows");
+
+
+            if ((Bcols != null) && (Brows != null) && (Bcols !== "null") && (Brows !== "null")) {
+
+                document.getElementById('plusOneB').style.visibility = 'visible';
+
+            } else {
+                document.getElementById('plusOneB').style.visibility = 'hidden';
+
+            }
+        }
+    }
+
+
+    //=========================================================================
 
 
 //=====================================================================================================
@@ -436,6 +454,8 @@ test.controller("testController", function ($scope, $http) {
             if (res[0]) {
                 sessionStorage.setItem("Acols", res[1]);
                 sessionStorage.setItem("Arows", res[2]);
+                $scope.aRow = res[2];
+                $scope.aCol = res[1];
                 $('#forResponseA').val(JSON.stringify(mas));
                 document.getElementById('inputA').style.visibility = 'visible';
 
@@ -476,156 +496,6 @@ test.controller("testController", function ($scope, $http) {
         }
 
 
-    }
-
-    $scope.allChecks = function () {
-        plusCheck("A");
-        plusCheck("B");
-        subCheck();
-        multCheck();
-        sumCheck();
-    }
-
-
-    $scope.multFunc = function () {
-        aCol = sessionStorage.getItem("Acols");
-        aRow = sessionStorage.getItem("Arows");
-        bCol = sessionStorage.getItem("Bcols");
-        bRow = sessionStorage.getItem("Brows");
-
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-        if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Brows) || (Arows === Bcols)) {
-
-            $('#mult').val("yes");
-
-
-        } else {
-
-            $('#mult').val("no");
-
-        }
-    }
-
-    $scope.sumFunc = function () {
-        aCol = sessionStorage.getItem("Acols");
-        aRow = sessionStorage.getItem("Arows");
-        bCol = sessionStorage.getItem("Bcols");
-        bRow = sessionStorage.getItem("Brows");
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-        if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows)) {
-
-
-        } else {
-
-
-        }
-    }
-
-    $scope.subFunc = function () {
-        aCol = sessionStorage.getItem("Acols");
-        aRow = sessionStorage.getItem("Arows");
-        bCol = sessionStorage.getItem("Bcols");
-        bRow = sessionStorage.getItem("Brows");
-
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-        if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows)) {
-
-
-        } else {
-
-        }
-    }
-
-
-    $scope.multCheck = function () {
-        aCol = sessionStorage.getItem("Acols");
-        aRow = sessionStorage.getItem("Arows");
-        bCol = sessionStorage.getItem("Bcols");
-        bRow = sessionStorage.getItem("Brows");
-
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Brows) || (Arows === Bcols))) {
-
-            $('#mult').val("yes");
-            document.getElementById('mult').style.visibility = 'visible';
-        } else {
-
-            $('#mult').val("no");
-            document.getElementById('mult').style.visibility = 'hidden';
-        }
-    }
-
-
-    $scope.sumCheck = function () {
-        aCol = sessionStorage.getItem("Acols");
-        aRow = sessionStorage.getItem("Arows");
-        bCol = sessionStorage.getItem("Bcols");
-        bRow = sessionStorage.getItem("Brows");
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows))) {
-            document.getElementById('sum').style.visibility = 'visible';
-
-        } else {
-            document.getElementById('sum').style.visibility = 'hidden';
-
-        }
-    }
-
-    $scope.subCheck = function () {
-        aCol = sessionStorage.getItem("Acols");
-        aRow = sessionStorage.getItem("Arows");
-        bCol = sessionStorage.getItem("Bcols");
-        bRow = sessionStorage.getItem("Brows");
-
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows))) {
-
-            document.getElementById('sub').style.visibility = 'visible';
-
-        } else {
-            document.getElementById('sub').style.visibility = 'hidden';
-
-        }
-    }
-
-    $scope.plusCheck = function (plus) {
-        if (plus === "A") {
-            aCol = sessionStorage.getItem("Acols");
-            aRow = sessionStorage.getItem("Arows");
-            if ((Acols != null) && (Arows != null) && (Acols !== "null") && (Arows !== "null")) {
-                document.getElementById('plusOneA').style.visibility = 'visible';
-
-            } else {
-                document.getElementById('plusOneA').style.visibility = 'hidden';
-
-            }
-        }
-        if (plus === "B") {
-            bCol = sessionStorage.getItem("Bcols");
-            bRow = sessionStorage.getItem("Brows");
-
-
-            if ((Bcols != null) && (Brows != null) && (Bcols !== "null") && (Brows !== "null")) {
-
-                document.getElementById('plusOneB').style.visibility = 'visible';
-
-            } else {
-                document.getElementById('plusOneB').style.visibility = 'hidden';
-
-            }
-        }
     }
 
 

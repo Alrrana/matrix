@@ -10,9 +10,6 @@ import java.io.IOException;
 import java.util.Date;
 
 
-
-
-
 public class TestFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -29,7 +26,7 @@ public class TestFilter implements Filter {
 
         System.out.println("\n==============================================\n");
 
-        if(!(request instanceof HttpServletRequest)){
+        if (!(request instanceof HttpServletRequest)) {
             chain.doFilter(request, response);
             return;
         }
@@ -37,13 +34,16 @@ public class TestFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
 
-        Matrix matrixA = (Matrix) session.getAttribute("matrixA");
 
-        if (matrixA.getRows() > 1 || matrixA.getColumns() > 1) {
-            chain.doFilter(request, response);
-        } else {
-            System.out.println("Нельзя осуществитть операцию с матрицей размерности 1х1");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+
+        if (session.getAttribute("matrixA") != null ) {
+            Matrix matrixA = (Matrix) session.getAttribute("matrixA");
+            if (matrixA.getRows() > 1 || matrixA.getColumns() > 1) {
+                chain.doFilter(request, response);
+            } else {
+                System.out.println("Нельзя осуществитть операцию с матрицей размерности 1х1");
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            }
         }
     }
 

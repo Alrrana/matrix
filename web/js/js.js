@@ -21,7 +21,7 @@ function init() {
     }
     for (let i = 0; i < 3; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     for (let i = 0; i < 3; i++) {
@@ -30,35 +30,35 @@ function init() {
 
     for (let i = 0; i < 3; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     document.getElementById('inputA').style.visibility = 'hidden';
     document.getElementById('inputB').style.visibility = 'hidden';
-    subCheck();
-    multCheck();
-    sumCheck();
-    plusCheck("A");
-    plusCheck("B");
+    document.getElementById('mult').style.visibility = 'hidden';
+    document.getElementById('sub').style.visibility = 'hidden';
+    document.getElementById('sum').style.visibility = 'hidden';
+    document.getElementById('plusOneA').style.visibility = 'hidden';
+    document.getElementById('plusOneB').style.visibility = 'hidden';
 
 }
-
-function clearM(matrixId, col, row, plus) {
-
-    $(matrixId).val(null);
-    sessionStorage.setItem(col, null);
-    sessionStorage.setItem(row, null);
-    document.getElementById(plus).style.visibility = 'hidden';
-    allChecks();
-    init();
-}
+//
+// function clearM(matrixId, col, row, plus) {
+//
+//     $(matrixId).val(null);
+//     sessionStorage.setItem(col, null);
+//     sessionStorage.setItem(row, null);
+//     document.getElementById(plus).style.visibility = 'hidden';
+//     allChecks();
+//     init();
+// }
 
 
 function plusRowA() {
     var row = parseInt(sessionStorage.getItem("matrixArows")) + 1;
 
     $('#containerA .item').each(function (index) {
-        $(this).append('<div class="col"><input onkeyup="inpA()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
+        $(this).append('<div class="col"><input ng-keyup="inpA()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
     })
     sessionStorage.setItem("matrixArows", row);
 }
@@ -75,7 +75,7 @@ function plusColA() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixAcols", col);
@@ -110,7 +110,7 @@ function minusRowA() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input onkeyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixArows", row);
@@ -133,7 +133,7 @@ function plusRowB() {
     var row = parseInt(sessionStorage.getItem("matrixBrows")) + 1;
 
     $('#containerB .item').each(function (index) {
-        $(this).append('<div class="col"><input onkeyup="inpB()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
+        $(this).append('<div class="col"><input ng-keyup="inpB()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
     })
     sessionStorage.setItem("matrixBrows", row);
 }
@@ -150,7 +150,7 @@ function plusColB() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixBcols", col);
@@ -185,7 +185,7 @@ function minusRowB() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input onkeyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixBrows", row);
@@ -454,155 +454,3 @@ function inpB() {
 
 
 }
-
-function allChecks(plus) {
-    plusCheck("A");
-    plusCheck("B");
-    subCheck();
-    multCheck();
-    sumCheck();
-}
-
-
-function multFunc() {
-    var Acols = sessionStorage.getItem("Acols");
-    var Arows = sessionStorage.getItem("Arows");
-    var Bcols = sessionStorage.getItem("Bcols");
-    var Brows = sessionStorage.getItem("Brows");
-
-    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-    if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Brows) || (Arows === Bcols)) {
-
-        $('#mult').val("yes");
-
-
-    } else {
-
-        $('#mult').val("no");
-
-    }
-}
-
-function sumFunc() {
-    var Acols = sessionStorage.getItem("Acols");
-    var Arows = sessionStorage.getItem("Arows");
-    var Bcols = sessionStorage.getItem("Bcols");
-    var Brows = sessionStorage.getItem("Brows");
-    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-    if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Bcols && Arows === Brows)) {
-
-
-    } else {
-
-
-    }
-}
-
-function subFunc() {
-    var Acols = sessionStorage.getItem("Acols");
-    var Arows = sessionStorage.getItem("Arows");
-    var Bcols = sessionStorage.getItem("Bcols");
-    var Brows = sessionStorage.getItem("Brows");
-
-    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-    if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Bcols && Arows === Brows)) {
-
-
-    } else {
-
-    }
-}
-
-
-function multCheck() {
-    var Acols = sessionStorage.getItem("Acols");
-    var Arows = sessionStorage.getItem("Arows");
-    var Bcols = sessionStorage.getItem("Bcols");
-    var Brows = sessionStorage.getItem("Brows");
-
-    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-    if ((Acols != null) && (Acols !== "null")&&(Arows!=="null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Brows) || (Arows === Bcols))) {
-
-        $('#mult').val("yes");
-        document.getElementById('mult').style.visibility = 'visible';
-    } else {
-
-        $('#mult').val("no");
-        document.getElementById('mult').style.visibility = 'hidden';
-    }
-}
-
-
-function sumCheck() {
-    var Acols = sessionStorage.getItem("Acols");
-    var Arows = sessionStorage.getItem("Arows");
-    var Bcols = sessionStorage.getItem("Bcols");
-    var Brows = sessionStorage.getItem("Brows");
-    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-    if ((Acols != null) && (Acols !== "null")&&(Arows!=="null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Bcols && Arows === Brows))) {
-        document.getElementById('sum').style.visibility = 'visible';
-
-    } else {
-        document.getElementById('sum').style.visibility = 'hidden';
-
-    }
-}
-
-function subCheck() {
-    var Acols = sessionStorage.getItem("Acols");
-    var Arows = sessionStorage.getItem("Arows");
-    var Bcols = sessionStorage.getItem("Bcols");
-    var Brows = sessionStorage.getItem("Brows");
-
-    // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-    if ((Acols != null)  && (Acols !== "null")&&(Arows!=="null")&& (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-        (Acols === Bcols && Arows === Brows))) {
-
-        document.getElementById('sub').style.visibility = 'visible';
-
-    } else {
-        document.getElementById('sub').style.visibility = 'hidden';
-
-    }
-}
-
-function plusCheck(plus) {
-    if (plus === "A") {
-        var Acols = sessionStorage.getItem("Acols");
-        var Arows = sessionStorage.getItem("Arows");
-        if  ((Acols != null)&&(Arows!=null) && (Acols !== "null")&&(Arows!=="null") ) {
-            document.getElementById('plusOneA').style.visibility = 'visible';
-
-        } else {
-            document.getElementById('plusOneA').style.visibility = 'hidden';
-
-        }
-    }
-    if (plus === "B") {
-        var Bcols = sessionStorage.getItem("Bcols");
-        var Brows = sessionStorage.getItem("Brows");
-
-
-
-        if ((Bcols != null)&&(Brows!=null) && (Bcols !== "null")&&(Brows!=="null") ) {
-
-            document.getElementById('plusOneB').style.visibility = 'visible';
-
-        } else {
-            document.getElementById('plusOneB').style.visibility = 'hidden';
-
-        }
-    }
-}
-

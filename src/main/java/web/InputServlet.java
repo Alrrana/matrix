@@ -28,9 +28,11 @@ public class InputServlet extends HttpServlet {
 
         String mas;
         Matrix A = null;
-        if (request.getParameter("forResponseA") != null) {
-            mas = request.getParameter("forResponseA");
+        String test = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+        mas = test.substring(1);
+        if (test.substring(0, 0).equals("A")) {
             A = null;
+
             if (!mas.equals("")) {
                 A = matrixTypeDetector.gimmeMatrix(mas);
                 A.print();
@@ -41,21 +43,19 @@ public class InputServlet extends HttpServlet {
             session.setAttribute("matrixA", A);
         }
         Matrix B = null;
-        if (request.getParameter("forResponseB") != null) {
+        if (test.substring(0, 0).equals("B")) {
             mas = request.getParameter("forResponseB");
             B = null;
             if (!mas.equals("")) {
                 B = matrixTypeDetector.gimmeMatrix(mas);
                 B.print();
-                System.out.println(B.getColumns()+" "+ B.getRows());
+                System.out.println(B.getColumns() + " " + B.getRows());
                 session.setAttribute("matrixBrows", B.getRows());
                 session.setAttribute("matrixBcols", B.getColumns());
             }
             session.setAttribute("matrixB", B);
         }
 
-
-        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

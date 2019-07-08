@@ -48,8 +48,12 @@ public abstract class OperationServlet extends HttpServlet {
 
             returnRes(request, session, C );
 
+            response.setContentType("application/json");
+            response.resetBuffer();
+            response.getWriter().print(C.toString());
+
         }
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+       // request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     protected void returnRes(HttpServletRequest request, HttpSession session, Matrix c) {

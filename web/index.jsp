@@ -9,8 +9,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<html lang="en">
+<html ng-app="test" lang="en">
 <head>
+    <script type="text/javascript" src="js/angular.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="title"/>
     <meta name="keywords" content="title"/>
@@ -19,23 +20,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" link href="css/style.css"/>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/ang_test.js"></script>
     <script type="text/javascript" src="js/js.js"></script>
-    <script type="text/javascript" src="js/angular.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Play:400,700&display=swap&subset=cyrillic" rel="stylesheet">
 </head>
 <body onload="init()">
-<div class="wrapper">
+<div class="wrapper" ng-controller="testController">
     <div class="custom">
         <div class="form">
-
             <div class="custom">
 
                 <button name="AplusColA" onclick="plusColA()">+ plusColA</button>
                 <button name="AplusRowA" onclick="plusRowA()">+ plusRowA</button>
                 <button name="AminusColA" onclick="minusColA()">- minusColA</button>
                 <button name="AminusRowA" onclick="minusRowA()">- minusRowA</button>
-                <form action="clearMA" method="post"><input type="hidden"/>
-                    <button  onclick="clearM('#matrixA','Acols','Arows','plusOneA')">Очистить</button>
+                <form><input type="hidden"/>
+                    <button ng-click="clearM('#matrixA','Acols','Arows','plusOneA')">Очистить</button>
                 </form>
                 <%--            <button type="hidden" name="goA">Задать размерность</button>--%>
             </div>
@@ -48,11 +49,11 @@
                 </c:forEach>
             </div>
 
-            <form action="input" method="post"><input type="hidden" name="forResponseA" id="forResponseA"/>
-                <button name="inputA" id="inputA" onclick="allChecks('plusOneA')">Ввести матрицу</button>
+            <form><input type="hidden" name="forResponseA" id="forResponseA"/>
+                <button name="inputA" id="inputA" ng-click="inputAFunc()">Ввести матрицу</button>
             </form>
-            <form action="plusMA" method="post">
-                <button name="plusOneA" id="plusOneA" >Плюс один ко всем ячейкам матрицы</button>
+            <form>
+                <button name="plusOneA" id="plusOneA">Плюс один ко всем ячейкам матрицы</button>
             </form>
 
         </div>
@@ -66,7 +67,7 @@
                     <input type="hidden" name="Bcols" id="Brows"/>
                 </form>
 
-                <%--                <form action="input" method="post">--%>
+                <%--                <form >--%>
                 <%--                    <input type="hidden" name="forResponseA" id="forResponseA"/>--%>
                 <%--                </form>--%>
 
@@ -82,8 +83,8 @@
                 <button name="BplusRowB" onclick="plusRowB()">+ plusRowB</button>
                 <button name="BminusColB" onclick="minusColB()">- minusColB</button>
                 <button name="BminusRowB" onclick="minusRowB()">- minusRowB</button>
-                <form action="clearMB" method="post"><input type="hidden"/>
-                    <button  onclick="clearM('#matrixB','Bcols','Brows','plusOneB')">Очистить</button>
+                <form><input type="hidden"/>
+                    <button ng-click="clearM('#matrixB','Bcols','Brows','plusOneB')">Очистить</button>
                 </form>
                 <%--            <button name="plusB">Задать размерность</button>--%>
             </div>
@@ -95,16 +96,16 @@
                     <p>${List1.toString()}</p>
                 </c:forEach>
             </div>
-            <form action="input" method="post"><input type="hidden" name="forResponseB" id="forResponseB"/>
-                <button name="inputB" id="inputB" onclick="allChecks('plusOneB')">Ввести матрицу</button>
+            <form><input type="hidden" name="forResponseB" id="forResponseB"/>
+                <button name="inputB" id="inputB" ng-click="allChecks('plusOneB')">Ввести матрицу</button>
             </form>
-            <form action="plusMB" method="post">
-                <button name="plusOneB" id="plusOneB" >Плюс один ко всем ячейкам матрицы</button>
+            <form>
+                <button name="plusOneB" id="plusOneB">Плюс один ко всем ячейкам матрицы</button>
             </form>
         </div>
         <div class="block">
             <div id="containerB">
-                <%--                <form action="input" onkeyup="inpB()" method="post">--%>
+                <%--                <form >--%>
                 <%--                    <input type="hidden" name="forResponseB" id="forResponseB"/>--%>
                 <%--                </form>--%>
                 <form>
@@ -120,14 +121,14 @@
         <div class="block1">
             <div id="containerRes">
                 <div class="form">
-                    <form action="sum" method="post"><input type="hidden" name="sum"/>
-                        <button name="sum" id="sum" onclick="sumFunc()">Sum</button>
+
+                    <button name="sum" id="sum" ng-click="sumFunc()">Sum</button>
+
+                    <form><input type="hidden" name="sub"/>
+                        <button name="sub" id="sub" ng-click="subFunc()">Subtract</button>
                     </form>
-                    <form action="sub" method="post"><input type="hidden" name="sub"/>
-                        <button name="sub" id="sub" onclick="subFunc()">Subtract</button>
-                    </form>
-                    <form action="mult" method="post"><input type="hidden" name="mult"/>
-                        <button name="mult" id="mult" onclick="multFunc()">Mult</button>
+                    <form><input type="hidden" name="mult"/>
+                        <button name="mult" id="mult" ng-click="multFunc()">Mult</button>
                     </form>
                 </div>
 
@@ -146,10 +147,6 @@
     </div>
 
 
-
-
-
-
     <%--    <c:if test="${MatrixRes!=null}">--%>
     <%--    </c:if>--%>
     ${matrixA.printStr()}
@@ -159,6 +156,8 @@
         ${attr.key}=${attr.value}<br>
     </c:forEach>
 </div>
+
+</body>
 
 </body>
 </html>
