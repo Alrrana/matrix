@@ -20,6 +20,7 @@
     <link rel="stylesheet" link href="css/style.css"/>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="js/js.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Play:400,700&display=swap&subset=cyrillic" rel="stylesheet">
 </head>
 <body onload="init()">

@@ -3,6 +3,7 @@ function sinit() {
 }
 
 
+
 function init() {
     sessionStorage.setItem("matrixAcols", 3);
     sessionStorage.setItem("matrixArows", 3);
