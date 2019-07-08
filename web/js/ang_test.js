@@ -4,7 +4,8 @@ test.controller("testController", function ($scope, $http) {
     $scope.bRow = 0;
     $scope.aCol = 0;
     $scope.bCol = 0;
-
+    $scope.masA = '';
+    $scope.masB = '';
 
     //==============================
     function sinit() {
@@ -90,12 +91,6 @@ test.controller("testController", function ($scope, $http) {
 
 
     $scope.multFunc = function () {
-        $scope.aCol = sessionStorage.getItem("Acols");
-        $scope.aRow = sessionStorage.getItem("Arows");
-        $scope.bCol = sessionStorage.getItem("Bcols");
-        $scope.bRow = sessionStorage.getItem("Brows");
-
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
         if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
             (Acols === Brows) || (Arows === Bcols)) {
@@ -111,10 +106,6 @@ test.controller("testController", function ($scope, $http) {
     }
 
     $scope.sumFunc = function () {
-        $scope.aCol = sessionStorage.getItem("Acols");
-        $scope.aRow = sessionStorage.getItem("Arows");
-        $scope.bCol = sessionStorage.getItem("Bcols");
-        $scope.bRow = sessionStorage.getItem("Brows");
 
         if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
             (Acols === Bcols && Arows === Brows))) {
@@ -136,12 +127,6 @@ test.controller("testController", function ($scope, $http) {
 
 
     $scope.subFunc = function () {
-        $scope.aCol = sessionStorage.getItem("Acols");
-        $scope.aRow = sessionStorage.getItem("Arows");
-        $scope.bCol = sessionStorage.getItem("Bcols");
-        $scope.bRow = sessionStorage.getItem("Brows");
-
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
         if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
             (Acols === Bcols && Arows === Brows)) {
@@ -154,35 +139,23 @@ test.controller("testController", function ($scope, $http) {
 
 
     $scope.multCheck = function () {
-        $scope.aCol = sessionStorage.getItem("Acols");
-        $scope.aRow = sessionStorage.getItem("Arows");
-        $scope.bCol = sessionStorage.getItem("Bcols");
-        $scope.bRow = sessionStorage.getItem("Brows");
+     
+        if (($scope.aCol != null) && ($scope.aCol !== "null") && (Arows !== "null") && ($scope.bCol != null) && (($scope.aCol !== "") && ($scope.bCol !== "") && (Arows !== "") && ($scope.bRow !== "") &&
+            ($scope.aCol === $scope.bRow) || (Arows === $scope.bCol))) {
 
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Brows) || (Arows === Bcols))) {
-
-            $('#mult').val("yes");
             document.getElementById('mult').style.visibility = 'visible';
         } else {
 
-            $('#mult').val("no");
             document.getElementById('mult').style.visibility = 'hidden';
         }
     }
 
 
     $scope.sumCheck = function () {
-        $scope.aCol = sessionStorage.getItem("Acols");
-        $scope.aRow = sessionStorage.getItem("Arows");
-        $scope.bCol = sessionStorage.getItem("Bcols");
-        $scope.bRow = sessionStorage.getItem("Brows");
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
 
-        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows))) {
+        if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (($scope.aCol !== "") && ($scope.bCol !== "") && ($scope.aRow !== "") && ($scope.bRow !== "") &&
+            ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
+
             document.getElementById('sum').style.visibility = 'visible';
 
         } else {
@@ -192,29 +165,20 @@ test.controller("testController", function ($scope, $http) {
     }
 
     $scope.subCheck = function () {
-        $scope.aCol = sessionStorage.getItem("Acols");
-        $scope.aRow = sessionStorage.getItem("Arows");
-        $scope.bCol = sessionStorage.getItem("Bcols");
-        $scope.bRow = sessionStorage.getItem("Brows");
 
-        // alert(Acols + " " + Arows + "        " + Bcols + " " + Brows);
-
-        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows))) {
+        if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (($scope.aCol !== "") && ($scope.bCol !== "") && ($scope.aRow !== "") && ($scope.bRow !== "") &&
+            ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
 
             document.getElementById('sub').style.visibility = 'visible';
 
         } else {
             document.getElementById('sub').style.visibility = 'hidden';
-
         }
     }
 
     $scope.plusCheck = function (plus) {
         if (plus === "A") {
-            $scope.aCol = sessionStorage.getItem("Acols");
-            $scope.aRow = sessionStorage.getItem("Arows");
-            if ((Acols != null) && (Arows != null) && (Acols !== "null") && (Arows !== "null")) {
+            if (($scope.aCol !== 0) && ($scope.aRow !== 0)) {
                 document.getElementById('plusOneA').style.visibility = 'visible';
 
             } else {
@@ -223,11 +187,7 @@ test.controller("testController", function ($scope, $http) {
             }
         }
         if (plus === "B") {
-            $scope.bCol = sessionStorage.getItem("Bcols");
-            $scope.bRow = sessionStorage.getItem("Brows");
-
-
-            if ((Bcols != null) && (Brows != null) && (Bcols !== "null") && (Brows !== "null")) {
+            if (($scope.bCol !== 0) && ($scope.bRow !== 0)) {
 
                 document.getElementById('plusOneB').style.visibility = 'visible';
 
@@ -452,11 +412,9 @@ test.controller("testController", function ($scope, $http) {
         } else {
             var res = mascheckA(JSON.stringify(mas));
             if (res[0]) {
-                sessionStorage.setItem("Acols", res[1]);
-                sessionStorage.setItem("Arows", res[2]);
                 $scope.aRow = res[2];
                 $scope.aCol = res[1];
-                $('#forResponseA').val(JSON.stringify(mas));
+                $scope.masA = res;
                 document.getElementById('inputA').style.visibility = 'visible';
 
             } else {
@@ -486,9 +444,9 @@ test.controller("testController", function ($scope, $http) {
         } else {
             var res = mascheckB(JSON.stringify(mas));
             if (res[0]) {
-                sessionStorage.setItem("Bcols", res[1]);
-                sessionStorage.setItem("Brows", res[2]);
-                $('#forResponseB').val(JSON.stringify(mas));
+                $scope.bRow = res[2];
+                $scope.bCol = res[1];
+                $scope.masB = res;
                 document.getElementById('inputB').style.visibility = 'visible';
             } else {
                 document.getElementById('inputB').style.visibility = 'hidden';
