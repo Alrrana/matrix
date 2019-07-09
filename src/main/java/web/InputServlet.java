@@ -30,7 +30,7 @@ public class InputServlet extends HttpServlet {
         Matrix A = null;
         String test = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         mas = test.substring(1);
-        if (test.substring(0, 0).equals("A")) {
+        if (test.substring(0, 1).equals("A")) {
             A = null;
 
             if (!mas.equals("")) {
@@ -38,13 +38,20 @@ public class InputServlet extends HttpServlet {
                 A.print();
                 session.setAttribute("matrixArows", A.getRows());
                 session.setAttribute("matrixAcols", A.getColumns());
+
+
+                PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.print(A.toJSON());
+                out.flush();
             }
 
-            session.setAttribute("matrixA", A);
+
+            session.setAttribute("MatrixA", A);
         }
         Matrix B = null;
-        if (test.substring(0, 0).equals("B")) {
-            mas = request.getParameter("forResponseB");
+        if (test.substring(0, 1).equals("B")) {
             B = null;
             if (!mas.equals("")) {
                 B = matrixTypeDetector.gimmeMatrix(mas);
@@ -52,8 +59,14 @@ public class InputServlet extends HttpServlet {
                 System.out.println(B.getColumns() + " " + B.getRows());
                 session.setAttribute("matrixBrows", B.getRows());
                 session.setAttribute("matrixBcols", B.getColumns());
+
+                PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.print(B.toJSON());
+                out.flush();
             }
-            session.setAttribute("matrixB", B);
+            session.setAttribute("MatrixB", B);
         }
 
     }

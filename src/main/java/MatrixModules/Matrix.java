@@ -222,6 +222,23 @@ public class Matrix<ElType> {
         }
     }
 
+    public String toJSON() {
+        if (this.content == null) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+                builder.append("{\"value\":\"" + content.get(i).get(j).getValue().toString() + "\",\"row\":\"" + j + "\",\"col\":\"" + i + "\"}");
+            }
+            if (i != columns - 1)
+                builder.append(",");
+        }
+        builder.append("]");
+        return builder.toString();
+    }
+
     public String printStr(int num) {
         if (this.content == null) {
             return "";

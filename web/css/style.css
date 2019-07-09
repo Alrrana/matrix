@@ -4,6 +4,10 @@
 	outline: none;
 }
 
+table {
+    width: 50%;
+}
+
 body {
 	background: #0d0d0f;
 	color: #fff;

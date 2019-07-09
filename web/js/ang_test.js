@@ -1,16 +1,25 @@
 var test = angular.module("test", []);
 test.controller("testController", function ($scope, $http) {
+    $scope.aRowMax = [0, 1, 2];
+    $scope.bRowMax = [0, 1, 2];
+    $scope.aColMax = [0, 1, 2];
+    $scope.bColMax = [0, 1, 2];
     $scope.aRow = 0;
     $scope.bRow = 0;
     $scope.aCol = 0;
     $scope.bCol = 0;
     $scope.masA = '';
     $scope.masB = '';
+    $scope.successPushA = false;
+    $scope.successPushB = false;
 
     //==============================
     function sinit() {
     }
 
+    $scope.blabla = function (input) {
+        return input + 1;
+    }
 
     $scope.init = function () {
         sessionStorage.setItem("matrixAcols", 3);
@@ -29,7 +38,7 @@ test.controller("testController", function ($scope, $http) {
         }
         for (let i = 0; i < 3; i++) {
             $('#containerA .item').each(function (index) {
-                $(this).append('<input ng-keyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+                $(this).append('<input ng-keyup="checkInputContainerA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
             })
         }
         for (let i = 0; i < 3; i++) {
@@ -38,7 +47,7 @@ test.controller("testController", function ($scope, $http) {
 
         for (let i = 0; i < 3; i++) {
             $('#containerB .item').each(function (index) {
-                $(this).append('<input ng-keyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+                $(this).append('<input ng-keyup="checkInputContainerB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
             })
         }
         document.getElementById('inputA').style.visibility = 'hidden';
@@ -51,64 +60,102 @@ test.controller("testController", function ($scope, $http) {
 
     }
 
-    $scope.clearM = function (matrixId, col, row, plus) {
+    $scope.clearM = function (matrixId, plus) {
+        if (matrixId === "A") {
+            $scope.masA = '';
+            $scope.aRow = 0;
+            $scope.aCol = 0;
+            $scope.aRowMax = [0, 1, 2];
+            $scope.aColMax = [0, 1, 2];
 
-        $(matrixId).val(null);
-        sessionStorage.setItem(col, null);
-        sessionStorage.setItem(row, null);
+        }
+        if (matrixId === "B") {
+            $scope.masB = '';
+            $scope.bRow = 0;
+            $scope.bCol = 0;
+            $scope.bRowMax = [0, 1, 2];
+            $scope.bColMax = [0, 1, 2];
+        }
+
         document.getElementById(plus).style.visibility = 'hidden';
-        allChecks();
-        init();
-    }
-
-
-    $scope.inputAFunc = function () {
-        allChecks();
-        $http({
-            method: 'POST',
-            data: "A",
-            data: $('#forResponseA').val(),
-            url: "/input"
-        }).then(function success(response) {
-            $scope.message = response.getAttribute("MatrixRes");
-            alert(response.getAttribute("MatrixRes"));
-        }, function error(response) {
-            alert("Something went wrong")
-        });
-    }
-    $scope.inputBFunc = function () {
-        allChecks();
-
+        $scope.allChecks();
     }
 
     $scope.allChecks = function () {
-        plusCheck("A");
-        plusCheck("B");
-        subCheck();
-        multCheck();
-        sumCheck();
+        $scope.plusCheck("A");
+        $scope.plusCheck("B");
+        $scope.subCheck();
+        $scope.multCheck();
+        $scope.sumCheck();
+    }
+
+    $scope.inputAFunc = function () {
+
+        $http({
+            method: 'POST',
+            data: "A" + $scope.masA,
+            url: "/input"
+        }).then(function success(response) {
+            console.log(response);
+            $scope.successPushA = true;
+        }, function error(response) {
+            console.log(response);
+            $scope.successPushA = false;
+        });
+        $scope.allChecks();
+    }
+
+    $scope.inputBFunc = function () {
+
+        $http({
+            method: 'POST',
+            data: "B" + $scope.masB,
+            url: "/input"
+        }).then(function success(response) {
+            console.log(response);
+            $scope.successPushB = true;
+        }, function error(response) {
+            console.log(response);
+            $scope.successPushB = false;
+        });
+        $scope.allChecks();
     }
 
 
     $scope.multFunc = function () {
 
-        if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Brows) || (Arows === Bcols)) {
-
-            $('#mult').val("yes");
+        if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
+            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
 
 
         } else {
 
-            $('#mult').val("no");
 
         }
     }
 
+    $scope.multCheck = function () {
+
+        if ($scope.successPushA && $scope.successPushB &&
+            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
+            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
+
+            document.getElementById('mult').style.visibility = 'visible';
+        } else {
+
+            document.getElementById('mult').style.visibility = 'hidden';
+        }
+    }
+
+    //
+
+
     $scope.sumFunc = function () {
 
-        if ((Acols != null) && (Acols !== "null") && (Arows !== "null") && (Bcols != null) && ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows))) {
+        if ($scope.successPushA && $scope.successPushB &&
+            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
+                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
+
             $http({
                 method: 'POST',
                 url: "/sum"
@@ -128,33 +175,22 @@ test.controller("testController", function ($scope, $http) {
 
     $scope.subFunc = function () {
 
-        if ((Acols !== "") && (Bcols !== "") && (Arows !== "") && (Brows !== "") &&
-            (Acols === Bcols && Arows === Brows)) {
+        if ($scope.successPushA && $scope.successPushB &&
+            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
+                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
 
 
         } else {
 
-        }
-    }
-
-
-    $scope.multCheck = function () {
-     
-        if (($scope.aCol != null) && ($scope.aCol !== "null") && (Arows !== "null") && ($scope.bCol != null) && (($scope.aCol !== "") && ($scope.bCol !== "") && (Arows !== "") && ($scope.bRow !== "") &&
-            ($scope.aCol === $scope.bRow) || (Arows === $scope.bCol))) {
-
-            document.getElementById('mult').style.visibility = 'visible';
-        } else {
-
-            document.getElementById('mult').style.visibility = 'hidden';
         }
     }
 
 
     $scope.sumCheck = function () {
 
-        if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (($scope.aCol !== "") && ($scope.bCol !== "") && ($scope.aRow !== "") && ($scope.bRow !== "") &&
-            ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
+        if ($scope.successPushA && $scope.successPushB &&
+            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
+                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
 
             document.getElementById('sum').style.visibility = 'visible';
 
@@ -166,8 +202,9 @@ test.controller("testController", function ($scope, $http) {
 
     $scope.subCheck = function () {
 
-        if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (($scope.aCol !== "") && ($scope.bCol !== "") && ($scope.aRow !== "") && ($scope.bRow !== "") &&
-            ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
+        if ($scope.successPushA && $scope.successPushB &&
+            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
+                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
 
             document.getElementById('sub').style.visibility = 'visible';
 
@@ -178,7 +215,7 @@ test.controller("testController", function ($scope, $http) {
 
     $scope.plusCheck = function (plus) {
         if (plus === "A") {
-            if (($scope.aCol !== 0) && ($scope.aRow !== 0)) {
+            if ($scope.successPushA && ($scope.aCol !== 0) && ($scope.aRow !== 0)) {
                 document.getElementById('plusOneA').style.visibility = 'visible';
 
             } else {
@@ -187,7 +224,7 @@ test.controller("testController", function ($scope, $http) {
             }
         }
         if (plus === "B") {
-            if (($scope.bCol !== 0) && ($scope.bRow !== 0)) {
+            if ($scope.successPushB && ($scope.bCol !== 0) && ($scope.bRow !== 0)) {
 
                 document.getElementById('plusOneB').style.visibility = 'visible';
 
@@ -389,9 +426,8 @@ test.controller("testController", function ($scope, $http) {
     }
 
 
-    $scope.inpA = function () {
+    $scope.checkInputContainerA = function () {
         var mas = [];
-        var can = true;
         var t = "";
 
         $('#containerA input').each(function () {
@@ -414,7 +450,7 @@ test.controller("testController", function ($scope, $http) {
             if (res[0]) {
                 $scope.aRow = res[2];
                 $scope.aCol = res[1];
-                $scope.masA = res;
+                $scope.masA = JSON.stringify(mas);
                 document.getElementById('inputA').style.visibility = 'visible';
 
             } else {
@@ -424,7 +460,7 @@ test.controller("testController", function ($scope, $http) {
 
     }
 
-    $scope.inpB = function () {
+    $scope.checkInputContainerB = function () {
         var mas = [];
         var t = "";
         $('#containerB input').each(function () {
@@ -439,14 +475,14 @@ test.controller("testController", function ($scope, $http) {
         })
 
         if (JSON.stringify(mas) === "[]") {
-            alert("No input");
+            // alert("No input");
             document.getElementById('inputB').style.visibility = 'hidden';
         } else {
             var res = mascheckB(JSON.stringify(mas));
             if (res[0]) {
                 $scope.bRow = res[2];
                 $scope.bCol = res[1];
-                $scope.masB = res;
+                $scope.masB = JSON.stringify(mas);
                 document.getElementById('inputB').style.visibility = 'visible';
             } else {
                 document.getElementById('inputB').style.visibility = 'hidden';
@@ -454,6 +490,33 @@ test.controller("testController", function ($scope, $http) {
         }
 
 
+    }
+
+    $scope.plusColA = function () {
+        $scope.aColMax.push($scope.aColMax.length);
+    }
+    $scope.plusRowA = function () {
+        $scope.aRowMax.push($scope.aRowMax.length);
+    }
+    $scope.minusColA = function () {
+        $scope.aColMax.pop();
+    }
+    $scope.minusRowA = function () {
+        $scope.aRowMax.pop();
+    }
+
+
+    $scope.plusColB = function () {
+        $scope.bColMax.push($scope.bColMax.length);
+    }
+    $scope.plusRowB = function () {
+        $scope.bRowMax.push($scope.bRowMax.length);
+    }
+    $scope.minusColB = function () {
+        $scope.bColMax.pop();
+    }
+    $scope.minusRowB = function () {
+        $scope.bRowMax.pop();
     }
 
 

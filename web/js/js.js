@@ -17,11 +17,11 @@ function init() {
     }
 
     for (let i = 0; i < 3; i++) {
-        $('#containerA').append('<div class="item"></div>');
+        $('#containerA').append('<div class="item" ng-init="checkInputContainerA()"></div>');
     }
     for (let i = 0; i < 3; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input ng-keyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-change="checkInputContainerA()" ng-model="testModel" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     for (let i = 0; i < 3; i++) {
@@ -30,7 +30,7 @@ function init() {
 
     for (let i = 0; i < 3; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input ng-keyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="checkInputContainerB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     document.getElementById('inputA').style.visibility = 'hidden';
@@ -58,7 +58,7 @@ function plusRowA() {
     var row = parseInt(sessionStorage.getItem("matrixArows")) + 1;
 
     $('#containerA .item').each(function (index) {
-        $(this).append('<div class="col"><input ng-keyup="inpA()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
+        $(this).append('<div class="col"><input ng-change="checkInputContainerA()" ng-model="testModel" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
     })
     sessionStorage.setItem("matrixArows", row);
 }
@@ -75,7 +75,7 @@ function plusColA() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input ng-keyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-change="checkInputContainerA()" ng-model="testModel" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixAcols", col);
@@ -110,7 +110,7 @@ function minusRowA() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerA .item').each(function (index) {
-            $(this).append('<input ng-keyup="inpA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-change="checkInputContainerA()" ng-model="testModel" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixArows", row);
@@ -133,7 +133,7 @@ function plusRowB() {
     var row = parseInt(sessionStorage.getItem("matrixBrows")) + 1;
 
     $('#containerB .item').each(function (index) {
-        $(this).append('<div class="col"><input ng-keyup="inpB()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
+        $(this).append('<div class="col"><input ng-keyup="checkInputContainerB()" type="text" col="' + index + '" row="' + row + '" placeholder="_"></div>');
     })
     sessionStorage.setItem("matrixBrows", row);
 }
@@ -150,7 +150,7 @@ function plusColB() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input ng-keyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="checkInputContainerB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixBcols", col);
@@ -185,7 +185,7 @@ function minusRowB() {
     }
     for (let i = 0; i < row; i++) {
         $('#containerB .item').each(function (index) {
-            $(this).append('<input ng-keyup="inpB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
+            $(this).append('<input ng-keyup="checkInputContainerB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
         })
     }
     sessionStorage.setItem("matrixBrows", row);
@@ -388,69 +388,71 @@ function mascheck(input) {
 }
 
 
-function inpA() {
-    var mas = [];
-    var can = true;
-    var t = "";
-
-    $('#containerA input').each(function () {
-        if ($(this).attr("col") !== undefined) {
-            if ($(this).val() === "") {
-                t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
-                // can = false;
-            } else {
-                mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
-            }
-        }
-    })
-
-
-    if (JSON.stringify(mas) === "[]") {
-        alert("No input");
-        document.getElementById('inputA').style.visibility = 'hidden';
-    } else {
-        var res = mascheckA(JSON.stringify(mas));
-        if (res[0]) {
-            sessionStorage.setItem("Acols", res[1]);
-            sessionStorage.setItem("Arows", res[2]);
-            $('#forResponseA').val(JSON.stringify(mas));
-            document.getElementById('inputA').style.visibility = 'visible';
-
-        } else {
-            document.getElementById('inputA').style.visibility = 'hidden';
-        }
-    }
-
-}
-
-function inpB() {
-    var mas = [];
-    var t = "";
-    $('#containerB input').each(function () {
-        if ($(this).attr("col") !== undefined) {
-            if ($(this).val() === "") {
-                t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
-                // can = false;
-            } else {
-                mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
-            }
-        }
-    })
-
-    if (JSON.stringify(mas) === "[]") {
-        alert("No input");
-        document.getElementById('inputB').style.visibility = 'hidden';
-    } else {
-        var res = mascheckB(JSON.stringify(mas));
-        if (res[0]) {
-            sessionStorage.setItem("Bcols", res[1]);
-            sessionStorage.setItem("Brows", res[2]);
-            $('#forResponseB').val(JSON.stringify(mas));
-            document.getElementById('inputB').style.visibility = 'visible';
-        } else {
-            document.getElementById('inputB').style.visibility = 'hidden';
-        }
-    }
-
-
-}
+//
+//
+// function checkInputContainerA() {
+//     var mas = [];
+//     var can = true;
+//     var t = "";
+//
+//     $('#containerA input').each(function () {
+//         if ($(this).attr("col") !== undefined) {
+//             if ($(this).val() === "") {
+//                 t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
+//                 // can = false;
+//             } else {
+//                 mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
+//             }
+//         }
+//     })
+//
+//
+//     if (JSON.stringify(mas) === "[]") {
+//         alert("No input");
+//         document.getElementById('inputA').style.visibility = 'hidden';
+//     } else {
+//         var res = mascheckA(JSON.stringify(mas));
+//         if (res[0]) {
+//             sessionStorage.setItem("Acols", res[1]);
+//             sessionStorage.setItem("Arows", res[2]);
+//             $('#forResponseA').val(JSON.stringify(mas));
+//             document.getElementById('inputA').style.visibility = 'visible';
+//
+//         } else {
+//             document.getElementById('inputA').style.visibility = 'hidden';
+//         }
+//     }
+//
+// }
+//
+// function checkInputContainerB() {
+//     var mas = [];
+//     var t = "";
+//     $('#containerB input').each(function () {
+//         if ($(this).attr("col") !== undefined) {
+//             if ($(this).val() === "") {
+//                 t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
+//                 // can = false;
+//             } else {
+//                 mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
+//             }
+//         }
+//     })
+//
+//     if (JSON.stringify(mas) === "[]") {
+//         alert("No input");
+//         document.getElementById('inputB').style.visibility = 'hidden';
+//     } else {
+//         var res = mascheckB(JSON.stringify(mas));
+//         if (res[0]) {
+//             sessionStorage.setItem("Bcols", res[1]);
+//             sessionStorage.setItem("Brows", res[2]);
+//             $('#forResponseB').val(JSON.stringify(mas));
+//             document.getElementById('inputB').style.visibility = 'visible';
+//         } else {
+//             document.getElementById('inputB').style.visibility = 'hidden';
+//         }
+//     }
+//
+//
+// }
