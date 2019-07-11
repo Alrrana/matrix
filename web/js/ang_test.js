@@ -10,8 +10,26 @@ test.controller("testController", function ($scope, $http) {
     $scope.bCol = 0;
     $scope.masA = '';
     $scope.masB = '';
+
+
+    $scope.resRowMax = [0, 1, 2];
+    $scope.resColMax = [0, 1, 2];
+    $scope.masRes = '';
+    $scope.successMult = false;
+    $scope.successSum = false;
+    $scope.successSub = false;
+
     $scope.successPushA = false;
     $scope.successPushB = false;
+
+
+    $scope.matrixA = '';
+    $scope.matrixRes = '';
+    $scope.matrixB = '';
+
+    $scope.lenmatrixA = [0];
+    $scope.lenmatrixRes = [0];
+    $scope.lenmatrixB = [0];
 
     //==============================
     function sinit() {
@@ -21,50 +39,48 @@ test.controller("testController", function ($scope, $http) {
         return input + 1;
     }
 
-    $scope.init = function () {
-        sessionStorage.setItem("matrixAcols", 3);
-        sessionStorage.setItem("matrixArows", 3);
-        sessionStorage.setItem("matrixBcols", 3);
-        sessionStorage.setItem("matrixBrows", 3);
-        while (containerA.hasChildNodes()) {
-            containerA.removeChild(containerA.lastChild);
+    $scope.setLen = function (mas, n) {
+        while (mas.length > 1) {
+            mas.pop();
         }
-        while (containerB.hasChildNodes()) {
-            containerB.removeChild(containerB.lastChild);
+        while (mas.length < n) {
+            mas.push(mas.length);
         }
-
-        for (let i = 0; i < 3; i++) {
-            $('#containerA').append('<div class="item"></div>');
-        }
-        for (let i = 0; i < 3; i++) {
-            $('#containerA .item').each(function (index) {
-                $(this).append('<input ng-keyup="checkInputContainerA()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
-            })
-        }
-        for (let i = 0; i < 3; i++) {
-            $('#containerB').append('<div class="item"></div>');
-        }
-
-        for (let i = 0; i < 3; i++) {
-            $('#containerB .item').each(function (index) {
-                $(this).append('<input ng-keyup="checkInputContainerB()" type="text" col="' + index + '" row="' + i + '" placeholder="_">');
-            })
-        }
-        document.getElementById('inputA').style.visibility = 'hidden';
-        document.getElementById('inputB').style.visibility = 'hidden';
-        subCheck();
-        multCheck();
-        sumCheck();
-        plusCheck("A");
-        plusCheck("B");
-
     }
+
+    $scope.parser = function (input) {
+        var parsed = input.split('\"');
+        var col = parseInt(parsed[parsed.length - 2]) + 1;
+        var row = parseInt(parsed[parsed.length - 6]) + 1;
+        var res = new Array(col);
+        for (let i = 0; i < col; i++) {
+            res[i] = new Array(row);
+        }
+        for (let i = 3; i < parsed.length; i += 12
+        ) {
+            res[parsed[i + 8]][parsed[i + 4]] = parsed[i];
+        }
+
+        let resStr = [];
+        for (let j = 0; j < col; j++) {
+            let str = "";
+            for (let i = 0; i < row; i++) {
+                str += res[j][i] + " ";
+            }
+            resStr.push(str);
+        }
+
+        return resStr;
+    };
+
 
     $scope.clearM = function (matrixId, plus) {
         if (matrixId === "A") {
             $scope.masA = '';
             $scope.aRow = 0;
+            sessionStorage.setItem("matrixArows", aRow);
             $scope.aCol = 0;
+            sessionStorage.setItem("matrixAcols", aCol);
             $scope.aRowMax = [0, 1, 2];
             $scope.aColMax = [0, 1, 2];
 
@@ -72,7 +88,9 @@ test.controller("testController", function ($scope, $http) {
         if (matrixId === "B") {
             $scope.masB = '';
             $scope.bRow = 0;
+            sessionStorage.setItem("matrixBrows", bRow);
             $scope.bCol = 0;
+            sessionStorage.setItem("matrixBcols", bCol);
             $scope.bRowMax = [0, 1, 2];
             $scope.bColMax = [0, 1, 2];
         }
@@ -97,6 +115,13 @@ test.controller("testController", function ($scope, $http) {
             url: "/input"
         }).then(function success(response) {
             console.log(response);
+            sessionStorage.setItem("matrixArows", $scope.aRow);
+            sessionStorage.setItem("matrixAcols", $scope.aCol);
+
+            $scope.setLen($scope.lenmatrixA, $scope.aCol);
+            $scope.matrixA = $scope.parser($scope.masA);
+            sessionStorage.setItem("masA", $scope.masA);
+
             $scope.successPushA = true;
         }, function error(response) {
             console.log(response);
@@ -113,6 +138,13 @@ test.controller("testController", function ($scope, $http) {
             url: "/input"
         }).then(function success(response) {
             console.log(response);
+            sessionStorage.setItem("matrixBrows", $scope.bRow);
+            sessionStorage.setItem("matrixBcols", $scope.bCol);
+
+            $scope.setLen($scope.lenmatrixB, $scope.bCol);
+            $scope.matrixB = $scope.parser($scope.masB);
+            sessionStorage.setItem("masB", $scope.masB);
+
             $scope.successPushB = true;
         }, function error(response) {
             console.log(response);
@@ -122,11 +154,95 @@ test.controller("testController", function ($scope, $http) {
     }
 
 
+
+
+    $scope.plusOneA = function () {
+
+        if ($scope.successPushA && ($scope.aCol !== 0) && ($scope.aRow !== 0)) {
+
+            $http({
+                method: 'POST',
+                data: $scope.masA,
+                url: "/plusMA"
+            }).then(function success(response) {
+                $scope.masA = JSON.stringify(response.data);
+
+                $scope.matrixA = $scope.parser($scope.masA);
+                sessionStorage.setItem("masA", $scope.masA);
+
+                console.log(response);
+            }, function error(response) {
+                console.log(response);
+            });
+        } else {
+
+        }
+    }
+
+    $scope.plusOneB = function () {
+
+        if ($scope.successPushA && ($scope.bCol !== 0) && ($scope.bRow !== 0)) {
+
+            $http({
+                method: 'POST',
+                data: $scope.masB,
+                url: "/plusMB"
+            }).then(function success(response) {
+                $scope.masB = JSON.stringify(response.data);
+
+                $scope.matrixB = $scope.parser($scope.masB);
+                sessionStorage.setItem("masB", $scope.masB);
+
+                console.log(response);
+            }, function error(response) {
+                console.log(response);
+            });
+        } else {
+
+        }
+    }
+
+
+
+    //=========================== operations ===========================================================
+    //
+    // $scope.stringifier = function(input){
+    //     var mas = "";
+    //     $(input).each(function () {
+    //         if ($(this).attr("col") !== undefined) {
+    //             if ($(this).val() === "") {
+    //                 t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
+    //                 // can = false;
+    //             } else {
+    //                 mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
+    //             }
+    //         }
+    //     })
+    // };
+
+
     $scope.multFunc = function () {
 
         if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
             ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
 
+            $http({
+                method: 'POST',
+                data: $scope.masA + "@" + $scope.masB,
+                url: "/mult"
+            }).then(function success(response) {
+                $scope.masRes = JSON.stringify(response.data);
+                console.log(response);
+
+                $scope.setLen($scope.lenmatrixRes, $scope.aCol); // ToDo
+                $scope.matrixRes = $scope.parser($scope.masRes);
+                sessionStorage.setItem("masRes", $scope.masRes);
+
+                $scope.successMult = true;
+            }, function error(response) {
+                console.log(response);
+                $scope.successMult = false;
+            });
 
         } else {
 
@@ -134,18 +250,6 @@ test.controller("testController", function ($scope, $http) {
         }
     }
 
-    $scope.multCheck = function () {
-
-        if ($scope.successPushA && $scope.successPushB &&
-            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
-            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
-
-            document.getElementById('mult').style.visibility = 'visible';
-        } else {
-
-            document.getElementById('mult').style.visibility = 'hidden';
-        }
-    }
 
     //
 
@@ -158,12 +262,20 @@ test.controller("testController", function ($scope, $http) {
 
             $http({
                 method: 'POST',
+                data: $scope.masA + "@" + $scope.masB,
                 url: "/sum"
             }).then(function success(response) {
-                $scope.message = response.getAttribute("MatrixRes");
-                alert(response.getAttribute("MatrixRes"));
+                $scope.masRes = JSON.stringify(response.data);
+                console.log(response);
+
+                $scope.setLen($scope.lenmatrixRes, $scope.aCol); // ToDo
+                $scope.matrixRes = $scope.parser($scope.masRes);
+                sessionStorage.setItem("masRes", $scope.masRes);
+
+                $scope.successSum = true;
             }, function error(response) {
-                alert("Something went wrong")
+                console.log(response);
+                $scope.successSum = false;
             });
 
         } else {
@@ -179,9 +291,39 @@ test.controller("testController", function ($scope, $http) {
             ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
                 ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
 
+            $http({
+                method: 'POST',
+                data: $scope.masA + "@" + $scope.masB,
+                url: "/sub"
+            }).then(function success(response) {
+                $scope.masRes = JSON.stringify(response.data);
+                console.log(response);
 
+                $scope.setLen($scope.lenmatrixRes, $scope.aCol); // ToDo
+                $scope.matrixRes = $scope.parser($scope.masRes);
+                sessionStorage.setItem("masRes", $scope.masRes);
+
+                $scope.successSub = true;
+            }, function error(response) {
+                console.log(response);
+                $scope.successSub = false;
+            });
         } else {
 
+        }
+    }
+
+
+    $scope.multCheck = function () {
+
+        if ($scope.successPushA && $scope.successPushB &&
+            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
+            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
+
+            document.getElementById('mult').style.visibility = 'visible';
+        } else {
+
+            document.getElementById('mult').style.visibility = 'hidden';
         }
     }
 
@@ -236,9 +378,11 @@ test.controller("testController", function ($scope, $http) {
     }
 
 
+
+
     //=========================================================================
 
-
+//input helpers
 //=====================================================================================================
 
     function isEmpty(obj) {
@@ -492,6 +636,10 @@ test.controller("testController", function ($scope, $http) {
 
     }
 
+
+    // input field change
+
+
     $scope.plusColA = function () {
         $scope.aColMax.push($scope.aColMax.length);
     }
@@ -519,5 +667,45 @@ test.controller("testController", function ($scope, $http) {
         $scope.bRowMax.pop();
     }
 
+
+    // init
+
+
+    var init = function () {
+        if (sessionStorage.getItem("matrixArows") != null && sessionStorage.getItem("matrixArows") !== "null")
+            $scope.aRow = parseInt(sessionStorage.getItem("matrixArows"));
+
+        if (sessionStorage.getItem("matrixBrows") != null && sessionStorage.getItem("matrixBrows") !== "null")
+            $scope.bRow = parseInt(sessionStorage.getItem("matrixBrows"));
+
+        if (sessionStorage.getItem("matrixAcols") != null && sessionStorage.getItem("matrixAcols") !== "null")
+            $scope.aCol = parseInt(sessionStorage.getItem("matrixAcols"));
+
+        if (sessionStorage.getItem("matrixBcols") != null && sessionStorage.getItem("matrixBcols") !== "null")
+            $scope.bCol = parseInt(sessionStorage.getItem("matrixBcols"));
+
+
+        $scope.successPushA = true;
+        $scope.successPushB = true;
+
+        if (sessionStorage.getItem("masA") != null && sessionStorage.getItem("masA") !== "null") {
+            $scope.masA = sessionStorage.getItem("masA");
+            $scope.setLen($scope.lenmatrixA, $scope.aCol);
+            $scope.matrixA = $scope.parser($scope.masA);
+        }
+        if (sessionStorage.getItem("masRes") != null && sessionStorage.getItem("masRes") !== "null") {
+            $scope.masRes = sessionStorage.getItem("masRes");
+            $scope.setLen($scope.lenmatrixA, $scope.aCol);
+            $scope.matrixRes = $scope.parser($scope.masRes);
+        }
+        if (sessionStorage.getItem("masB") != null && sessionStorage.getItem("masB") !== "null") {
+            $scope.masB = sessionStorage.getItem("masB");
+            $scope.setLen($scope.lenmatrixB, $scope.bCol);
+            $scope.matrixB = $scope.parser($scope.masB);
+        }
+
+        $scope.allChecks();
+    };
+    init();
 
 });

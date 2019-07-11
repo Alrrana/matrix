@@ -34,7 +34,7 @@ public class InputServlet extends HttpServlet {
             A = null;
 
             if (!mas.equals("")) {
-                A = matrixTypeDetector.gimmeMatrix(mas);
+                A = matrixTypeDetector.giveMeMatrix(mas);
                 A.print();
                 session.setAttribute("matrixArows", A.getRows());
                 session.setAttribute("matrixAcols", A.getColumns());
@@ -54,7 +54,7 @@ public class InputServlet extends HttpServlet {
         if (test.substring(0, 1).equals("B")) {
             B = null;
             if (!mas.equals("")) {
-                B = matrixTypeDetector.gimmeMatrix(mas);
+                B = matrixTypeDetector.giveMeMatrix(mas);
                 B.print();
                 System.out.println(B.getColumns() + " " + B.getRows());
                 session.setAttribute("matrixBrows", B.getRows());

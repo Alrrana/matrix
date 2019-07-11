@@ -231,9 +231,10 @@ public class Matrix<ElType> {
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
                 builder.append("{\"value\":\"" + content.get(i).get(j).getValue().toString() + "\",\"row\":\"" + j + "\",\"col\":\"" + i + "\"}");
+                if (i != columns - 1 || j!= rows-1)
+                    builder.append(",");
             }
-            if (i != columns - 1)
-                builder.append(",");
+
         }
         builder.append("]");
         return builder.toString();

@@ -36,8 +36,8 @@ public class TestFilter implements Filter {
 
 
 
-        if (session.getAttribute("matrixA") != null ) {
-            Matrix matrixA = (Matrix) session.getAttribute("matrixA");
+        if (session.getAttribute("MatrixA") != null ) {
+            Matrix matrixA = (Matrix) session.getAttribute("MatrixA");
             if (matrixA.getRows() > 1 || matrixA.getColumns() > 1) {
                 chain.doFilter(request, response);
             } else {

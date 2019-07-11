@@ -40,14 +40,14 @@ public class PlusOneToB extends OperationServlet {
 
     @Override
     protected boolean matrixNotNull(HttpSession session) {
-        return (session.getAttribute("matrixB") != null);
+        return (session.getAttribute("MatrixB") != null);
     }
 
 
     @Override
     protected void returnRes(HttpServletRequest request, HttpSession session, Matrix c) {
-        request.setAttribute("matrixB", c);
-        session.setAttribute("matrixB", c);
+        request.setAttribute("MatrixB", c);
+        session.setAttribute("MatrixB", c);
     }
 
 }

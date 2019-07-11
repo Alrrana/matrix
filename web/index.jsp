@@ -49,29 +49,47 @@
             <%--             style="position: relative; left: 384px; top: -7px;"--%>
             >
                 <p>Введенная матрица A:</p>
-                <p> {{aRow}}, {{aCol}} </p>
-                <p> {{masA}} </p>
+<%--                <p> {{aRow}}, {{aCol}} </p>--%>
+                <%--<p> {{matrixA}} </p>--%>
+                <div ng-repeat="i in lenmatrixA">
+                    <p> {{matrixA[i]}} </p>
+                </div>
+
             </div>
 
             <form><input type="hidden" name="forResponseA" id="forResponseA"/>
-                <button style="visibility:hidden;" name="inputA" id="inputA" ng-click="inputAFunc()">Ввести матрицу</button>
+                <button style="visibility:hidden;" name="inputA" id="inputA" ng-click="inputAFunc()">Ввести матрицу
+                </button>
             </form>
             <form>
-                <button style="visibility:hidden;" name="plusOneA" id="plusOneA">Плюс один ко всем ячейкам матрицы</button>
+                <button style="visibility:hidden;" name="plusOneA" id="plusOneA" ng-click="plusOneA()">Плюс один ко всем
+                    ячейкам матрицы
+                </button>
             </form>
 
         </div>
 
-        <div class="block" id="containerA">
-            <table>
-                <tr ng-repeat="i in aColMax">
-                    <td ng-repeat="j in aRowMax">
-                        <input ng-model="test" ng-change="checkInputContainerA()" type="text" col={{i}} row={{j}} placeholder="_">
-                    </td>
-                </tr>
-            </table>
+
+
+        <div class="form">
+            <div class="block" id="containerA">
+                <table>
+                    <tr ng-repeat="i in aColMax">
+                        <td ng-repeat="j in aRowMax">
+                            <input ng-model="test" ng-change="checkInputContainerA()" type="text" col={{i}} row={{j}}
+                                   placeholder="_">
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
+
+
     </div>
+
+
+
+
     <div class="custom">
         <div class="form">
 
@@ -86,31 +104,56 @@
                 </form>
                 <%--            <button name="plusB">Задать размерность</button>--%>
             </div>
+
+
             <div class="custom"
             <%--             style="position: relative; left: 384px; top: -7px;"--%>
             >
                 <p>Введенная матрица B:</p>
-                <p>{{bRow}} , {{bCol}} </p>
-                <p>{{masB}} </p>
+<%--                <p>{{bRow}} , {{bCol}} </p>--%>
+                <%--  <p> {{matrixB}} </p>--%>
+                <div ng-repeat="i in lenmatrixB">
+                    <p> {{matrixB[i]}} </p>
+                </div>
             </div>
+
+
             <form><input type="hidden" name="forResponseB" id="forResponseB"/>
-                <button style="visibility:hidden;" name="inputB" id="inputB" ng-click="inputBFunc()">Ввести матрицу</button>
+                <button style="visibility:hidden;" name="inputB" id="inputB" ng-click="inputBFunc()">Ввести матрицу
+                </button>
             </form>
             <form>
-                <button style="visibility:hidden;" name="plusOneB" id="plusOneB">Плюс один ко всем ячейкам матрицы</button>
+                <button style="visibility:hidden;" name="plusOneB" id="plusOneB"  ng-click="plusOneB()">Плюс один ко
+                    всем ячейкам матрицы
+                </button>
             </form>
-        </div>
-        <div class="block" id="containerB">
-            <table>
-                <tr ng-repeat="i in bColMax">
-                    <td ng-repeat="j in bRowMax">
-                        <input ng-keyup="checkInputContainerB()" type="text" col={{i}} row={{j}} placeholder="_">
-                    </td>
-                </tr>
-            </table>
+
 
         </div>
+
+
+
+        <div class="form">
+            <div class="block" id="containerB">
+                <table>
+                    <tr ng-repeat="i in bColMax">
+                        <td ng-repeat="j in bRowMax">
+                            <input ng-keyup="checkInputContainerB()" type="text" col={{i}} row={{j}} placeholder="_">
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+
+
     </div>
+
+
+
+
+
     <div class="custom" style="vertical-align:top">
         <div class="block1">
             <div id="containerRes">
@@ -126,12 +169,24 @@
                     </form>
                 </div>
 
+
             </div>
         </div>
 
         <div class="form">
             <p>Result:</p>
 
+            <%--  <p>{{masRes}} </p>--%>
+            <div ng-repeat="i in lenmatrixRes">
+                <p> {{matrixRes[i]}} </p>
+            </div>
+            <%--            <table>--%>
+            <%--                <tr ng-repeat="i in resColMax">--%>
+            <%--                    <td ng-repeat="j in resRowMax">--%>
+            <%--                        <input type="text" col={{i}} row={{j}} placeholder="_">--%>
+            <%--                    </td>--%>
+            <%--                </tr>--%>
+            <%--            </table>--%>
         </div>
     </div>
 

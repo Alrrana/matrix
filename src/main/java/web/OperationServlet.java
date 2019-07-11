@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public abstract class OperationServlet extends HttpServlet {
 
@@ -20,7 +21,6 @@ public abstract class OperationServlet extends HttpServlet {
     protected abstract OperationPossibilityChecker getChecker();
 
     /**
-     *
      * @param request
      * @param response
      * @throws ServletException
@@ -41,19 +41,21 @@ public abstract class OperationServlet extends HttpServlet {
 
         if (matrixNotNull(session)) {
 
-            Matrix A = (Matrix) session.getAttribute("matrixA");
-            Matrix B = (Matrix) session.getAttribute("matrixB");
+            Matrix A = (Matrix) session.getAttribute("MatrixA");
+            Matrix B = (Matrix) session.getAttribute("MatrixB");
 //            System.out.println(A.getContent()+"    "+B.getContent());
-            Matrix C = doOperation(A,B);
+            Matrix C = doOperation(A, B);
 
-            returnRes(request, session, C );
+            returnRes(request, session, C);
 
+            PrintWriter out = response.getWriter();
             response.setContentType("application/json");
-            response.resetBuffer();
-            response.getWriter().print(C.toString());
+            response.setCharacterEncoding("UTF-8");
+            out.print(C.toJSON());
+            out.flush();
 
         }
-       // request.getRequestDispatcher("/index.jsp").forward(request, response);
+        // request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     protected void returnRes(HttpServletRequest request, HttpSession session, Matrix c) {
@@ -62,7 +64,7 @@ public abstract class OperationServlet extends HttpServlet {
     }
 
     protected boolean matrixNotNull(HttpSession session) {
-        return (session.getAttribute("matrixA") != null && session.getAttribute("matrixB") != null);
+        return (session.getAttribute("MatrixA") != null && session.getAttribute("MatrixB") != null);
     }
 
     /**
