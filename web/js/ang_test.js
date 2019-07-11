@@ -10,7 +10,12 @@ test.controller("testController", function ($scope, $http) {
     $scope.bCol = 0;
     $scope.masA = '';
     $scope.masB = '';
+    $scope.test = 0;
+    $scope.wow = [];
 
+    $scope.$watch('testus', function (newValue, oldValue) {
+        console.log(newValue);
+    });
 
     $scope.resRowMax = [0, 1, 2];
     $scope.resColMax = [0, 1, 2];
@@ -154,8 +159,6 @@ test.controller("testController", function ($scope, $http) {
     }
 
 
-
-
     $scope.plusOneA = function () {
 
         if ($scope.successPushA && ($scope.aCol !== 0) && ($scope.aRow !== 0)) {
@@ -201,7 +204,6 @@ test.controller("testController", function ($scope, $http) {
 
         }
     }
-
 
 
     //=========================== operations ===========================================================
@@ -376,8 +378,6 @@ test.controller("testController", function ($scope, $http) {
             }
         }
     }
-
-
 
 
     //=========================================================================
@@ -574,20 +574,29 @@ test.controller("testController", function ($scope, $http) {
         var mas = [];
         var t = "";
 
-        $('#containerA input').each(function () {
-            if ($(this).attr("col") !== undefined) {
-                if ($(this).val() === "") {
-                    t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
-                    // can = false;
-                } else {
-                    mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
-                }
+        // $('#containerA input').each(function () {
+        //     if ($(this).attr("col") !== undefined) {
+        //         if ($(this).val() === "") {
+        //             t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
+        //             // can = false;
+        //         } else {
+        //             mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
+        //         }
+        //     }
+        // });
+
+        for (let i = 0; i < $scope.aColMax.length; i++) {
+            for (let j = 0; j < $scope.aRowMax.length; j++) {
+                mas.push({value: $scope.wow[i][j], row:j, col: i});
             }
-        })
+
+        }
+        console.log(mas);
+        console.log($scope.wow);
 
 
         if (JSON.stringify(mas) === "[]") {
-            alert("No input");
+            console.log("No input");
             document.getElementById('inputA').style.visibility = 'hidden';
         } else {
             var res = mascheckA(JSON.stringify(mas));

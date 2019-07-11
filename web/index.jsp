@@ -76,13 +76,17 @@
                 <table>
                     <tr ng-repeat="i in aColMax">
                         <td ng-repeat="j in aRowMax">
-                            <input ng-model="test" ng-change="checkInputContainerA()" type="text" col={{i}} row={{j}}
+                            <input ng-model="wow[i][j]" ng-change="checkInputContainerA()" type="text" col={{i}} row={{j}}
                                    placeholder="_">
                         </td>
                     </tr>
                 </table>
+
+                <p>{{wow[0][0]}}     {{wow[0][1]}}    {{wow[1][0]}}        </p>
             </div>
         </div>
+
+        <p> {{$scope}}</p>
 
 
     </div>
@@ -192,5 +196,9 @@
 
 
 </div>
+<%--<div ng-repeat="i in [0,1,2]">--%>
+<%--    <input type="text" name="kjdhfgkjds" ng-model="wow[i]"/>--%>
+<%--    <span>{{wow[i]}}</span>--%>
+<%--</div>--%>
 </body>
 </html>
