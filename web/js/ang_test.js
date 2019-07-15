@@ -11,7 +11,7 @@ test.controller("testController", function ($scope, $http) {
     $scope.masA = '';
     $scope.masB = '';
     $scope.test = 0;
-    $scope.wow = [];
+    $scope.wow = [[]];
 
     $scope.$watch('testus', function (newValue, oldValue) {
         console.log(newValue);
@@ -574,25 +574,20 @@ test.controller("testController", function ($scope, $http) {
         var mas = [];
         var t = "";
 
-        // $('#containerA input').each(function () {
-        //     if ($(this).attr("col") !== undefined) {
-        //         if ($(this).val() === "") {
-        //             t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
-        //             // can = false;
-        //         } else {
-        //             mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
-        //         }
-        //     }
-        // });
-
         for (let i = 0; i < $scope.aColMax.length; i++) {
+            if (!$scope.wow[i]) {
+                continue;
+            }
+
             for (let j = 0; j < $scope.aRowMax.length; j++) {
-                mas.push({value: $scope.wow[i][j], row:j, col: i});
+                if (!!$scope.wow[i][j]) {
+                    mas.push({value: $scope.wow[i][j], row: j.toString(), col: i.toString()});
+                }
             }
 
         }
-        console.log(mas);
-        console.log($scope.wow);
+        console.log("mas: " + mas);
+        console.log("wow: " + $scope.wow);
 
 
         if (JSON.stringify(mas) === "[]") {
@@ -616,16 +611,21 @@ test.controller("testController", function ($scope, $http) {
     $scope.checkInputContainerB = function () {
         var mas = [];
         var t = "";
-        $('#containerB input').each(function () {
-            if ($(this).attr("col") !== undefined) {
-                if ($(this).val() === "") {
-                    t += "Не введено поле row: " + $(this).attr("row") + " column: " + $(this).attr("col") + "\n";
-                    // can = false;
-                } else {
-                    mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
+
+
+        for (let i = 0; i < $scope.bColMax.length; i++) {
+            if (!$scope.wow[i]) {
+                continue;
+            }
+
+            for (let j = 0; j < $scope.bRowMax.length; j++) {
+                if (!!$scope.wow[i][j]) {
+                    mas.push({value: $scope.wow[i][j], row: j.toString(), col: i.toString()});
                 }
             }
-        })
+
+        }
+
 
         if (JSON.stringify(mas) === "[]") {
             // alert("No input");
@@ -712,6 +712,11 @@ test.controller("testController", function ($scope, $http) {
             $scope.setLen($scope.lenmatrixB, $scope.bCol);
             $scope.matrixB = $scope.parser($scope.masB);
         }
+
+        // $scope.wow = new Array(aColMax.length);
+        // for (let i = 0; i < $scope.aColMax.length; i++) {
+        //     $scope.wow[i] = new Array(aRowMax.length);
+        // }
 
         $scope.allChecks();
     };
