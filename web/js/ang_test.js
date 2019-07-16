@@ -734,7 +734,7 @@ test.controller('ictrl',function($scope){
     $scope.check = '';
 });
 
-test..directive('matrixForm', function () {
+test.directive('matrixForm', function () {
     return {
         compile: function (templateElement, templateAttrs) {
             templateElement.html('<table>' +
