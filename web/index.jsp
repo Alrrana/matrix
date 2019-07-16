@@ -16,6 +16,8 @@
     <script type="text/javascript" src="js/ang_test.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="js/js.js"></script>
+    <script type="text/javascript" src="js/inputTemplate.js"></script>
+    <script type="text/html" src="js/inputField.html"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="title"/>
     <meta name="keywords" content="title"/>
@@ -49,7 +51,7 @@
             <%--             style="position: relative; left: 384px; top: -7px;"--%>
             >
                 <p>Введенная матрица A:</p>
-<%--                <p> {{aRow}}, {{aCol}} </p>--%>
+                <%--                <p> {{aRow}}, {{aCol}} </p>--%>
                 <%--<p> {{matrixA}} </p>--%>
                 <div ng-repeat="i in lenmatrixA">
                     <p> {{matrixA[i]}} </p>
@@ -70,28 +72,19 @@
         </div>
 
 
-
         <div class="form">
             <div class="block" id="containerA">
-                <table>
-                    <tr ng-repeat="i in aColMax">
-                        <td ng-repeat="j in aRowMax">
-                            <input ng-model="wow[i][j]" ng-change="checkInputContainerA()" type="text" col={{i}} row={{j}}
-                                   placeholder="_">
-                        </td>
-                    </tr>
-                </table>
 
-                <p>{{wow[0][0]}}     {{wow[0][1]}}    {{wow[1][0]}}        </p>
+
+                <div matrix-form col="aColMax" row = "aRowMax" wow="wowA" container="A"></div>
+                <%--     inputField    --%>
+
+
+                <p>{{wowA[0][0]}} {{wowA[0][1]}} {{wowA[1][0]}} </p>
             </div>
         </div>
 
-        <p> {{$scope}}</p>
-
-
     </div>
-
-
 
 
     <div class="custom">
@@ -114,7 +107,7 @@
             <%--             style="position: relative; left: 384px; top: -7px;"--%>
             >
                 <p>Введенная матрица B:</p>
-<%--                <p>{{bRow}} , {{bCol}} </p>--%>
+                <%--                <p>{{bRow}} , {{bCol}} </p>--%>
                 <%--  <p> {{matrixB}} </p>--%>
                 <div ng-repeat="i in lenmatrixB">
                     <p> {{matrixB[i]}} </p>
@@ -127,7 +120,7 @@
                 </button>
             </form>
             <form>
-                <button style="visibility:hidden;" name="plusOneB" id="plusOneB"  ng-click="plusOneB()">Плюс один ко
+                <button style="visibility:hidden;" name="plusOneB" id="plusOneB" ng-click="plusOneB()">Плюс один ко
                     всем ячейкам матрицы
                 </button>
             </form>
@@ -136,26 +129,14 @@
         </div>
 
 
-
         <div class="form">
             <div class="block" id="containerB">
-                <table>
-                    <tr ng-repeat="i in bColMax">
-                        <td ng-repeat="j in bRowMax">
-                            <input ng-keyup="checkInputContainerB()" type="text" col={{i}} row={{j}} placeholder="_">
-                        </td>
-                    </tr>
-                </table>
-
+                <div matrix-form col="bColMax" row = "bRowMax" wow="wowB" container="B"></div>
             </div>
         </div>
 
 
-
     </div>
-
-
-
 
 
     <div class="custom" style="vertical-align:top">
@@ -197,8 +178,8 @@
 
 </div>
 <%--<div ng-repeat="i in [0,1,2]">--%>
-<%--    <input type="text" name="kjdhfgkjds" ng-model="wow[i]"/>--%>
-<%--    <span>{{wow[i]}}</span>--%>
+<%--    <input type="text" name="kjdhfgkjds" ng-model="wowA[i]"/>--%>
+<%--    <span>{{wowA[i]}}</span>--%>
 <%--</div>--%>
 </body>
 </html>

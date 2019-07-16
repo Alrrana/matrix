@@ -11,7 +11,8 @@ test.controller("testController", function ($scope, $http) {
     $scope.masA = '';
     $scope.masB = '';
     $scope.test = 0;
-    $scope.wow = [[]];
+    $scope.wowA = [[]];
+    $scope.wowB = [[]];
 
     $scope.$watch('testus', function (newValue, oldValue) {
         console.log(newValue);
@@ -575,19 +576,19 @@ test.controller("testController", function ($scope, $http) {
         var t = "";
 
         for (let i = 0; i < $scope.aColMax.length; i++) {
-            if (!$scope.wow[i]) {
+            if (!$scope.wowA[i]) {
                 continue;
             }
 
             for (let j = 0; j < $scope.aRowMax.length; j++) {
-                if (!!$scope.wow[i][j]) {
-                    mas.push({value: $scope.wow[i][j], row: j.toString(), col: i.toString()});
+                if (!!$scope.wowA[i][j]) {
+                    mas.push({value: $scope.wowA[i][j], row: j.toString(), col: i.toString()});
                 }
             }
 
         }
         console.log("mas: " + mas);
-        console.log("wow: " + $scope.wow);
+        console.log("wowA: " + $scope.wowA);
 
 
         if (JSON.stringify(mas) === "[]") {
@@ -614,13 +615,13 @@ test.controller("testController", function ($scope, $http) {
 
 
         for (let i = 0; i < $scope.bColMax.length; i++) {
-            if (!$scope.wow[i]) {
+            if (!$scope.wowB[i]) {
                 continue;
             }
 
             for (let j = 0; j < $scope.bRowMax.length; j++) {
-                if (!!$scope.wow[i][j]) {
-                    mas.push({value: $scope.wow[i][j], row: j.toString(), col: i.toString()});
+                if (!!$scope.wowB[i][j]) {
+                    mas.push({value: $scope.wowB[i][j], row: j.toString(), col: i.toString()});
                 }
             }
 
@@ -713,13 +714,69 @@ test.controller("testController", function ($scope, $http) {
             $scope.matrixB = $scope.parser($scope.masB);
         }
 
-        // $scope.wow = new Array(aColMax.length);
+        // $scope.wowA = new Array(aColMax.length);
         // for (let i = 0; i < $scope.aColMax.length; i++) {
-        //     $scope.wow[i] = new Array(aRowMax.length);
+        //     $scope.wowA[i] = new Array(aRowMax.length);
         // }
 
         $scope.allChecks();
     };
     init();
 
+
 });
+
+test.controller('ictrl',function($scope){
+
+    $scope.ColMax = 1;
+    $scope.RowMax = 1;
+    $scope.wow = '';
+    $scope.check = '';
+});
+
+test..directive('matrixForm', function () {
+    return {
+        compile: function (templateElement, templateAttrs) {
+            templateElement.html('<table>' +
+                '                    <tr ng-repeat="i in ' + templateAttrs.col + '">' +
+                '                        <td ng-repeat="j in ' + templateAttrs.row + '">' +
+                '                            <input ng-model="' + templateAttrs.wow + '[i][j]" ng-change="checkInputContainer'+templateAttrs.container+'()" type="text" col={{i}} row={{j}} placeholder="_">' +
+                '                        </td>' +
+                '                    </tr>' +
+                '                </table>')
+        },
+        link: function (scope, element, attrs) {
+
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
