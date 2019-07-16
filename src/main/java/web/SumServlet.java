@@ -12,8 +12,6 @@ import java.io.IOException;
 public class SumServlet extends OperationServlet {
     private OperationPossibilityChecker checker = new SumChecker();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
 
     @Override
     protected OperationPossibilityChecker getChecker() {

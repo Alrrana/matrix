@@ -13,8 +13,6 @@ public class MultServlet extends OperationServlet {
 
     private OperationPossibilityChecker checker = new MultChecker();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
 
     @Override
     protected OperationPossibilityChecker getChecker() {

@@ -12,9 +12,6 @@ import java.io.IOException;
 public class SubServlet extends OperationServlet {
     private OperationPossibilityChecker checker = new SubChecker();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 
     @Override
     protected OperationPossibilityChecker getChecker() {

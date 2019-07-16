@@ -2,6 +2,8 @@ package web;
 
 
 import MatrixModules.Matrix;
+import MatrixModules.MatrixTypeDetector;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.stream.Collectors;
 
 public abstract class OperationServlet extends HttpServlet {
 
@@ -19,6 +22,9 @@ public abstract class OperationServlet extends HttpServlet {
      * @return экземпляр OperationPossibilityChecker
      */
     protected abstract OperationPossibilityChecker getChecker();
+
+    MatrixTypeDetector matrixTypeDetector = new MatrixTypeDetector();
+
 
     /**
      * @param request
@@ -55,8 +61,66 @@ public abstract class OperationServlet extends HttpServlet {
             out.flush();
 
         }
-        // request.getRequestDispatcher("/index.jsp").forward(request, response);
+
+//
+//        String test = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+//        String[] temp = test.split("@");
+//        String masA = temp[0];
+//        String masB = temp[1];
+//
+//        Matrix A = matrixTypeDetector.giveMeMatrix(masA);
+//        Matrix B = matrixTypeDetector.giveMeMatrix(masB);
+//
+//        if (!(getChecker().isPossible(A.getColumns(), A.getRows(), B.getColumns(), B.getRows()))) {
+//            request.getRequestDispatcher("/index.jsp").forward(request, response);
+//            return;
+//        }
+//
+//
+////            System.out.println(A.getContent()+"    "+B.getContent());
+//        Matrix C = doOperation(A, B);
+//
+//
+//        PrintWriter out = response.getWriter();
+//        response.setContentType("application/json");
+//        response.setCharacterEncoding("UTF-8");
+//        out.print(C.toJSON());
+//        out.flush();
+
+
     }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+//        JSONObject jsonObject = new JSONObject(request);
+        String test = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+        String[] temp = test.split("@");
+        String masA = temp[0];
+        String masB = temp[1];
+
+        Matrix A = matrixTypeDetector.giveMeMatrix(masA);
+        Matrix B = matrixTypeDetector.giveMeMatrix(masB);
+
+        if (!(getChecker().isPossible(A.getColumns(), A.getRows(), B.getColumns(), B.getRows()))) {
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            return;
+        }
+
+
+//            System.out.println(A.getContent()+"    "+B.getContent());
+        Matrix C = doOperation(A, B);
+
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print(C.toJSON());
+        out.flush();
+
+
+    }
+
 
     protected void returnRes(HttpServletRequest request, HttpSession session, Matrix c) {
         request.setAttribute("MatrixRes", c);
@@ -75,4 +139,6 @@ public abstract class OperationServlet extends HttpServlet {
      * @return результат выполнения операции в виде экземпляра Matrix
      */
     protected abstract Matrix doOperation(Matrix A, Matrix B);
+
+
 }

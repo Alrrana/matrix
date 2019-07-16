@@ -76,11 +76,11 @@
             <div class="block" id="containerA">
 
 
-                <div matrix-form col="aColMax" row = "aRowMax" wow="wowA" container="A"></div>
+                <div matrix-form col="aColMax" row="aRowMax" wow="wowA" container="A"></div>
                 <%--     inputField    --%>
 
 
-                <p>{{wowA[0][0]}} {{wowA[0][1]}} {{wowA[1][0]}} </p>
+                <%--                <p>{{wowA[0][0]}} {{wowA[0][1]}} {{wowA[1][0]}} </p>--%>
             </div>
         </div>
 
@@ -131,7 +131,7 @@
 
         <div class="form">
             <div class="block" id="containerB">
-                <div matrix-form col="bColMax" row = "bRowMax" wow="wowB" container="B"></div>
+                <div matrix-form col="bColMax" row="bRowMax" wow="wowB" function-name="checkInputContainerB"></div>
             </div>
         </div>
 
@@ -151,6 +151,23 @@
                     </form>
                     <form>
                         <button style="visibility:hidden;" name="mult" id="mult" ng-click="multFunc()">Mult</button>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="block1">
+            <div id="containerRes1">
+                <div class="form">
+
+                    <button style="visibility:hidden;"  ng-click="sumFunc()">Sum</button>
+
+                    <form>
+                        <button style="visibility:hidden;"  ng-click="subFunc()">Subtract</button>
+                    </form>
+                    <form>
+                        <button style="visibility:visible;" ng-click="multFuncNS()">Mult(noSession)</button>
                     </form>
                 </div>
 

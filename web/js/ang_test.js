@@ -219,9 +219,10 @@ test.controller("testController", function ($scope, $http) {
     //             } else {
     //                 mas.push({value: $(this).val(), row: $(this).attr("row"), col: $(this).attr("col")});
     //             }
-    //         }
+    //         }mas.push({value: $scope.wowA[i][j], row: j.toString(), col: i.toString()});
     //     })
-    // };
+    // }; var mas = [];
+    //             mas.push({})
 
 
     $scope.multFunc = function () {
@@ -231,7 +232,8 @@ test.controller("testController", function ($scope, $http) {
 
             $http({
                 method: 'POST',
-                data: $scope.masA + "@" + $scope.masB,
+                data: JSON.stringify([{MatrixA: $scope.masA},
+                                            {MatrixB: $scope.masB}] ),
                 url: "/mult"
             }).then(function success(response) {
                 $scope.masRes = JSON.stringify(response.data);
@@ -253,6 +255,39 @@ test.controller("testController", function ($scope, $http) {
         }
     }
 
+    $scope.multFuncNS = function () {
+
+        if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
+            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
+
+            $http({
+                // method: 'POST',
+                // data: $scope.masA + "@" + $scope.masB,
+                // url: "/mult"
+                method: 'GET',
+                url: "/mult?"+$scope.masA + "@" + $scope.masB
+
+            }).then(function success(response) {
+                $scope.masRes = JSON.stringify(response.data);
+                console.log(response);
+
+                $scope.setLen($scope.lenmatrixRes, $scope.aCol); // ToDo
+                $scope.matrixRes = $scope.parser($scope.masRes);
+                sessionStorage.setItem("masRes", $scope.masRes);
+
+                $scope.successMult = true;
+            }, function error(response) {
+                console.log(response);
+                $scope.successMult = false;
+            });
+
+        } else {
+
+
+        }
+    }
+
+
 
     //
 
@@ -262,6 +297,7 @@ test.controller("testController", function ($scope, $http) {
         if ($scope.successPushA && $scope.successPushB &&
             ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
                 ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
+
 
             $http({
                 method: 'POST',
@@ -485,91 +521,6 @@ test.controller("testController", function ($scope, $http) {
         return [true, col, row];
     }
 
-    function mascheck(input) {
-
-        var parsed = input.split('\"');
-        var col = parseInt(parsed[parsed.length - 2]) + 1;
-        var row = parseInt(parsed[parsed.length - 6]) + 1;
-        var res = new Array(row);
-        for (let i = 0; i < row; i++) {
-            res[i] = new Array(col);
-        }
-
-        let logic = false;
-        for (let i = 3; i < parsed.length; i += 12
-        ) {
-            if (parsed[i] === "")
-                return false;
-
-            try {
-                res[parsed[i + 4]][parsed[i + 8]] = parsed[i];
-            } catch (e) {
-                logic = true;
-            }
-        }
-        if (logic)
-            return false;
-        if (row > 1) {
-            var lastlen = res[0].length;
-            for (let c = 1; c < row; c++) {
-                if (lastlen != res[c].length) {
-                    // alert("ALARM");
-                    return false;
-                }
-            }
-        }
-
-        for (let i = 0; i < row; i++) {
-            for (let j = 0; j < col; j++) {
-                if (isEmpty(res[i][j]))
-                // alert("ALARM");
-                    return false;
-            }
-        }
-
-        return true;
-        // alert(input + "\n col is " + col + "   row is" + row + "\n" + res);
-
-        // for (let c = 0; c < col; c++) {
-        //     let currentRows = 0;
-        //
-        //     for (let r = 0; r < row; r++) {
-        //
-        //         if (r * 8 + 3 + c * row < parsed.length) {
-        //             currentRows++;
-        //         }
-        //     }
-        //     if (currentRows < row) {
-        //         alert(" Oops currentRows = " + currentRows + " when rows = " + row)
-        //     }
-        // }
-
-
-        // if (res.length < (col ) * (row ))
-        // {
-        //     alert("Malo res.len="+res.length+" expLen="+(col ) * (row ))
-        // }
-        // if(res.length > (col ) * (row)){
-        //     alert("Mnogo")
-        // }
-
-        // let expCol = 0;
-        // for (let c = 3 + 4; c < parsed.length; c += 3 + 4) {
-        //     if (parsed[c]===col)
-        //     expCol++;
-        // }
-        // if (expCol !== col) {
-        //     alert("ALARM  expCol =" + expCol+" col ="+col)
-        // }
-        // let expRow = 0;
-        // for (let r = 3 + 8; r< parsed.length; r += 3 + 8) {
-        //     expRow++;
-        // }
-        // if (expRow !== row) {
-        //     alert("ALARM  expRow =" + expRow+" row ="+row)
-        // }
-    }
-
 
     $scope.checkInputContainerA = function () {
         var mas = [];
@@ -726,24 +677,42 @@ test.controller("testController", function ($scope, $http) {
 
 });
 
-test.controller('ictrl',function($scope){
-
-    $scope.ColMax = 1;
-    $scope.RowMax = 1;
-    $scope.wow = '';
-    $scope.check = '';
-});
+// test.controller('ictrl',function($scope){
+//
+//     $scope.ColMax = 1;
+//     $scope.RowMax = 1;
+//     $scope.wow = '';
+//     $scope.check = '';
+// });
 
 test.directive('matrixForm', function () {
     return {
+        scope: {
+            col: '@',
+            row: '@',
+            wow: '@',
+            container: '@',
+            functionName: '@'
+
+        },
         compile: function (templateElement, templateAttrs) {
-            templateElement.html('<table>' +
-                '                    <tr ng-repeat="i in ' + templateAttrs.col + '">' +
-                '                        <td ng-repeat="j in ' + templateAttrs.row + '">' +
-                '                            <input ng-model="' + templateAttrs.wow + '[i][j]" ng-change="checkInputContainer'+templateAttrs.container+'()" type="text" col={{i}} row={{j}} placeholder="_">' +
-                '                        </td>' +
-                '                    </tr>' +
-                '                </table>')
+            if (!!templateAttrs.container)
+                templateElement.html('<table>' +
+                    '                    <tr ng-repeat="i in ' + templateAttrs.col + '">' +
+                    '                        <td ng-repeat="j in ' + templateAttrs.row + '">' +
+                    '                            <input ng-model="' + templateAttrs.wow + '[i][j]" ng-change="checkInputContainer' + templateAttrs.container + '()" type="text" col={{i}} row={{j}} placeholder="_">' +
+                    '                        </td>' +
+                    '                    </tr>' +
+                    '                </table>')
+            else {
+                templateElement.html('<table>' +
+                    '                    <tr ng-repeat="i in ' + templateAttrs.col + '">' +
+                    '                        <td ng-repeat="j in ' + templateAttrs.row + '">' +
+                    '                            <input ng-model="' + templateAttrs.wow + '[i][j]" ng-change="' + templateAttrs.functionName + '()" type="text" col={{i}} row={{j}} placeholder="_">' +
+                    '                        </td>' +
+                    '                    </tr>' +
+                    '                </table>')
+            }
         },
         link: function (scope, element, attrs) {
 
