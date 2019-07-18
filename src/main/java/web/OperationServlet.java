@@ -3,7 +3,6 @@ package web;
 
 import MatrixModules.Matrix;
 import MatrixModules.MatrixTypeDetector;
-import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.stream.Collectors;
 
 public abstract class OperationServlet extends HttpServlet {
 
@@ -94,10 +92,11 @@ public abstract class OperationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 //        JSONObject jsonObject = new JSONObject(request);
-        String test = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        String[] temp = test.split("@");
-        String masA = temp[0];
-        String masB = temp[1];
+
+//        String test = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+//        String[] temp = test.split("@");
+        String masA = request.getParameter("A");
+        String masB = request.getParameter("B");
 
         Matrix A = matrixTypeDetector.giveMeMatrix(masA);
         Matrix B = matrixTypeDetector.giveMeMatrix(masB);

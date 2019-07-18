@@ -84,9 +84,9 @@ test.controller("testController", function ($scope, $http) {
         if (matrixId === "A") {
             $scope.masA = '';
             $scope.aRow = 0;
-            sessionStorage.setItem("matrixArows", aRow);
+            sessionStorage.setItem("matrixArows", $scope.aRow);
             $scope.aCol = 0;
-            sessionStorage.setItem("matrixAcols", aCol);
+            sessionStorage.setItem("matrixAcols", $scope.aCol);
             $scope.aRowMax = [0, 1, 2];
             $scope.aColMax = [0, 1, 2];
 
@@ -94,9 +94,9 @@ test.controller("testController", function ($scope, $http) {
         if (matrixId === "B") {
             $scope.masB = '';
             $scope.bRow = 0;
-            sessionStorage.setItem("matrixBrows", bRow);
+            sessionStorage.setItem("matrixBrows", $scope.bRow);
             $scope.bCol = 0;
-            sessionStorage.setItem("matrixBcols", bCol);
+            sessionStorage.setItem("matrixBcols", $scope.bCol);
             $scope.bRowMax = [0, 1, 2];
             $scope.bColMax = [0, 1, 2];
         }
@@ -224,17 +224,40 @@ test.controller("testController", function ($scope, $http) {
     // }; var mas = [];
     //             mas.push({})
 
+    function isSumPossible() {
+        return ($scope.successPushA && $scope.successPushB &&
+            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
+                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow)));
+    }
 
-    $scope.multFunc = function () {
+    function isMultPossible() {
+        return (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
+            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol));
+    }
 
-        if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
-            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
+    function hide(button) {
+        document.getElementById(button).style.visibility = 'hidden';
+    }
+
+    function reveal(button) {
+        document.getElementById(button).style.visibility = 'visible';
+    }
+
+
+    $scope.operationFunc = function (opName) {
+
+        var possible = false;
+        if (opName === "mult") {
+            possible = isMultPossible();
+        } else possible = isSumPossible();
+
+        if (possible) {
 
             $http({
                 method: 'POST',
                 data: JSON.stringify([{MatrixA: $scope.masA},
-                                            {MatrixB: $scope.masB}] ),
-                url: "/mult"
+                    {MatrixB: $scope.masB}]),
+                url: "/" + opName
             }).then(function success(response) {
                 $scope.masRes = JSON.stringify(response.data);
                 console.log(response);
@@ -255,17 +278,23 @@ test.controller("testController", function ($scope, $http) {
         }
     }
 
-    $scope.multFuncNS = function () {
 
-        if (($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
-            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
+    $scope.operationFuncREST = function (opName) {
+
+        var possible = false;
+        if (opName === "mult") {
+            possible = isMultPossible();
+        } else possible = isSumPossible();
+
+        if (possible) {
+
 
             $http({
                 // method: 'POST',
                 // data: $scope.masA + "@" + $scope.masB,
                 // url: "/mult"
                 method: 'GET',
-                url: "/mult?"+$scope.masA + "@" + $scope.masB
+                url: encodeURI("/" + opName + "?" + "A=" + $scope.masA + "&B=" + $scope.masB)
 
             }).then(function success(response) {
                 $scope.masRes = JSON.stringify(response.data);
@@ -283,71 +312,6 @@ test.controller("testController", function ($scope, $http) {
 
         } else {
 
-
-        }
-    }
-
-
-
-    //
-
-
-    $scope.sumFunc = function () {
-
-        if ($scope.successPushA && $scope.successPushB &&
-            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
-                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
-
-
-            $http({
-                method: 'POST',
-                data: $scope.masA + "@" + $scope.masB,
-                url: "/sum"
-            }).then(function success(response) {
-                $scope.masRes = JSON.stringify(response.data);
-                console.log(response);
-
-                $scope.setLen($scope.lenmatrixRes, $scope.aCol); // ToDo
-                $scope.matrixRes = $scope.parser($scope.masRes);
-                sessionStorage.setItem("masRes", $scope.masRes);
-
-                $scope.successSum = true;
-            }, function error(response) {
-                console.log(response);
-                $scope.successSum = false;
-            });
-
-        } else {
-            document.getElementById('sum').style.visibility = 'hidden';
-
-        }
-    }
-
-
-    $scope.subFunc = function () {
-
-        if ($scope.successPushA && $scope.successPushB &&
-            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
-                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
-
-            $http({
-                method: 'POST',
-                data: $scope.masA + "@" + $scope.masB,
-                url: "/sub"
-            }).then(function success(response) {
-                $scope.masRes = JSON.stringify(response.data);
-                console.log(response);
-
-                $scope.setLen($scope.lenmatrixRes, $scope.aCol); // ToDo
-                $scope.matrixRes = $scope.parser($scope.masRes);
-                sessionStorage.setItem("masRes", $scope.masRes);
-
-                $scope.successSub = true;
-            }, function error(response) {
-                console.log(response);
-                $scope.successSub = false;
-            });
-        } else {
 
         }
     }
@@ -355,63 +319,55 @@ test.controller("testController", function ($scope, $http) {
 
     $scope.multCheck = function () {
 
-        if ($scope.successPushA && $scope.successPushB &&
-            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) &&
-            ($scope.aCol === $scope.bRow) || ($scope.aRow === $scope.bCol)) {
+        if (isMultPossible()) {
 
-            document.getElementById('mult').style.visibility = 'visible';
+            reveal('mult');
         } else {
 
-            document.getElementById('mult').style.visibility = 'hidden';
+            hide('mult');
         }
     }
 
 
     $scope.sumCheck = function () {
 
-        if ($scope.successPushA && $scope.successPushB &&
-            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
-                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
+        if (isSumPossible()) {
 
-            document.getElementById('sum').style.visibility = 'visible';
-
+            reveal('sum');
         } else {
-            document.getElementById('sum').style.visibility = 'hidden';
 
+            hide('sum');
         }
     }
 
     $scope.subCheck = function () {
 
-        if ($scope.successPushA && $scope.successPushB &&
-            ($scope.aCol !== 0) && ($scope.aRow !== 0) && ($scope.bCol !== 0) && ($scope.bRow !== 0) && (
-                ($scope.aCol === $scope.bCol && $scope.aRow === $scope.bRow))) {
+        if (isSumPossible()) {
 
-            document.getElementById('sub').style.visibility = 'visible';
-
+            reveal('sub');
         } else {
-            document.getElementById('sub').style.visibility = 'hidden';
+
+            hide('sub');
         }
     }
 
     $scope.plusCheck = function (plus) {
         if (plus === "A") {
             if ($scope.successPushA && ($scope.aCol !== 0) && ($scope.aRow !== 0)) {
-                document.getElementById('plusOneA').style.visibility = 'visible';
 
+                reveal('plusOneA');
             } else {
-                document.getElementById('plusOneA').style.visibility = 'hidden';
 
+                hide('plusOneA');
             }
         }
         if (plus === "B") {
             if ($scope.successPushB && ($scope.bCol !== 0) && ($scope.bRow !== 0)) {
 
-                document.getElementById('plusOneB').style.visibility = 'visible';
-
+                reveal('plusOneB');
             } else {
-                document.getElementById('plusOneB').style.visibility = 'hidden';
 
+                hide('plusOneB');
             }
         }
     }

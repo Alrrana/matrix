@@ -144,13 +144,13 @@
             <div id="containerRes">
                 <div class="form">
 
-                    <button style="visibility:hidden;" name="sum" id="sum" ng-click="sumFunc()">Sum</button>
+                    <button style="visibility:hidden;" name="sum" id="sum" ng-click="operationFunc('sum')">Sum</button>
 
                     <form>
-                        <button style="visibility:hidden;" name="sub" id="sub" ng-click="subFunc()">Subtract</button>
+                        <button style="visibility:hidden;" name="sub" id="sub" ng-click="operationFunc('sub')">Subtract</button>
                     </form>
                     <form>
-                        <button style="visibility:hidden;" name="mult" id="mult" ng-click="multFunc()">Mult</button>
+                        <button style="visibility:hidden;" name="mult" id="mult" ng-click="operationFunc('mult')">Mult</button>
                     </form>
                 </div>
 
@@ -161,13 +161,13 @@
             <div id="containerRes1">
                 <div class="form">
 
-                    <button style="visibility:hidden;"  ng-click="sumFunc()">Sum</button>
+                    <button style="visibility:hidden;"  ng-click="operationFuncREST('sum')">Sum(REST)</button>
 
                     <form>
-                        <button style="visibility:hidden;"  ng-click="subFunc()">Subtract</button>
+                        <button style="visibility:hidden;"  ng-click="operationFuncREST('sub')">Subtract(REST)</button>
                     </form>
                     <form>
-                        <button style="visibility:visible;" ng-click="multFuncNS()">Mult(noSession)</button>
+                        <button style="visibility:visible;" ng-click="operationFuncREST('mult')">Mult(REST)</button>
                     </form>
                 </div>
 
