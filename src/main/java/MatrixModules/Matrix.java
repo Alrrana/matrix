@@ -1,5 +1,9 @@
 package MatrixModules;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.List;
@@ -226,18 +230,37 @@ public class Matrix<ElType> {
         if (this.content == null) {
             return "";
         }
-        StringBuilder builder = new StringBuilder();
-        builder.append("[");
+//        StringBuilder builder = new StringBuilder();
+//        builder.append("[");
+//        for (int i = 0; i < columns; i++) {
+//            for (int j = 0; j < rows; j++) {
+//                builder.append("{\"value\":\"" + content.get(i).get(j).getValue().toString() + "\",\"row\":\"" + j + "\",\"col\":\"" + i + "\"}");
+//                if (i != columns - 1 || j!= rows-1)
+//                    builder.append(",");
+//            }
+//
+//        }
+//        builder.append("]");
+//        return builder.toString();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<MatrixElement> parsed = new ArrayList<>();
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
-                builder.append("{\"value\":\"" + content.get(i).get(j).getValue().toString() + "\",\"row\":\"" + j + "\",\"col\":\"" + i + "\"}");
-                if (i != columns - 1 || j!= rows-1)
-                    builder.append(",");
+               parsed.add(new MatrixElement(content.get(i).get(j).getValue().toString(),j,i));
             }
 
         }
-        builder.append("]");
-        return builder.toString();
+        try {
+            String res = objectMapper.writeValueAsString(parsed);
+            return res;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
     }
 
     public String printStr(int num) {

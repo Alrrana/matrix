@@ -1,21 +1,56 @@
 package MatrixModules;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.List;
+
 public class MatrixTypeDetector extends MatrixHelper {
 
     static int col;
     static int row;
 
     public static String[][] JSONparser(String input) {
-        String[] parsed = input.split("\"");
-        col = Integer.valueOf(parsed[parsed.length - 2]) + 1;
-        row = Integer.valueOf(parsed[parsed.length - 6]) + 1;
-        String[][] res = new String[col][row];
-        for (int i = 3; i < parsed.length; i += 12) {
-            if (parsed[i].equals(""))
-                return null;
-            res[Integer.valueOf(parsed[i + 8])][Integer.valueOf(parsed[i + 4])] = parsed[i];
+//        JsonFactory factory = new JsonFactory();
+//        try {
+//            JsonParser jp = factory.createParser(input);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        String[] parsed = input.split("\"");
+//        col = Integer.valueOf(parsed[parsed.length - 2]) + 1;
+//        row = Integer.valueOf(parsed[parsed.length - 6]) + 1;
+//        String[][] res = new String[col][row];
+//        for (int i = 3; i < parsed.length; i += 12) {
+//            if (parsed[i].equals(""))
+//                return null;
+//            res[Integer.valueOf(parsed[i + 8])][Integer.valueOf(parsed[i + 4])] = parsed[i];
+//        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<MatrixElement> parsed;
+        try {
+            parsed = objectMapper.readValue(input, new TypeReference<List<MatrixElement>>() {
+            });
+            col = parsed.get(parsed.size() - 1).col+1;
+            row = parsed.get(parsed.size() - 1).row+1;
+            String[][] res = new String[col][row];
+            for (int i = 0; i < parsed.size(); i++) {
+                if (parsed.get(i).value.equals(""))
+                    return null;
+                res[parsed.get(i).col][parsed.get(i).row] = parsed.get(i).value;
+
+            }
+            return res;
+        } catch (IOException e) {
+                e.printStackTrace();
         }
-        return res;
+        return null;
+
     }
 
     public static int defineType(String[][] input) {

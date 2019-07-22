@@ -15,8 +15,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script type="text/javascript" src="js/ang_test.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="js/js.js"></script>
-    <script type="text/javascript" src="js/inputTemplate.js"></script>
     <script type="text/html" src="js/inputField.html"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="title"/>
@@ -161,13 +159,13 @@
             <div id="containerRes1">
                 <div class="form">
 
-                    <button style="visibility:hidden;"  ng-click="operationFuncREST('sum')">Sum(REST)</button>
+                    <button style="visibility:visible;"  id="sumR" ng-click="operationFuncREST('sum')">Sum(REST)</button>
 
                     <form>
-                        <button style="visibility:hidden;"  ng-click="operationFuncREST('sub')">Subtract(REST)</button>
+                        <button style="visibility:visible;" id="subR"  ng-click="operationFuncREST('sub')">Subtract(REST)</button>
                     </form>
                     <form>
-                        <button style="visibility:visible;" ng-click="operationFuncREST('mult')">Mult(REST)</button>
+                        <button style="visibility:visible;" id="multR" ng-click="operationFuncREST('mult')">Mult(REST)</button>
                     </form>
                 </div>
 

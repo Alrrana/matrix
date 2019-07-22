@@ -322,9 +322,11 @@ test.controller("testController", function ($scope, $http) {
         if (isMultPossible()) {
 
             reveal('mult');
+            reveal('multR');
         } else {
 
             hide('mult');
+            hide('multR');
         }
     }
 
@@ -334,9 +336,11 @@ test.controller("testController", function ($scope, $http) {
         if (isSumPossible()) {
 
             reveal('sum');
+            reveal('sumR');
         } else {
 
             hide('sum');
+            hide('sumR');
         }
     }
 
@@ -345,9 +349,11 @@ test.controller("testController", function ($scope, $http) {
         if (isSumPossible()) {
 
             reveal('sub');
+            reveal('subR');
         } else {
 
             hide('sub');
+            hide('subR');
         }
     }
 
@@ -386,7 +392,7 @@ test.controller("testController", function ($scope, $http) {
         return true;
     }
 
-    $scope.mascheckA = function (input) {
+    $scope.mascheck = function (input) {
 
         var parsed = input.split('\"');
         var col = parseInt(parsed[parsed.length - 2]) + 1;
@@ -428,52 +434,7 @@ test.controller("testController", function ($scope, $http) {
             }
         }
 
-
-        return [true, col, row];
-    }
-
-    $scope.mascheckB = function (input) {
-
-        var parsed = input.split('\"');
-        var col = parseInt(parsed[parsed.length - 2]) + 1;
-        var row = parseInt(parsed[parsed.length - 6]) + 1;
-        var res = new Array(row);
-        for (let i = 0; i < row; i++) {
-            res[i] = new Array(col);
-        }
-
-        let logic = false;
-        for (let i = 3; i < parsed.length; i += 12
-        ) {
-            if (parsed[i] === "")
-                return false;
-
-            try {
-                res[parsed[i + 4]][parsed[i + 8]] = parsed[i];
-            } catch (e) {
-                logic = true;
-            }
-        }
-        if (logic)
-            return false;
-        if (row > 1) {
-            var lastlen = res[0].length;
-            for (let c = 1; c < row; c++) {
-                if (lastlen != res[c].length) {
-                    // alert("ALARM");
-                    return false;
-                }
-            }
-        }
-
-        for (let i = 0; i < row; i++) {
-            for (let j = 0; j < col; j++) {
-                if (isEmpty(res[i][j]))
-                // alert("ALARM");
-                    return false;
-            }
-        }
-
+        console.log("LOL")
         return [true, col, row];
     }
 
@@ -502,7 +463,7 @@ test.controller("testController", function ($scope, $http) {
             console.log("No input");
             document.getElementById('inputA').style.visibility = 'hidden';
         } else {
-            var res = mascheckA(JSON.stringify(mas));
+            var res = $scope.mascheck(JSON.stringify(mas));
             if (res[0]) {
                 $scope.aRow = res[2];
                 $scope.aCol = res[1];
@@ -539,7 +500,7 @@ test.controller("testController", function ($scope, $http) {
             // alert("No input");
             document.getElementById('inputB').style.visibility = 'hidden';
         } else {
-            var res = mascheckB(JSON.stringify(mas));
+            var res = $scope.mascheck(JSON.stringify(mas));
             if (res[0]) {
                 $scope.bRow = res[2];
                 $scope.bCol = res[1];
