@@ -55,16 +55,16 @@ test.controller("testController", function ($scope, $http) {
     }
 
     $scope.parser = function (input) {
-        var parsed = input.split('\"');
-        var col = parseInt(parsed[parsed.length - 2]) + 1;
-        var row = parseInt(parsed[parsed.length - 6]) + 1;
+        var parsed = JSON.parse(input);
+        var col = parseInt(parsed[parsed.length - 1].col) + 1;
+        var row = parseInt(parsed[parsed.length - 1].row) + 1;
         var res = new Array(col);
         for (let i = 0; i < col; i++) {
             res[i] = new Array(row);
         }
-        for (let i = 3; i < parsed.length; i += 12
+        for (let i = 0; i < parsed.length; i ++
         ) {
-            res[parsed[i + 8]][parsed[i + 4]] = parsed[i];
+            res[parsed[i].col][parsed[i].row] = parsed[i].value;
         }
 
         let resStr = [];
